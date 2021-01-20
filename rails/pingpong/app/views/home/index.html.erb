@@ -1,0 +1,6 @@
+
+<% unless user_signed_in? %>
+<%= link_to "Sign in with 42", user_marvin_omniauth_authorize_path %>
+<% else %>
+<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+<% end %>
