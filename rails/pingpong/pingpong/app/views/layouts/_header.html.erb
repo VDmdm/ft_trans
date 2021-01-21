@@ -18,9 +18,9 @@
 		</li>
 	</ul>
 	<div class="dropdown" style="float:right;">
-		<button class="dropbtn"><%= image_tag "profile_ico_drop.svg" %></button>
+		<button class="dropbtn"><%= image_tag (current_user.image), style: 'height:50px;width:50px;' %></button>
 		<div class="dropdown-content">
-			<%= link_to "profile", profile_path %>
+			<%= link_to (current_user.nickname), profile_path %>
 			<a href="#">friends</a>
 			<%= link_to "logout", destroy_user_session_path, :method => :delete %>
 		</div>
