@@ -1,8 +1,8 @@
 /* include pixelar_font */
 @font-face {
     font-family: "PixelarRegularW01-Regular";
-	src:    url("../fonts/PixelarRegularW01Regular.woff2") format("woff2"),
-		    url("../fonts/PixelarRegularW01Regular.woff") format("woff");
+	src:    url("PixelarRegularW01Regular.woff2") format("woff2"),
+		    url("PixelarRegularW01Regular.woff") format("woff");
     }
 
 

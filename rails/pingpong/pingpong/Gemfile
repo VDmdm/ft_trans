@@ -7,6 +7,7 @@ ruby '2.7.2'
 gem 'omniauth-marvin', '~> 1.0.2'
 gem 'devise'
 gem 'activerecord-session_store'
+gem 'normalize-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.1'
 # Use postgresql as the database for Active Record
