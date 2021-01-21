@@ -1,0 +1,31 @@
+/* include pixelar_font */
+@font-face {
+    font-family: "PixelarRegularW01-Regular";
+	src:    url("PixelarRegularW01Regular.woff2") format("woff2"),
+		    url("PixelarRegularW01Regular.woff") format("woff");
+    }
+
+
+/* default settings */
+body {
+    background-color: black;
+    width: 1440;
+    height: 1024;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    margin-top: 0px;
+    font: 159px "PixelarRegularW01-Regular", sans-serif;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: #B2D430;
+}
