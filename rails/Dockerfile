@@ -1,4 +1,4 @@
-FROM ruby:2.7.2-alpine
+FROM ruby:2.7.2-alpine3.12
 
 #install requariments
 RUN apk update && apk upgrade
