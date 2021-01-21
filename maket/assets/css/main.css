@@ -1,8 +1,8 @@
 /* include pixelar_font */
 @font-face {
     font-family: "PixelarRegularW01-Regular";
-	src:    url("./PixelarRegularW01Regular.woff2") format("woff2"),
-		    url("./PixelarRegularW01Regular.woff") format("woff");
+	src:    url("../fonts/PixelarRegularW01Regular.woff2") format("woff2"),
+		    url("../fonts/PixelarRegularW01Regular.woff") format("woff");
     }
 
 
@@ -28,10 +28,4 @@ a {
 
 a:hover {
     color: #B2D430;
-}
-
-/* home_page */
-.welcome-msg {
-    text-align: center;
-    margin-top: 10%;
 }
