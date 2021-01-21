@@ -1,0 +1,31 @@
+<header>
+<div class="navbar">
+	<ul class="navbar-elements">
+		<li class="navbar-element">
+			<a href="#">tournaments</a>
+		</li>
+		<li class="navbar-element">
+			<a href="#">stats</a>
+		</li>
+		<li class="navbar-element logo">
+			<a href="#">
+				<%= image_tag "logo.png" %>
+			</a>
+		</li>
+		<li class="navbar-element">
+			<a href="#">guilds</a>
+		</li>
+		<li class="navbar-element">
+			<a href="#">games</a>
+		</li>
+	</ul>
+	<div class="dropdown" style="float:right;">
+		<button class="dropbtn"><%= image_tag "profile_ico_drop.svg" %></button>
+		<div class="dropdown-content">
+		  <a href="#">profile</a>
+		  <a href="#">friends</a>
+		  <%= link_to "logout", destroy_user_session_path, :method => :delete %>
+		</div>
+	  </div>
+</div>
+</header>
