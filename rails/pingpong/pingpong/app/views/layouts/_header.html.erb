@@ -2,29 +2,27 @@
 <div class="navbar">
 	<ul class="navbar-elements">
 		<li class="navbar-element">
-			<a href="#">tournaments</a>
+			<%= link_to "tournaments", tournaments_path %>
 		</li>
 		<li class="navbar-element">
-			<a href="#">stats</a>
+			<%= link_to "stats", stats_path %>
 		</li>
 		<li class="navbar-element logo">
-			<a href="#">
-				<%= image_tag "logo.png" %>
-			</a>
+			<%= link_to image_tag("logo.png"), root_path %>
 		</li>
 		<li class="navbar-element">
-			<a href="#">guilds</a>
+			<%= link_to "guilds", guilds_path %>
 		</li>
 		<li class="navbar-element">
-			<a href="#">games</a>
+			<%= link_to "games", games_path %>
 		</li>
 	</ul>
 	<div class="dropdown" style="float:right;">
 		<button class="dropbtn"><%= image_tag "profile_ico_drop.svg" %></button>
 		<div class="dropdown-content">
-		  <a href="#">profile</a>
-		  <a href="#">friends</a>
-		  <%= link_to "logout", destroy_user_session_path, :method => :delete %>
+			<%= link_to "profile", profile_path %>
+			<a href="#">friends</a>
+			<%= link_to "logout", destroy_user_session_path, :method => :delete %>
 		</div>
 	  </div>
 </div>
