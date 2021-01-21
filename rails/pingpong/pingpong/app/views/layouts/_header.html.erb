@@ -18,7 +18,11 @@
 		</li>
 	</ul>
 	<div class="dropdown" style="float:right;">
-		<button class="dropbtn"><%= image_tag (current_user.image), style: 'height:50px;width:50px;' %></button>
+		<% if current_user.image %>
+			<button class="dropbtn"><%= image_tag (current_user.image), style: 'height:50px;width:50px;' %></button>
+		<%else%>
+			<button class="dropbtn"><%= image_tag ("profile_ico_drop.svg")%></button>
+		<%end%>
 		<div class="dropdown-content">
 			<%= link_to (current_user.nickname), profile_path %>
 			<a href="#">friends</a>
