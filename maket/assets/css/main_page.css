@@ -1,0 +1,9 @@
+/* home_page */
+
+.main-page {
+    display: flex;
+}
+
+.main-page-profile-info {
+    border: 2px white solid;
+}
