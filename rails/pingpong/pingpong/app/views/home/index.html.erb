@@ -1,0 +1,6 @@
+
+<% unless user_signed_in? %>
+<h1 class="welcome-msg">Insert<br><%= link_to "intra42", user_marvin_omniauth_authorize_path %><br>to play</h1>
+<% else %>
+<h1 class="welcome-msg"><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></h1>
+<% end %>
