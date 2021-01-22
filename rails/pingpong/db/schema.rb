@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_20_182905) do
+ActiveRecord::Schema.define(version: 2021_01_22_123823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer "friendable_id"
+    t.integer "friend_id"
+    t.integer "blocker_id"
+    t.boolean "pending", default: true
+    t.index ["friendable_id", "friend_id"], name: "index_friendships_on_friendable_id_and_friend_id", unique: true
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
@@ -40,6 +48,7 @@ ActiveRecord::Schema.define(version: 2021_01_20_182905) do
     t.string "nickname"
     t.string "provider"
     t.string "uid"
+    t.string "image"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider"], name: "index_users_on_provider"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

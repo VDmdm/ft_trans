@@ -68,6 +68,7 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    amistad (0.10.2)
     bcrypt (3.1.16)
     bindex (0.8.1)
     bootsnap (1.5.1)
@@ -127,6 +128,7 @@ GEM
     nio4r (2.5.4)
     nokogiri (1.11.1-x86_64-linux)
       racc (~> 1.4)
+    normalize-rails (8.0.1)
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
@@ -239,6 +241,7 @@ GEM
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    will_paginate (3.3.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.4.2)
@@ -248,12 +251,14 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-session_store
+  amistad
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
   devise
   jbuilder (~> 2.7)
   listen (~> 3.3)
+  normalize-rails
   omniauth-marvin (~> 1.0.2)
   pg (~> 1.1)
   puma (~> 5.0)
@@ -267,9 +272,10 @@ DEPENDENCIES
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)
+  will_paginate
 
 RUBY VERSION
-   ruby 3.0.0p0
+   ruby 2.7.2p137
 
 BUNDLED WITH
    2.2.6
