@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
+  get 'friends/index'
   root 'home#index'
+
+  get 'stats' , to: "stats#index"
+  get 'friends' , to: "friends#index"
+  post 'friends/search' , to: "friends#search"
+  get 'friends/search' , to: "friends#search"
+  get 'guilds' , to: "guilds#index"
+  get 'games' , to: "games#index"
+  get 'profile' , to: "profile#index"
+  get 'tournaments' , to: "tournaments#index"
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 

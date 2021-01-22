@@ -1,0 +1,8 @@
+<ul>
+	<% @users.each do |user| %>
+		<li style="color: white">
+			<%= user.email%>
+	 	</li>
+	<% end %>
+	<%= will_paginate @users %>
+</ul>

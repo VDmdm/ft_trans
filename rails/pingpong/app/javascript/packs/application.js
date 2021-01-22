@@ -3,11 +3,22 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+$(document).on("turbolinks:load", function() {
+		$("#btnSubmit").attr("disabled", true);
+		$("#users_search input").keyup(function() {
+			$.get($("#users_search").attr("action"), $("#users_search").serialize(), null, "script");
+			return false;
+		  });
+});
+

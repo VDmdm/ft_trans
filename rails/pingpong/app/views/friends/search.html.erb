@@ -1,0 +1,9 @@
+<%= form_tag friends_search_path, :method => 'get', :id => "users_search" do %>
+	<p>
+	  <%= text_field_tag :search, params[:search] %>
+	  <%= submit_tag "", :name => nil, :id => "btnSubmit", :style => "display:none;" %>
+	</p>
+<% end %>
+<div id='user_list'>
+<%= render 'user_list' %>
+</div>
