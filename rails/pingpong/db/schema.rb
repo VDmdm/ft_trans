@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2021_01_23_214801) do
   create_table "invitations", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "friend_id"
-    t.boolean "confirmed"
+    t.boolean "confirmed", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_invitations_on_user_id"

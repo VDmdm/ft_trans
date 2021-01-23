@@ -8,7 +8,7 @@ class Invitation < ApplicationRecord
 	end
   
 	def self.pending?(id1, id2)
-	  case1 = !Invitation.where(user_id: id1, friend_id: id2).empty?
+	  case1 = !Invitation.where(user_id: id1, friend_id: id2, confirmed: false).empty?
 	end
   
 	def self.confirmed_record?(id1, id2)

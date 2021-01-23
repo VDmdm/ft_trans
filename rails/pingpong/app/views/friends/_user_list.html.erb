@@ -5,11 +5,11 @@
             <% if current_user.friends_with?(user) %>
                 <p>is your friend</p>
             <% elsif Invitation.pending?(current_user.id, user.id) %>
-                <p>friend request is pending </p>
+                <h3>friend request is pending</h3>
             <% elsif Invitation.reacted?(current_user.id, user.id) %>
-                <p>is you </p>
+				<%= link_to "accept friend invite",  friends_update_path(inv_id: Invitation.all.find_by(user_id: user.id).id) %>	
             <% else %>
-                <%= link_to "add friend", friends_add_path(user_id: user.id), method: "post", remote: true %>
+                <%= link_to "add friend", friends_add_path(user_id: user.id) %>
             <% end %>
          </li>
     <% end %>
