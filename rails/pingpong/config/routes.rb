@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'stats' , to: "stats#index"
   get 'friends' , to: "friends#index"
   post 'friends/search' , to: "friends#search"
+  post 'friends/add', to: "friends#add"
   get 'friends/search' , to: "friends#search"
   get 'guilds' , to: "guilds#index"
   get 'games' , to: "games#index"
