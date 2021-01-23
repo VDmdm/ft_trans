@@ -5,22 +5,29 @@
 		    url("../fonts/PixelarRegularW01Regular.woff") format("woff");
     }
 
-
 /* default settings */
 body {
     background-color: black;
-    width: 1440;
-    height: 1024;
+    width: 1240px;
+    height: 1024px;
     margin-left: auto;
     margin-right: auto;
-    min-width: 1000px;
     padding-left: 100px;
     padding-right: 100px;
+    scrollbar-color: black #B2D430;
 }
 
-h1, h2, h3, h4, a {
+main {
+    padding-left: auto;
+    padding-right: auto;
+}
+
+h1, h2, h3, h4, a, p {
     font-family: "PixelarRegularW01-Regular", sans-serif;
     color: white;
+    letter-spacing: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 h1 {
@@ -29,14 +36,26 @@ h1 {
     color: white;
 }
 
+h4 {
+    font-size: 35px;
+    font-weight: normal;
+    padding: 0px;
+    margin: 0px;
+}
+
 a {
     text-decoration: none;
-    font-size: 45px;
     color: white;
+    transition: 0.5s;
 }
 
 a:hover {
     color: #B2D430;
+}
+
+p {
+    font-size: 35px;
+    padding: 0px;
 }
 
 button {
@@ -63,11 +82,16 @@ button:focus {
 }
 .navbar-elements {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-top: 0px;
     width: 100%;
     padding: 0px;
+    list-style-type: none;
+}
+
+.navbar-elements a {
+    font-size: 45px;
 }
 
 .logo {
@@ -85,23 +109,45 @@ button:focus {
     cursor: pointer;
   }
   
-  .dropdown {
+.dropdown {
     position: relative;
     display: inline-block;
-  }
+    margin-left: 50px;
+}
   
-  .dropdown-content {
+.dropdown-content {
     display: none;
     position: absolute;
     right: 0;
     background-color: black;
-    min-width: 160px;
+    min-width: 170px;
+    min-height: 150px;
     z-index: 1;
-    border: 2px white solid;
-    text-align: right;
-    padding-right: 20px;
-    padding-bottom: 20px;
-  }
+    border: 4px white solid;
+    font-size: 25px;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.dropdown-content a{
+    display: block;
+    padding-left: 0px;
+    letter-spacing: 0px;
+    padding: 0px;
+    margin: 0px;
+}
   
-  .dropdown:hover .dropdown-content {display: block;}
-  .dropdown:hover .dropbtn {background-color: #3e8e41;}
+.dropdown:hover .dropdown-content {display: flex;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+/* scrollbar */
+::-webkit-scrollbar {
+    width: 10px; /* ширина для вертикального скролла */
+    height: 8px; /* высота для горизонтального скролла */
+    background-color: black;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #616F39;
+}

@@ -5,6 +5,162 @@
 }
 
 .main-page-profile-info {
-    border: 2px white solid;
+    border: 4px white solid;
     display: flex;
+    padding: 25px;
+    width: 540px;
+    height: 90px;
+    margin: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-page-profile-img {
+    padding-top: 5px;
+}
+
+.main-page-rate-nickname-guild {
+    margin-left: 10px;
+}
+
+.main-page-nickname-guild {
+   
+    margin-top: 0px;
+    padding: 0px;
+    display: flex;
+}
+
+.main-page-guild {
+    color: #616F39;
+}
+
+.main-page-rate-ladder {
+    display: flex;
+    vertical-align: center;
+}
+
+.main-page-rate-ladder img {
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.main-page-rate, .main-page-ladder {
+    display: flex;
+}
+
+.main-page-rate {
+    margin-left: 20px;
+}
+
+.main-page-info-contour {
+    width: 540px;
+    height: 515px;
+    border: 4px white solid;
+    padding: 10px 25px;
+    overflow: auto;
+}   
+
+.main-page-live-matches {
+    margin-top: 50px;
+}
+
+.main-page-section-header {
+    border-bottom: 1px white solid;
+}
+
+.main-page-live-matches-list ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.main-page-live-matches-list-element {
+    display: flex;
+}
+
+.main-page-live-matches-list-element:hover {
+    background-color: gray;
+}
+
+.main-page-live-matches-info {
+    margin-left: 10px;
+}
+
+.main-page-live-matches-player {
+    display: flex;
+}
+
+.line {
+    display: block;
+    border-bottom: 1px white solid;
+    width: 185px;
+    margin-top: 5px;
+}
+
+.main-page-friends {
+    width: 530px;
+    height: 300px;
+    margin-left: 55px;
+}
+
+
+.main-page-friends-list-element {
+    display: flex;
+    margin-top: 5px;
+    transition: 0.5s;
+}
+.main-page-friends-list-element:hover {
+    background-color: gray;
+}
+
+.main-page-friends-list-element img{
+    margin-top: 5px;
+    margin-right: 20px;
+    height: 35px;
+    width: 35px;
+    border: 1px white solid;
+}
+
+.main-page-friend-online, .main-page-friend-offline, .main-page-friend-ingame {
+    margin-left: auto;
+}
+
+.main-page-friend-online {
+    color: #B2D430;
+}
+
+.main-page-friend-offline {
+    color: #616F39;
+}
+
+.main-page-friend-ingame {
+    color: white;
+}
+
+.main-page-events {
+    margin-top: 50px;
+    margin-left: 55px;
+    height: 335px;
+    width: 530px;
+}
+
+.datetime {
+    display: block;
+    font-size: 20px;
+    border-bottom: 1px white solid;
+    text-align: right;
+}
+
+.main-page-events-list-element {
+    transition: 0.5s;
+}
+
+.main-page-events-list-element:hover {
+    background-color: gray;
+}
+
+.main-page-events-list-element-new p{
+    color: #B2D430;
 }
