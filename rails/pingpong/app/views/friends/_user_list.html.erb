@@ -4,8 +4,11 @@
             <%= user.email %>
             <% if current_user.friends_with?(user) %>
                 <p>is your friend</p>
-            <% elsif Invitation.pending?(current_user.id, user.id) %>
-                <h3>friend request is pending</h3>
+			<% elsif Invitation.pending?(current_user.id, user.id) %>
+				<%= p current_user.id %>
+				<%= p user.id %>
+				<h3>friend request is pending</h3>
+				<%= link_to "decline", friends_destroy_path(inv_id: Invitation.find_by(user_id: current_user.id, friend_id: user.id).id) %>
             <% elsif Invitation.reacted?(current_user.id, user.id) %>
 				<%= link_to "accept friend invite",  friends_update_path(inv_id: Invitation.all.find_by(user_id: user.id).id) %>	
             <% else %>

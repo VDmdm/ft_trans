@@ -3,8 +3,10 @@ class FriendsController < ApplicationController
 	before_action :check_add_user_params, only: [:add]
   
 	def index
+	  @user = current_user
 	  @user_friends = current_user.friends
-	  @pending_invites = User.all.find(current_user.id).pending_invitations
+	  @pending_invites = @user.pending_invitations
+	  @invites = Invitation.where(user_id: 1, confirmed: false)
 	end
   
 	def search

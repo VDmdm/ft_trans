@@ -9,6 +9,14 @@
 	</li>
 <% end %>
 
+<h2>Waiting for confirm<br><h2>
+<% @invites.each do |invite| %>
+	<li style="color: white">
+		<%= User.all.find(invite.friend_id).email %>
+		<%= link_to "decline", friends_destroy_path(inv_id: invite.id) %>
+	</li>
+<% end %>
+
 <h2>Friends<br><h2>
 <% @user_friends.each do |friend| %>
 	<%= friend.email %>
