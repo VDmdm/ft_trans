@@ -39,10 +39,12 @@ class FriendsController < ApplicationController
   
 	private
 	def check_add_user_params
-	  user = User.all.find_by(id: params[:user_id])
-	  if !user
-		  redirect_back fallback_location: friends_search_path, alert: "User not found!" and return
-	  end
+	  	user = User.all.find_by(id: params[:user_id])
+	  	if !user
+			redirect_back fallback_location: friends_search_path, alert: "User not found!" and return
+	  	elsif user == current_user
+			redirect_back fallback_location: friends_search_path, alert: "Can create friendship with self!" and return
+		end
 	end
 	
   end

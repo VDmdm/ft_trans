@@ -1,53 +1,61 @@
-            <section class="main-page">
-                <section class="main-page-left">
-                    <section class="main-page-profile-info">
-                        <div class="main-page-profile-img">
-                            <img src="assets/images/main-page-profile-img.svg" alt="profile-img">
-                        </div>
-                        <div class="main-page-rate-nickname-guild">
-                            <div class="main-page-nickname-guild">
-                                <a href="#"><h4>Jalvaraddq</h4></a>
-                                <a href="#"><h4 class="main-page-guild">[ANAL$]</h4></a>
-                            </div>
-                            <div class="main-page-rate-ladder">
-                                <div class="main-page-ladder">
-                                    <img src="assets/images/pixil-frame-0 (4).png" class="ladder">
-                                    <p>100</p>
-                                </div>
-                                <div class="main-page-rate">
-                                    <img src="assets/images/pixil-frame-0 (2).png" class="ladder">
-                                    <p>100</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="main-page-live-matches main-page-info-contour">
-                        <div class="main-page-section-header">
-                            <h4>Live mathes</h4>
-                        </div>
-						<div class="main-page-live-matches-list">
-						
-                        </div>
-                    </section>
-                </section>
-                <section class="main-page-right">
-                    <section class="main-page-friends main-page-info-contour">
-                        <div class="main-page-section-header">
-                            <h4>Friends</h4>
-                        </div>
-                        <div class="main-page-friends-list">
-							<% @friends.each do |freind| %>
-								<!-- <%= render 'home/match', :locals => { :friend => freind } %> 
-							<% end %>
-                        </div>
-                    </section>
-                    <section class="main-page-events main-page-info-contour">
-                        <div class="main-page-section-header">
-                            <h4>Events</h4>
-                        </div>
-                        <dev class="main-page-events-list">
-							<%= render 'home/event' %>
-                        </dev>
-                    </section>
-                </section>
-            </section>
+<section class="main-page">
+    <section class="main-page-left">
+        <section class="main-page-profile-info">
+            <div class="main-page-profile-img">
+            <% if current_user.avatar.attach? %>
+                <img src="<%= url_for current_user.avatar %>" alt="profile-img">
+            <% end %>
+            </div>
+            <div class="main-page-rate-nickname-guild">
+                <div class="main-page-nickname-guild">
+                    <a href="#">
+                        <h4><%= current_user.nickname %></h4>
+                    </a>
+                    <% if current_user.guild %>
+                        <a href="#">
+                            <h4 class="main-page-guild">[<%= current_user.guild.anagram %>]</h4>
+                        </a>
+                    <% end %>
+                </div>
+                <div class="main-page-rate-ladder">
+                    <div class="main-page-ladder">
+                        <%= image_tag "cup.png", class: "ladder" %>
+                        <p><%= current_user.rating %></p>
+                    </div>
+                    <div class="main-page-rate">
+                        <%= image_tag "ball.png", class: "ladder" %>
+                        <p><%= current_user.score %></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="main-page-live-matches main-page-info-contour">
+            <div class="main-page-section-header">
+                <h4>Live mathes</h4>
+            </div>
+            <div class="main-page-live-matches-list">
+
+            </div>
+        </section>
+    </section>
+    <section class="main-page-right">
+        <section class="main-page-friends main-page-info-contour">
+            <div class="main-page-section-header">
+                <h4>Friends</h4>
+            </div>
+            <div class="main-page-friends-list">
+                <% @friends.each do |friend| %>
+                    <%= render 'home/friend', friend: friend %>
+                <% end %>
+            </div>
+        </section>
+        <section class="main-page-events main-page-info-contour">
+            <div class="main-page-section-header">
+                <h4>Events</h4>
+            </div>
+            <dev class="main-page-events-list">
+                <%= render 'home/event' %>
+            </dev>
+        </section>
+    </section>
+</section>

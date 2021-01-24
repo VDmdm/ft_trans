@@ -1,8 +1,16 @@
 <a href="#">
     <div class="main-page-friends-list-element">
-		<img src="<%= @friend.avatar %>">
-		<h4><%= @friend.nickname %></h4>
-		<h4 class="main-page-guild">[ANAL$]</h4>
-		<h4 class="main-page-friend-online">online</h4>
+		<% if friend.avatar.attach? %>
+			<img src="<%= friend.avatar %>">
+		<% end %>
+		<h4><%= friend.nickname %></h4>
+		<% if friend.guild %>
+			<h4 class="main-page-guild">[<%= friend.guild.anagram %>]</h4>
+		<% end %>
+		<% if friend.online? %>
+			<h4 class="main-page-friend-online">online</h4>
+		<% else %>
+			<h4 class="main-page-friend-offline">offline</h4>
+		<% end %>
 	</div>
 </a>

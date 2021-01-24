@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
 
 	before_action :signed_in, unless: -> { home_controller? || devise_controller? }
 	before_action :configure_permitted_parameters, if: :devise_controller?
+	before_action :user_activity
 
 	protected
     def configure_permitted_parameters
@@ -17,5 +18,9 @@ class ApplicationController < ActionController::Base
 	def home_controller?
 		return true if params[:controller] == "home"
 	end
+
+	def user_activity
+        current_user.try :touch
+    end
 
 end

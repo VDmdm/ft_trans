@@ -53,6 +53,14 @@ class User < ApplicationRecord
 		User.all
 	  end
 	end
+
+	def rating
+		User.order(:score).index(self) + 1
+	end
+
+	def online?
+		updated_at > 10.minutes.ago
+	end
   
   end
   
