@@ -6,7 +6,7 @@ class FriendsController < ApplicationController
 	  @user = current_user
 	  @user_friends = current_user.friends
 	  @pending_invites = @user.pending_invitations
-	  @invites = Invitation.where(user_id: 1, confirmed: false)
+	  @invites = Invitation.where(user_id: current_user.id, confirmed: false)
 	end
   
 	def search
