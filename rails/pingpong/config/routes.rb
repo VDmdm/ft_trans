@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'friends/destroy', to: "friends#destroy"
   get 'friends/search' , to: "friends#search"
   get 'guilds' , to: "guilds#index"
+  get 'guilds/new', to: "guilds#new"
   get 'games' , to: "games#index"
   get 'profile' , to: "profile#index"
   get 'tournaments' , to: "tournaments#index"

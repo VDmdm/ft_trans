@@ -1,7 +1,12 @@
 class User < ApplicationRecord
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-	
+	require 'open-uri'
+
+	has_one_attached :avatar
+	  validates :avatar, attached: true, allow_blank: true, content_type: [:png, :jpg, :jpeg, :gif],
+		size: { less_than: 10.megabytes , message: 'filesize to big' }
+
 	validates :nickname, presence: true, uniqueness: true
 
 	has_many :invitations
@@ -33,6 +38,8 @@ class User < ApplicationRecord
 		user.password = Devise.friendly_token[0,20]
 		user.nickname = auth.info.nickname
 		user.image =  auth.info.image
+		downloaded_image = open(auth.info.image)
+      	user.avatar.attach(io: downloaded_image, filename: 'avatar.jpg', content_type: downloaded_image.content_type)
 	  end
 	end
   

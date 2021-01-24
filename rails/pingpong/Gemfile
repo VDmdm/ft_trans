@@ -10,6 +10,8 @@ gem 'activerecord-session_store'
 gem 'normalize-rails'
 gem 'amistad'
 gem 'will_paginate'
+gem 'active_storage_validations'
+gem 'mini_magick', '>= 4.9.5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.1'
 # Use postgresql as the database for Active Record
