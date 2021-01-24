@@ -3,6 +3,9 @@ class User < ApplicationRecord
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 	require 'open-uri'
 
+	has_one :guild_member
+	delegate :guild, to: :guild_member, allow_nil: true
+
 	has_one_attached :avatar
 	  validates :avatar, attached: true, allow_blank: true, content_type: [:png, :jpg, :jpeg, :gif],
 		size: { less_than: 10.megabytes , message: 'filesize to big' }

@@ -1,3 +1,9 @@
 <h1>guilds</h1>
 
-<h2><%= link_to "Create a guild", guilds_new_path %> </h2>
+<% @guilds.each do |guild| %>
+
+	<h3> <%= guild.name %> </h3>
+
+<%end%>
+
+<h2><%= link_to "Create a guild", new_guild_path %> </h2>

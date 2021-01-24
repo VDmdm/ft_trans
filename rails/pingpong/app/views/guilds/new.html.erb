@@ -1,0 +1,16 @@
+<h1> Create a guild </h1>
+
+<%= form_for @guild, remote: true do |form| %>
+
+	<h3><%= form.file_field :avatar %></h3>
+
+	<h3><%= form.label :name, 'Guild name:'%></h3>
+
+	<%= form.text_field :name, placeholder: "max 15", maxlength: 15 %>
+
+	<h3><%= form.label :anagram, 'Guild anagram:'%></h3>
+	<%= form.text_field :anagram, placeholder: "5 characters", minlength: 5, maxlength: 5 %>
+	
+	<%= form.submit 'Create'%>
+
+<% end %>
