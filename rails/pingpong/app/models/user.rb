@@ -2,6 +2,8 @@ class User < ApplicationRecord
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 	
+	validates :nickname, presence: true, uniqueness: true
+
 	has_many :invitations
 	has_many :pending_invitations, -> { where confirmed: false }, class_name: "Invitation", foreign_key: "friend_id"
   
