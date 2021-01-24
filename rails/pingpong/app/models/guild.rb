@@ -4,7 +4,7 @@ class Guild < ApplicationRecord
 	has_one :owner, -> { where owner: true }, class_name: "GuildMember"
 
 	has_one_attached :avatar
-	  validates :avatar, attached: true, allow_blank: false, content_type: [:png, :jpg, :jpeg, :gif],
+	validates :avatar, attached: true, allow_blank: false, content_type: [:png, :jpg, :jpeg, :gif],
 		size: { less_than: 10.megabytes , message: 'filesize to big' }
 
 	validates :name, presence: true, uniqueness: true, length: { maximum: 15 }

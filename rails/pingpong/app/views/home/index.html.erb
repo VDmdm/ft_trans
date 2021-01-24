@@ -1,5 +1,8 @@
 
 <% unless user_signed_in? %>
-<%= link_to "Insert email to play", new_user_session_path, style: 'position:fixed; top: 20px; right: 30px; font-size:30px' %>
-<h1 class="welcome-msg">Insert<br><%= link_to "intra42", user_marvin_omniauth_authorize_path %><br>to play</h1>
+	<%= link_to "Insert email to play", new_user_session_path, style: 'position:fixed; top: 20px; right: 30px; font-size:30px' %>
+	<h1 class="welcome-msg">Insert<br><%= link_to "intra42", user_marvin_omniauth_authorize_path %><br>to play</h1>
+
+<% else %>
+	<%= render 'home/home' %>
 <% end %>

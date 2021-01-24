@@ -1,4 +1,7 @@
 class GuildsController < ApplicationController
+
+  before_action :check_user_guild_exist, only: [:create]
+
   def index
 	@guilds = Guild.all
   end
@@ -15,7 +18,6 @@ class GuildsController < ApplicationController
 	else
 		redirect_to root_path
 	end
-	
   end
 
   def show
@@ -26,6 +28,10 @@ class GuildsController < ApplicationController
   private
   def guild_params
 	params.require(:guild).permit(:name, :description, :anagram, :avatar)
+  end
+
+  def check_user_guild_exist
+	redirect_to guild_path(current_user.guild), allert: "You allready have a guild" if current_user.guild
   end
 
 end
