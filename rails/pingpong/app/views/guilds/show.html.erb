@@ -18,8 +18,10 @@
 <h2>Incoming </h2>
 <% @guild.pending_incoming_invites_user.each do |member| %>
 	<p><%= member.nickname %> </p>
+	<%= link_to "accept invite", accept_invite_path(@guild, user_id: member), method: :post, remote: true %>
 <% end %>
 <h2>Sending </h2>
 <% @guild.pending_sending_invites_user.each do |member| %>
 	<p><%= member.nickname %> </p>
+	
 <% end %>

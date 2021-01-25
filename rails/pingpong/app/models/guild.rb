@@ -8,6 +8,7 @@ class Guild < ApplicationRecord
 	has_one  :owner, :through => :guild_members_owner, :source => :user
 
 	has_many :guild_invites, :dependent => :delete_all
+	has_many :pending_invites, -> { where(status: :pending) }, :class_name => :GuildInvite
 	# Pending sending invites
 	has_many :pending_sending_invites, -> { where(status: :pending, dir: :sending) }, :class_name => :GuildInvite
 	has_many :pending_sending_invites_user, :through => :pending_sending_invites, :source => :user
@@ -28,5 +29,13 @@ class Guild < ApplicationRecord
 	validates :name, presence: true, uniqueness: true, length: { minimum: 2, maximum: 15 }
 	validates :anagram, presence: true, uniqueness: true, length: { is: 5 }
 	validates :description, length: { maximum: 100 }
+
+	def pending_invites?(user)
+		if self.pending_incoming_invites_user.find_by(id: user.id) ||
+			self.pending_sending_invites_user.find_by(id: user.id)
+			return true
+		end
+		return false 
+	end
 
 end

@@ -12,7 +12,9 @@ Rails.application.routes.draw do
 
   resources :guilds
   post 'guilds/:id/add_officer', to: "guilds#add_officer", as: :add_officer
-  post 'guilds/:id/add_member', to: "guilds#add_member", as: :add_member
+  post 'guilds/:id/send_invite', to: "guilds#send_invite", as: :send_invite
+  post 'guilds/:id/decline_invite', to: "guilds#decline_invite", as: :decline_invite
+  post 'guilds/:id/accept_invite', to: "guilds#accept_invite", as: :accept_invite
 
   get 'games' , to: "games#index"
 

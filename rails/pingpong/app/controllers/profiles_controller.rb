@@ -2,7 +2,7 @@ class ProfilesController < ApplicationController
 	before_action :check_user_not_exist, only: [:show]
 
 	def index
-		@users = User.all
+		@users = User.search(params[:search]).paginate(:per_page => 1, :page => params[:page])
 	end
 
 	def show
