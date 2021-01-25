@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 2021_01_25_141935) do
     t.bigint "guild_id"
     t.bigint "user_id"
     t.integer "status", default: 0
-    t.integer "type", default: 0
+    t.integer "dir", default: 0
     t.bigint "invited_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -9,10 +9,10 @@ class Guild < ApplicationRecord
 
 	has_many :guild_invites, :dependent => :delete_all
 	# Pending sending invites
-	has_many :pending_sending_invites, -> { where(status: :pending, type: :sending) }, :class_name => :GuildInvite
+	has_many :pending_sending_invites, -> { where(status: :pending, dir: :sending) }, :class_name => :GuildInvite
 	has_many :pending_sending_invites_user, :through => :pending_sending_invites, :source => :user
 	# Pending incoming invites
-	has_many :pending_incoming_invites, -> { where(status: :pending, type: :incoming) }, :class_name => :GuildInvite
+	has_many :pending_incoming_invites, -> { where(status: :pending, dir: :incoming) }, :class_name => :GuildInvite
 	has_many :pending_incoming_invites_user, :through => :pending_incoming_invites, :source => :user
 	# accepted invites
 	has_many :accepted_invites, -> { where(status: :accept) }, :class_name => :GuildInvite

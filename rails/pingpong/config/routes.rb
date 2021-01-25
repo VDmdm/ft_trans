@@ -12,9 +12,12 @@ Rails.application.routes.draw do
 
   resources :guilds
   post 'guilds/:id/add_officer', to: "guilds#add_officer", as: :add_officer
+  post 'guilds/:id/add_member', to: "guilds#add_member", as: :add_member
 
   get 'games' , to: "games#index"
-  get 'profile' , to: "profile#index"
+
+  resources :profiles
+
   get 'tournaments' , to: "tournaments#index"
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }

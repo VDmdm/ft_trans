@@ -24,7 +24,7 @@
 			<button class="dropbtn"><%= image_tag ('profile_ico_drop.svg'), style: 'height:50px;width:50px;' %></button>
 		<%end%>
 		<div class="dropdown-content">
-			<%= link_to (current_user.nickname), profile_path %>
+			<%= link_to (current_user.nickname), profile_path(current_user) %>
 			<%= link_to "friends", friends_path %>
 			<%= link_to "logout", destroy_user_session_path, :method => :delete %>
 		</div>

@@ -8,6 +8,20 @@ class User < ApplicationRecord
 	delegate :owner, to: :guild_member, prefix: :guild, allow_nil: true
 	delegate :officer, to: :guild_member, prefix: :guild, allow_nil: true
 
+	has_many :guild_invites, :dependent => :delete_all
+	# Pending sending invites
+	has_many :pending_sending_invites, -> { where(status: :pending, dir: :incoming) }, :class_name => :GuildInvite
+	has_many :pending_sending_invites_guild, :through => :pending_sending_invites, :source => :guild
+	# Pending incoming invites
+	has_many :pending_incoming_invites, -> { where(status: :pending, dir: :sending) }, :class_name => :GuildInvite
+	has_many :pending_incoming_invites_guild, :through => :pending_incoming_invites, :source => :guild
+	# accepted invites
+	has_many :accepted_invites, -> { where(status: :accept) }, :class_name => :GuildInvite
+	has_many :accepted_invites_guild, :through => :accepted_invites, :source => :guild
+	# declined invites
+	has_many :declined_invites, -> { where(status: :decline) }, :class_name => :GuildInvite
+	has_many :declined_invites_guild, :through => :declined_invites, :source => :guild
+
 	has_one_attached :avatar
 	  validates :avatar, attached: true, allow_blank: true, content_type: [:png, :jpg, :jpeg, :gif],
 		size: { less_than: 10.megabytes , message: 'filesize to big' }

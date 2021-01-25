@@ -4,6 +4,7 @@ class GuildsController < ApplicationController
 	before_action :check_user_guild_not_exist, only: [:add_officer, :add_member]
 	before_action :check_target_not_exist, only: [:add_officer, :add_member]
 	before_action :check_user_is_not_owner, only: [:add_officer, :add_member], unless: :check_user_is_not_officer
+	before_action :check_invite_is_exist, only: [:add_member]
 	before_action :check_target_is_not_member, only: [:add_officer]
 	before_action :check_target_in_guild, only: [:add_member]
 	#before_action :check_target_is_not_officer, only: [:add_officer]
@@ -43,7 +44,7 @@ class GuildsController < ApplicationController
 
 	def add_member
 		user = User.find(params[:user_id])
-		if current_user.guild_invites.create(user: user)
+		if current_user.guild.guild_invites.create(user: user, invited_by: current_user)
 			redirect_back fallback_location: guild_path(current_user.guild), succes: "#{user.nickname} has been invited to you guild"
 		else
 			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't invite #{user.nickname} to guild"
@@ -70,11 +71,15 @@ class GuildsController < ApplicationController
 	end
 
 	def check_user_is_not_owner
-		redirect_to guild_path(current_user.guild), alert: "You are not a guild owner" unless current_user.guild_owner
+		redirect_to guild_path(current_user.guild), alert: "You are not a rights for this" unless current_user.guild_owner
 	end
 
 	def check_user_is_not_officer
-		redirect_to guild_path(current_user.guild), alert: "You are not a guild owner" unless current_user.guild_officer
+		unless current_user.guild_officer
+			return false
+		else
+			return true
+		end
 	end
 
 	def check_target_is_not_member
@@ -99,7 +104,14 @@ class GuildsController < ApplicationController
 
 	def check_guilds_not_exist
 		guild = Guild.all.find_by(id: params[:id])
-		redirect_to guilds_path, allert: "Guild not found" unless guild
+		redirect_to guilds_path, alert: "Guild not found" unless guild
+	end
+
+	def check_invite_is_exist
+		user = User.find(params[:user_id])
+		redirect_to guild_path(current_user.guild), alert: "invite allready is sending" if 
+					current_user.guild.pending_incoming_invites_user.find_by(id: user.id) ||
+					current_user.guild.pending_sending_invites_user.find_by(id: user.id)
 	end
 
 end

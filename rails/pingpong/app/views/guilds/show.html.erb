@@ -1,6 +1,8 @@
 <h1><%= @guild.name %> </h1>
 
 <h2>Members:</h2>
+<p><%= @guild.owner.nickname %> </p>
+<h2>Members:</h2>
 <% @guild.members.each do |member| %>
 	<p><%= member.nickname %> </p>
 	<% if current_user.guild_owner && @guild == current_user.guild && member != current_user %>
