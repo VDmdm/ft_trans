@@ -1,4 +1,4 @@
 class TournamentsController < ApplicationController
-  def index
-  end
+	def index
+	end
 end
