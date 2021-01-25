@@ -1,9 +1,11 @@
 class GuildsController < ApplicationController
 
 	before_action :check_user_guild_exist, only: [:create]
-	before_action :check_user_guild_not_exist, only: [:add_officer]
-	before_action :check_user_is_owner, only: [:add_officer]
-	before_action :check_target_is_member, only: [:add_officer]
+	before_action :check_user_guild_not_exist, only: [:add_officer, :add_member]
+	before_action :check_target_not_exist, only: [:add_officer, :add_member]
+	before_action :check_user_is_not_owner, only: [:add_officer, :add_member], unless: :check_user_is_not_officer
+	before_action :check_target_is_not_member, only: [:add_officer]
+	before_action :check_target_in_guild, only: [:add_member]
 	#before_action :check_target_is_not_officer, only: [:add_officer]
 	before_action :check_target_is_officer, only: [:add_officer]
 	before_action :check_guilds_not_exist, only: [:show]
@@ -35,7 +37,16 @@ class GuildsController < ApplicationController
 		if member.guild_member.update_attribute(:officer, true)
 			redirect_back fallback_location: guild_path(current_user.guild), succes: "#{member.nickname} now an officer"
 		else
-			redirect_back fallback_location: guild_path(current_user.guild), allert: "Can't add #{member.nickname} to officers"
+			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't add #{member.nickname} to officers"
+		end
+	end
+
+	def add_member
+		user = User.find(params[:user_id])
+		if current_user.guild_invites.create(user: user)
+			redirect_back fallback_location: guild_path(current_user.guild), succes: "#{user.nickname} has been invited to you guild"
+		else
+			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't invite #{user.nickname} to guild"
 		end
 	end
 
@@ -46,30 +57,44 @@ class GuildsController < ApplicationController
 	end
 
 	def check_user_guild_exist
-		redirect_to guild_path(current_user.guild), allert: "You allready have a guild" if current_user.guild
+		redirect_to guild_path(current_user.guild), alert: "You allready have a guild" if current_user.guild
 	end
 
 	def check_user_guild_not_exist
 		redirect_to guilds_path, allert: "You don't have a guild" unless current_user.guild
 	end
 
-	def check_user_is_owner
-		redirect_to guild_path(current_user.guild), allert: "You are not a guild owner" unless current_user.guild_owner
+	def check_target_not_exist
+		user = User.find_by(id: params[:user_id])
+		redirect_to guild_path(current_user.guild), alert: "User not found" unless user
 	end
 
-	def check_target_is_member
+	def check_user_is_not_owner
+		redirect_to guild_path(current_user.guild), alert: "You are not a guild owner" unless current_user.guild_owner
+	end
+
+	def check_user_is_not_officer
+		redirect_to guild_path(current_user.guild), alert: "You are not a guild owner" unless current_user.guild_officer
+	end
+
+	def check_target_is_not_member
 		member = current_user.guild.members.find_by(id: params[:user_id])
-		redirect_to guild_path(current_user.guild), allert: "Target not in you guild" unless member
+		redirect_to guild_path(current_user.guild), alert: "Target not in you guild" unless member
+	end
+
+	def check_target_in_guild
+		user = User.find(params[:user_id])
+		redirect_to guild_path(current_user.guild), alert: "Target allready in guild" if user.guild
 	end
 
 	def check_target_is_not_officer
 		member = current_user.guild.members.find_by(id: params[:user_id])
-		redirect_to guild_path(current_user.guild), allert: "#{member.nickname} is not officer" unless member.guild_officer
+		redirect_to guild_path(current_user.guild), alert: "#{member.nickname} is not officer" unless member.guild_officer
 	end
 
 	def check_target_is_officer
 		member = current_user.guild.members.find_by(id: params[:user_id])
-		redirect_to guild_path(current_user.guild), allert: "#{member.nickname} already officer" if member.guild_officer
+		redirect_to guild_path(current_user.guild), alert: "#{member.nickname} already officer" if member.guild_officer
 	end
 
 	def check_guilds_not_exist

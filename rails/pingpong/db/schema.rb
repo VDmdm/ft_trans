@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_144245) do
+ActiveRecord::Schema.define(version: 2021_01_25_141935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,19 @@ ActiveRecord::Schema.define(version: 2021_01_24_144245) do
     t.integer "blocker_id"
     t.boolean "pending", default: true
     t.index ["friendable_id", "friend_id"], name: "index_friendships_on_friendable_id_and_friend_id", unique: true
+  end
+
+  create_table "guild_invites", force: :cascade do |t|
+    t.bigint "guild_id"
+    t.bigint "user_id"
+    t.integer "status", default: 0
+    t.integer "type", default: 0
+    t.bigint "invited_by_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["guild_id"], name: "index_guild_invites_on_guild_id"
+    t.index ["invited_by_id"], name: "index_guild_invites_on_invited_by_id"
+    t.index ["user_id"], name: "index_guild_invites_on_user_id"
   end
 
   create_table "guild_members", force: :cascade do |t|

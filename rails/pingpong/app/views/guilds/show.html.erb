@@ -11,3 +11,13 @@
 <% @guild.officers.each do |member| %>
 	<p><%= member.nickname %> </p>
 <% end %>
+
+<h2>Pending invites:</h2>
+<h2>Incoming </h2>
+<% @guild.pending_incoming_invites_user.each do |member| %>
+	<p><%= member.nickname %> </p>
+<% end %>
+<h2>Sending </h2>
+<% @guild.pending_sending_invites_user.each do |member| %>
+	<p><%= member.nickname %> </p>
+<% end %>
