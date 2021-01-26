@@ -22,12 +22,18 @@ main {
     padding-right: auto;
 }
 
-h1, h2, h3, h4, a, p, label {
+h1, h2, h3, h4, a, p, label, input {
     font-family: "PixelarRegularW01-Regular", sans-serif;
     color: white;
     letter-spacing: 5px;
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+input {
+    font-size: 20px;
+    background-color: black;
+    letter-spacing: 3px;
 }
 
 h1 {
@@ -105,6 +111,7 @@ button:focus {
 .dropbtn {
     border: none;
     cursor: pointer;
+    background-color: black;
   }
 
 .dropbtn img {
