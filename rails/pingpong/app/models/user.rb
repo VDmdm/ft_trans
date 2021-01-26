@@ -87,7 +87,7 @@ class User < ApplicationRecord
 	def check_user_avatar
 		unless self.avatar.attached?
 			files = Dir["app/assets/images/default_avatars/*.png"]
-			downloaded_image = File.open(files[self.id % 40], 'rb')
+			downloaded_image = File.open(files[self.id % 39], 'rb')
 			self.avatar.attach(io: downloaded_image, filename: 'avatar.jpg')
 			self.save
 		end
