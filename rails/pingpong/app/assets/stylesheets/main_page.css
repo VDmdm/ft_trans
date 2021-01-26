@@ -19,6 +19,12 @@
     padding-top: 5px;
 }
 
+.main-page-profile-img img {
+    width: 80px;
+    height: 80px;
+    border: 2px solid white;
+}
+
 .main-page-rate-nickname-guild {
     margin-left: 10px;
 }

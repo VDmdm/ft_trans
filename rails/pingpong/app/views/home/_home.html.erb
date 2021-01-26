@@ -2,8 +2,8 @@
     <section class="main-page-left">
         <section class="main-page-profile-info">
             <div class="main-page-profile-img">
-            <% if current_user.avatar.attach? %>
-                <img src="<%= url_for current_user.avatar %>" alt="profile-img">
+            <% if current_user.avatar.attached? %>
+                <img src="<%= rails_blob_url(current_user.avatar) %>" alt="profile-img">
             <% end %>
             </div>
             <div class="main-page-rate-nickname-guild">
@@ -53,9 +53,9 @@
             <div class="main-page-section-header">
                 <h4>Events</h4>
             </div>
-            <dev class="main-page-events-list">
-                <%= render 'home/event' %>
-            </dev>
+            <div id="events" class="main-page-events-list">
+                <%= render 'home/events' %>
+            </div>
         </section>
     </section>
 </section>

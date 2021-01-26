@@ -30,6 +30,13 @@ services:
         PGADMIN_DEFAULT_PASSWORD: admin
         POSTGRES_USER: root
         POSTGRES_PASSWORD: root
+        REDIS_DB: 0
+        REDIS_URL: redis://redis
+        REDIS_PORT: 6379
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
 
 volumes:
   db:

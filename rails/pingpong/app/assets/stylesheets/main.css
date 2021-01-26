@@ -103,8 +103,6 @@ button:focus {
 }
 
 .dropbtn {
-    background-color: #4CAF50;
-    color: black;
     border: none;
     cursor: pointer;
   }

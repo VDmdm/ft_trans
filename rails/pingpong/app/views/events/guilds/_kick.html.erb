@@ -1,0 +1,6 @@
+<%= link_to guilds_path %>
+    <div class="main-page-events-list-element main-page-events-list-element-new">
+        <p><%= notification.user.nickname %> kick you from guild <%= notification.service_info %>.</p>
+        <p class="datetime"><%= notification.created_at %></p>
+	</div>
+<% end %>

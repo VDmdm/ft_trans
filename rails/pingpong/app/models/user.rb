@@ -3,6 +3,10 @@ class User < ApplicationRecord
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 	require 'open-uri'
 
+	after_create :check_user_avatar
+
+	has_many :notifications, foreign_key: :recipient_id
+
 	has_one :guild_member
 	delegate :guild, to: :guild_member, allow_nil: true
 	delegate :owner, to: :guild_member, prefix: :guild, allow_nil: true
@@ -76,6 +80,17 @@ class User < ApplicationRecord
 
 	def online?
 		updated_at > 10.minutes.ago
+	end
+
+	private 
+
+	def check_user_avatar
+		unless self.avatar.attached?
+			files = Dir["app/assets/images/default_avatars/*.png"]
+			downloaded_image = File.open(files[self.id % 40], 'rb')
+			self.avatar.attach(io: downloaded_image, filename: 'avatar.jpg')
+			self.save
+		end
 	end
 end
   
