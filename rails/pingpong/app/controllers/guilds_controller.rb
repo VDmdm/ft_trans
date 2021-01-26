@@ -1,13 +1,10 @@
 class GuildsController < ApplicationController
 
 	before_action :check_user_guild_exist, only: [:create]
-	before_action :check_user_guild_not_exist, only: [:add_officer, :send_invite, :decline_invite, :accept_invite]
-	before_action :check_target_not_exist, only: [:add_officer, :send_invite, :decline_invite, :accept_invite]
-	before_action :check_user_is_not_owner, only: [:add_officer, :send_invite, :decline_invite, :accept_invite], unless: :check_user_is_not_officer
-	before_action :check_invite_is_exist, only: [:send_invite]
-	before_action :check_invite_not_exist, only: [:decline_invite, :accept_invite]
+	before_action :check_user_guild_not_exist, only: [:add_officer]
+	before_action :check_target_not_exist, only: [:add_officer]
+	before_action :check_user_is_not_owner, only: [:add_officer ]
 	before_action :check_target_is_not_member, only: [:add_officer]
-	before_action :check_target_in_guild, only: [:send_invite]
 	#before_action :check_target_is_not_officer, only: [:add_officer]
 	before_action :check_target_is_officer, only: [:add_officer]
 	before_action :check_guilds_not_exist, only: [:show]
@@ -40,37 +37,6 @@ class GuildsController < ApplicationController
 			redirect_back fallback_location: guild_path(current_user.guild), succes: "#{member.nickname} now an officer"
 		else
 			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't add #{member.nickname} to officers"
-		end
-	end
-
-	def send_invite
-		user = User.find(params[:user_id])
-		if current_user.guild.guild_invites.create(user: user, invited_by: current_user)
-			redirect_back fallback_location: guild_path(current_user.guild), succes: "#{user.nickname} has been invited to you guild"
-		else
-			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't invite #{user.nickname} to guild"
-		end
-	end
-
-	def decline_invite
-		invite = current_user.guild.pending_invites.find_by(user: params[:user_id])
-		if invite.update_attribute(:status, :decline)
-			redirect_back fallback_location: guild_path(current_user.guild), succes: "Invite has been canceled"
-		else
-			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't dicline invite"
-		end
-	end
-
-	def accept_invite
-		invite = current_user.guild.pending_incoming_invites.find_by(user: params[:user_id])
-		if invite.update_attribute(:status, :accept)
-			if (current_user.guild.guild_member.create(user: invite.user))
-				redirect_back fallback_location: guild_path(current_user.guild), succes: "#{ invite.user.nickname } now in you guild"
-			else
-				redirect_back fallback_location: guild_path(current_user.guild), alert: "#Can't accepting invite. Try invite again"
-			end
-		else
-			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't dicline invite"
 		end
 	end
 
@@ -110,11 +76,6 @@ class GuildsController < ApplicationController
 		redirect_to guild_path(current_user.guild), alert: "Target not in you guild" unless member
 	end
 
-	def check_target_in_guild
-		user = User.find(params[:user_id])
-		redirect_to guild_path(current_user.guild), alert: "Target allready in guild" if user.guild
-	end
-
 	def check_target_is_not_officer
 		member = current_user.guild.members.find_by(id: params[:user_id])
 		redirect_to guild_path(current_user.guild), alert: "#{member.nickname} is not officer" unless member.guild_officer
@@ -128,18 +89,6 @@ class GuildsController < ApplicationController
 	def check_guilds_not_exist
 		guild = Guild.all.find_by(id: params[:id])
 		redirect_to guilds_path, alert: "Guild not found" unless guild
-	end
-
-	def check_invite_is_exist
-		user = User.find(params[:user_id])
-		redirect_to guild_path(current_user.guild), alert: "invite allready is sending" if 
-					current_user.guild.pending_invites?(user)
-	end
-
-	def check_invite_not_exist
-		user = User.find(params[:user_id])
-		redirect_to guild_path(current_user.guild), alert: "invite not found" unless 
-					current_user.guild.pending_invites?(user)
 	end
 
 end
