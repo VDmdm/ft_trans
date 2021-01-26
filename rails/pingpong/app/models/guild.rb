@@ -8,13 +8,13 @@ class Guild < ApplicationRecord
 	has_one  :owner, :through => :guild_members_owner, :source => :user
 
 	has_many :guild_invites, :dependent => :delete_all
-	has_many :pending_invites, -> { where(status: :pending) }, :class_name => :GuildInvite
+	has_many :pending_invites_and_requests, -> { where(status: :pending) }, :class_name => :GuildInvite
 	# Pending sending invites
-	has_many :pending_sending_invites, -> { where(status: :pending, dir: :sending) }, :class_name => :GuildInvite
-	has_many :pending_sending_invites_user, :through => :pending_sending_invites, :source => :user
+	has_many :pending_invites, -> { where(status: :pending, dir: :invite) }, :class_name => :GuildInvite
+	has_many :pending_invites_user, :through => :pending_invites, :source => :user
 	# Pending incoming invites
-	has_many :pending_incoming_invites, -> { where(status: :pending, dir: :incoming) }, :class_name => :GuildInvite
-	has_many :pending_incoming_invites_user, :through => :pending_incoming_invites, :source => :user
+	has_many :pending_join_request, -> { where(status: :pending, dir: :join_request) }, :class_name => :GuildInvite
+	has_many :pending_join_request_user, :through => :pending_join_request, :source => :user
 	# accepted invites
 	has_many :accepted_invites, -> { where(status: :accept) }, :class_name => :GuildInvite
 	has_many :accepted_invites_user, :through => :accepted_invites, :source => :user
@@ -30,9 +30,9 @@ class Guild < ApplicationRecord
 	validates :anagram, presence: true, uniqueness: true, length: { is: 5 }
 	validates :description, length: { maximum: 100 }
 
-	def pending_invites?(user)
-		if self.pending_incoming_invites_user.find_by(id: user.id) ||
-			self.pending_sending_invites_user.find_by(id: user.id)
+	def pending_invites_and_requests?(user)
+		if self.pending_invites_user.find_by(id: user.id) ||
+			self.pending_join_request_user.find_by(id: user.id)
 			return true
 		end
 		return false 

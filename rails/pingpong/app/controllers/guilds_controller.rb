@@ -34,7 +34,7 @@ class GuildsController < ApplicationController
 	def add_officer
 		member = current_user.guild.members.find(params[:user_id])
 		if member.guild_member.update_attribute(:officer, true)
-			redirect_back fallback_location: guild_path(current_user.guild), succes: "#{member.nickname} now an officer"
+			redirect_back fallback_location: guild_path(current_user.guild), success: "#{member.nickname} now an officer"
 		else
 			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't add #{member.nickname} to officers"
 		end
