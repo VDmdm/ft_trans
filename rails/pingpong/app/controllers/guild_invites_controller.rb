@@ -1,15 +1,15 @@
 class GuildInvitesController < ApplicationController
 
-	before_action :check_target_not_exist, only: [:send_invite, :cancel_invite, :accept_join_request, :cancel_join_request]
-	before_action :check_user_guild_not_exist, only: [:send_invite, :cancel_invite, :accept_join_request]
+	before_action :check_target_not_exist, only: [:send_invite, :cancel_invite, :accept_join_request, :cancel_join_request, :decline_join_request]
+	before_action :check_user_guild_not_exist, only: [:send_invite, :cancel_invite, :accept_join_request, :decline_join_request]
 	before_action :check_user_guild_exist, only: [:send_join_request, :accept_invite]
-	before_action :check_guild_not_exist, only: [:send_join_request, :cancel_invite, :accept_join_request]
+	before_action :check_guild_not_exist, only: [:send_join_request, :cancel_invite, :accept_join_request, :decline_join_request, :dicline_invite]
 	before_action :check_target_guild_exist, only: [:send_invite, :accept_join_request]
-	before_action :check_user_is_not_owner, only: [:send_invite, :cancel_invite, :accept_join_request], unless: :check_user_is_not_officer
+	before_action :check_user_is_not_owner, only: [:send_invite, :cancel_invite, :accept_join_request, :decline_join_request], unless: :check_user_is_not_officer
 	before_action :check_invite_is_exist, only: [:send_invite]
 	before_action :check_join_request_is_exist, only: [:send_join_request]
-	before_action :check_invite_not_exist, only: [:cancel_invite, :accept_invite]
-	before_action :check_join_request_not_exist, only: [:cancel_join_request, :accept_join_request]
+	before_action :check_invite_not_exist, only: [:cancel_invite, :accept_invite, :dicline_invite]
+	before_action :check_join_request_not_exist, only: [:cancel_join_request, :accept_join_request, :decline_join_request]
 
 	def send_invite
 		user = User.find(params[:user_id])
@@ -35,13 +35,23 @@ class GuildInvitesController < ApplicationController
 		guild = Guild.find(params[:id])
 		invite = guild.pending_invites.find_by(user: current_user)
 		if invite.update_attribute(:status, :accept)
-			if (guild.guild_member.create(user: invite.user))
+			if (guild.guild_members.create(user: invite.user))
 				redirect_back fallback_location: guild_path(guild), success: "You have successsfully joined guild #{ guild.name }"
 			else
 				redirect_back fallback_location: guild_path(guild), alert: "#Can't accepting штмшеу. Try join again"
 			end
 		else
 			redirect_back fallback_location: guild_path(guild), alert: "Can't accept invite"
+		end
+	end
+
+	def decline_invite
+		guild = Guild.find(params[:id])
+		invite = guild.pending_invites.find_by(user: current_user)
+		if invite.update_attribute(:status, :decline)
+			redirect_back fallback_location: guild_path(guild), success: "Invite was declined"
+		else
+			redirect_back fallback_location: guild_path(guild), alert: "Can't cancel invite"
 		end
 	end
 
@@ -68,12 +78,22 @@ class GuildInvitesController < ApplicationController
 		end
 	end
 
+	def decline_join_request
+		guild = Guild.find(params[:id])
+		invite = guild.pending_join_request.find_by(user: params[:user_id])
+		if invite.update_attribute(:status, :decline)
+			redirect_back fallback_location: guild_path(guild), success: "Join request was declined"
+		else
+			redirect_back fallback_location: guild_path(guild), alert: "Can't cancel join request"
+		end
+	end
+
 	def cancel_join_request
 		guild = Guild.find(params[:id])
 		user = User.find_by(id: params[:user_id])
 		invite = guild.pending_join_request.find_by(user: user)
 		if invite.delete
-			redirect_back fallback_location: guild_path(guild), success: "Join request has been canceled"
+			redirect_back fallback_location: guild_path(guild), success: "Join request was canceled"
 		else
 			redirect_back fallback_location: guild_path(guild), alert: "Can't cancel join request"
 		end

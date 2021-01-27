@@ -20,7 +20,7 @@
 	<p><%= member.nickname %> </p>
 	<% if current_user.guild == @guild && current_user.guild_owner || current_user.guild_officer %>
 		<%= link_to "accept join request", accept_join_request_path(@guild, user_id: member), method: :post, remote: true %>
-		<%= link_to "cancel join request", cancel_join_request_path(@guild, user_id: member), method: :post, remote: true %>
+		<%= link_to "decline join request", decline_join_request_path(@guild, user_id: member), method: :post, remote: true %>
 	<% end %>
 <% end %>
 <h2>Sending </h2>
@@ -38,7 +38,7 @@
 
 <% if !current_user.guild && @guild.pending_invites?(current_user) %>
 	<%= link_to "accept invite ", accept_invite_path(@guild, user_id: current_user), method: :post, remote: true %>
-	<%= link_to "cancel invite", cancel_invite_path(@guild, user_id: current_user), method: :post, remote: true %>
+	<%= link_to "decline invite", decline_invite_path(@guild, user_id: current_user), method: :post, remote: true %>
 <% end %>
 
 <% if current_user.guild == @guild %>

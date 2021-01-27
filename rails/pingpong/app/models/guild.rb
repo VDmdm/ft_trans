@@ -44,4 +44,11 @@ class Guild < ApplicationRecord
 		return false 
 	end
 
+	def pending_invites_and_requests?(user)
+		if self.pending_join_request_user.find_by(id: user.id) || self.pending_invites_user.find_by(id: user.id)
+			return true
+		end
+		return false 
+	end
+
 end
