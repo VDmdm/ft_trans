@@ -1,24 +1,32 @@
-<h2><%= link_to "Search for a friend", friends_search_path %> </h2>
-
-<h2>Pending invitations<br><h2>
-<% @pending_invites.each do |invite| %>
-	<li style="color: white">
-		<%= User.all.find(invite.user_id).email %>
-		<%= link_to "accept", friends_update_path(inv_id: invite.id) %>
-		<%= link_to "decline", friends_destroy_path(inv_id: invite.id) %>
-	</li>
-<% end %>
-
-<h2>Waiting for confirm<br><h2>
-<% @invites.each do |invite| %>
-	<li style="color: white">
-		<%= User.all.find(invite.friend_id).email %>
-		<%= link_to "decline", friends_destroy_path(inv_id: invite.id) %>
-	</li>
-<% end %>
-
-<h2>Friends<br><h2>
-<% @user_friends.each do |friend| %>
-	<%= friend.email %>
-	<%= link_to "delete", friends_destroy_path(inv_id: Invitation.find_invitation(current_user.id, friend.id)) %>
-<% end %>
+<section class="friend-page">
+    <section class="friend-list-section">
+        <div class="friend-list-section-header">
+            <h4>Friends</h4>
+            <a href="#">+</a>
+        </div>
+        <div class="friend-list-elements">
+            <%= render 'friends/friends' %>
+        </div>
+        <div class="friend-list-elements-nav">
+            <a href="#">&lt;prev</a>
+            <a href="#" class="friend-list-elements-nav-next-btn ">next&gt;</a>
+        </div>
+    </section>
+    <section class="friend-invites-section">
+        <div class="friend-list-section-header">
+            <h4>Invites</h4>
+        </div>
+        <div class="friend-invites-btn">
+            <button id="switch-invites-btn-incoming" class="btn-active"
+                onclick="friend_invites_list_switch(false)">incoming</button>
+            <button id="switch-invites-btn-swnding" onclick="friend_invites_list_switch(true)">sending</button>
+        </div>
+        <section class="friend-invites-list">
+            <%= render 'friends/invites' %>
+        </section>
+        <div class="friend-list-elements-nav">
+            <a href="#">&lt;prev</a>
+            <a href="#" class="friend-invites-list-nav-next-btn">next&gt;</a>
+        </div>
+    </section>
+</section>

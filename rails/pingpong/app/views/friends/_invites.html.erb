@@ -1,0 +1,51 @@
+<div id="block-incoming" class="friend-invites-list-incoming" style="display: block;">
+    <% @pending_invites.each do |invite| %>
+        <section class="friend-invites-list-incoming-element">
+            <div class="friend-invites-list-incoming-element-profile-img">
+                <img src="<%= rails_storage_proxy_path(invite.user.avatar) %>" alt="profile-img">
+            </div>
+            <div class="friend-invites-list-incoming-element-btn-nickname-guild">
+                <%= link_to profile_path(invite.user) do %>
+                    <div class="friend-invites-list-incoming-element-nickname-guild">
+                        <h4><%= invite.user.nickname%></h4>
+                        <% if invite.user.guild %>
+                            <h4 class="friend-list-element-guild">[<%= invite.user.guild.anagram %>]</h4>
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+            <div class="friend-invites-list-incoming-element-btn">
+                <a href="#">
+                    <%= image_tag "ok.png" , alt: "accept" %>
+                </a>
+                <a href="#">
+                    <%= image_tag "delete.png" , alt: "decline" %>
+                </a>
+            </div>
+        </section>
+    <% end %>
+</div>
+<div id="block-sending" class="friend-invites-list-send" style="display: none;">
+    <% @sending_invites.each do |invite| %>
+        <section class="friend-invites-list-incoming-element">
+            <div class="friend-invites-list-incoming-element-profile-img">
+                <img src="<%= rails_storage_proxy_path(invite.friend.avatar) %>" alt="profile-img">
+            </div>
+            <div class="friend-invites-list-incoming-element-btn-nickname-guild">
+                <%= link_to profile_path(invite.friend) do %>
+                    <div class="friend-invites-list-incoming-element-nickname-guild">
+                        <h4><%= invite.friend.nickname%></h4>
+                        <% if invite.friend.guild %>
+                            <h4 class="friend-list-element-guild">[<%= invite.friend.guild.anagram %>]</h4>
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+            <div class="friend-invites-list-incoming-element-btn">
+            <a href="#">
+                <%= image_tag "delete.png" , alt: "decline" %>
+            </a>
+        </div>
+        </section>
+    <% end%>
+</div>

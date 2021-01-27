@@ -1,0 +1,35 @@
+<% @friends.each do |friend| %>
+    <% if friend.online? %>
+        <section class="friend-list-element">
+    <% else %>
+        <section class="friend-list-element friend-list-element-offline">
+    <% end %>
+        <%= link_to profile_path(friend) do %>
+            <div class="friend-list-element-profile-img">
+                <img src="<%= rails_storage_proxy_path(friend.avatar) %>" alt="profile-img">
+            </div>
+            <div class="friend-list-element-btn-nickname-guild">
+                
+                    <div class="friend-list-element-nickname-guild">
+                        <h4><%= friend.nickname %></h4>
+                        <% if friend.guild %>
+                            <h4 class="friend-list-element-guild">[<%= friend.guild.anagram %>]</h4>
+                        <% end %>
+                    </div>
+        <% end %>
+            <div class="friend-list-element-btn">
+                <a href="#">
+                    <%= image_tag "mail.png", alt: "mail"%>
+                </a>
+                <% if friend.online? %>
+                    <a href="#">
+                        <%= image_tag "sword.png", alt: "battle"%>
+                    </a>
+                <% end %>
+                <a href="#">
+                    <%= image_tag "delete.png", alt: "delete"%>
+                </a>
+            </div>
+        </div>
+    </section>
+<% end %>
