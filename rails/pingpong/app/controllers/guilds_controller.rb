@@ -26,7 +26,7 @@ class GuildsController < ApplicationController
 			guild.guild_members.create(user: current_user, owner: true)
 			redirect_to guild_path(guild), success: "Guild was created"
 		else
-			redirect_to guilds_path, alert: "Can't create guild. Try again!"
+			redirect_to guilds_path, alert: "Can't create guild: #{ guild.errors.full_messages.join(", ") }"
 		end
 	end
 
