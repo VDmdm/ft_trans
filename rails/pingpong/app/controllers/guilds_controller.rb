@@ -2,12 +2,13 @@ class GuildsController < ApplicationController
 
 	before_action :check_user_guild_exist, only: [:create]
 	before_action :check_user_guild_not_exist, only: [:add_officer, :leave_guild, :kick_member]
-	before_action :check_target_not_exist, only: [:add_officer, :kick_member]
-	before_action :check_user_is_not_owner, only: [:add_officer, :kick_member]
-	before_action :check_target_is_not_member, only: [:add_officer]
+	before_action :check_target_not_exist, only: [:add_officer, :kick_member, :remove_officer]
+	before_action :check_user_is_not_owner, only: [:add_officer, :kick_member, :remove_officer]
+	before_action :check_target_is_not_member, only: [:add_officer, :kick_member, :remove_officer]
 	before_action :check_target_is_officer, only: [:add_officer]
 	before_action :check_target_is_officer, only: [:kick_member], unless: :check_user_is_owner
-	before_action :check_target_is_not_owner, only: [:kick_member]
+	before_action :check_target_is_not_officer, only: [:remove_officer]
+	before_action :check_target_is_owner, only: [:kick_member]
 	before_action :check_guilds_not_exist, only: [:show]
 	before_action :check_user_alone, only: [:leave_guild], if: :check_user_is_owner
 
@@ -36,9 +37,22 @@ class GuildsController < ApplicationController
 	def add_officer
 		member = current_user.guild.members.find(params[:user_id])
 		if member.guild_member.update_attribute(:officer, true)
+			Notification.create(user: current_user, recipient: member, action: "add_officer", notifiable_type: "guilds",
+								service_info: "#{ current_user.guild.name }")
 			redirect_back fallback_location: guild_path(current_user.guild), success: "#{member.nickname} now an officer"
 		else
 			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't add #{member.nickname} to officers"
+		end
+	end
+
+	def remove_officer
+		member = current_user.guild.members.find(params[:user_id])
+		if member.guild_member.update_attribute(:officer, false)
+			Notification.create(user: current_user, recipient: member, action: "remove_officer", notifiable_type: "guilds",
+								service_info: "#{ current_user.guild.name }")
+			redirect_back fallback_location: guild_path(current_user.guild), success: "Removed officer status for #{member.nickname}"
+		else
+			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't delete #{member.nickname} from officers"
 		end
 	end
 
@@ -59,6 +73,8 @@ class GuildsController < ApplicationController
 		guild = current_user.guild
 		user = guild.members.find_by(id: params[:user_id])
 		if user.guild_member.delete
+			Notification.create(user: current_user, recipient: user, action: "kick", notifiable_type: "guilds",
+																service_info: "#{ current_user.guild.name }")
 			redirect_to guilds_path, success: "You kick #{user.nickname} from guild"
 		else
 			redirect_to guilds_path, allert: "Can't kick  #{user.nickname}. Try again!"
@@ -128,7 +144,7 @@ class GuildsController < ApplicationController
 		end
 	end
 
-	def check_target_is_not_owner
+	def check_target_is_owner
 		member = current_user.guild.members.find_by(id: params[:user_id])
 		redirect_to guild_path(current_user.guild), alert: "#{member.nickname} is owner. What's goin on?" if member.guild_owner
 	end 

@@ -15,7 +15,7 @@
 			<% if (current_user.guild_owner || current_user.guild_officer) && !user.guild && current_user.guild && !current_user.guild.pending_invites_and_requests?(user) %>
 				<%= link_to "add to guild", send_invite_path(current_user.guild, user_id: user), method: :post, remote: true %>
 			<% elsif (current_user.guild_owner || current_user.guild_officer) && current_user.guild.pending_invites_and_requests?(user) %>
-				<%= link_to "decline invites", cancel_invite_path(current_user.guild, user_id: user), method: :post, remote: true %>
+				<%= link_to "cancel invites", cancel_invite_path(current_user.guild, user_id: user), method: :post, remote: true %>
 			<% elsif current_user.guild_owner && user.guild == current_user.guild && user != current_user %>
 				<%= link_to "kick from guild", kick_member_path(current_user.guild, user_id: user), method: :post, remote: true %>
 			<% end %>

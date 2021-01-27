@@ -6,7 +6,11 @@
 <% @guild.members.each do |member| %>
 	<p><%= member.nickname %> </p>
 	<% if current_user.guild_owner && @guild == current_user.guild && member != current_user %>
-		<%= link_to "add to officer", add_officer_path(@guild, user_id: member), method: :post, remote: true %>
+		<% if !member.guild_officer %>
+			<%= link_to "add to officer", add_officer_path(@guild, user_id: member), method: :post, remote: true %>
+		<% else %>
+			<%= link_to "remove from officer", remove_officer_path(@guild, user_id: member), method: :post, remote: true %>
+		<% end %>
 	<% end %>
 <% end %>
 <h2>Officers:</h2>
