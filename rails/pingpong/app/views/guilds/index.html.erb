@@ -2,7 +2,7 @@
 
 <% @guilds.each do |guild| %>
 
-	<h3> <%= guild.name %> </h3>
+	<h3> <%= link_to guild.name, guild_path(guild) %> </h3>
 
 <%end%>
 

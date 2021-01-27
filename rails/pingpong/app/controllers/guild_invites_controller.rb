@@ -1,14 +1,15 @@
 class GuildInvitesController < ApplicationController
 
-	before_action :check_target_not_exist, only: [:send_invite, :cancel_invite, :accept_join_request]
+	before_action :check_target_not_exist, only: [:send_invite, :cancel_invite, :accept_join_request, :cancel_join_request]
 	before_action :check_user_guild_not_exist, only: [:send_invite, :cancel_invite, :accept_join_request]
-	before_action :check_user_guild_exist, only: [:send_join_request]
+	before_action :check_user_guild_exist, only: [:send_join_request, :accept_invite]
 	before_action :check_guild_not_exist, only: [:send_join_request, :cancel_invite, :accept_join_request]
 	before_action :check_target_guild_exist, only: [:send_invite, :accept_join_request]
 	before_action :check_user_is_not_owner, only: [:send_invite, :cancel_invite, :accept_join_request], unless: :check_user_is_not_officer
-	before_action :check_invite_or_request_is_exist, only: [:send_invite]
-	before_action :check_invite_or_request_not_exist, only: [:cancel_invite, :accept_join_request]
-
+	before_action :check_invite_is_exist, only: [:send_invite]
+	before_action :check_join_request_is_exist, only: [:send_join_request]
+	before_action :check_invite_not_exist, only: [:cancel_invite, :accept_invite]
+	before_action :check_join_request_not_exist, only: [:cancel_join_request, :accept_join_request]
 
 	def send_invite
 		user = User.find(params[:user_id])
@@ -25,14 +26,14 @@ class GuildInvitesController < ApplicationController
 		if invite.save
 			redirect_back fallback_location: guild_path(guild), success: "You join request has been sent"
 		else
+			p invite.errors
 			redirect_back fallback_location: guild_path(guild), alert: "Can't send join request"
 		end
 	end
 
-
 	def accept_invite
 		guild = Guild.find(params[:id])
-		invite = guild.guild.pending_invite.find_by(user: current_user)
+		invite = guild.pending_invites.find_by(user: current_user)
 		if invite.update_attribute(:status, :accept)
 			if (guild.guild_member.create(user: invite.user))
 				redirect_back fallback_location: guild_path(guild), success: "You have successsfully joined guild #{ guild.name }"
@@ -57,7 +58,7 @@ class GuildInvitesController < ApplicationController
 		guild = Guild.find(params[:id])
 		invite = guild.pending_join_request.find_by(user: params[:user_id])
 		if invite.update_attribute(:status, :accept)
-			if (guild.guild_member.create(user: invite.user))
+			if (guild.guild_members.create(user: invite.user))
 				redirect_back fallback_location: guild_path(guild), success: "#{ invite.user.nickname } now in you guild"
 			else
 				redirect_back fallback_location: guild_path(guild), alert: "#Can't accepting join request. Try invite again"
@@ -69,7 +70,8 @@ class GuildInvitesController < ApplicationController
 
 	def cancel_join_request
 		guild = Guild.find(params[:id])
-		invite = guild.pending_join_request.find_by(user: params[:user_id])
+		user = User.find_by(id: params[:user_id])
+		invite = guild.pending_join_request.find_by(user: user)
 		if invite.delete
 			redirect_back fallback_location: guild_path(guild), success: "Join request has been canceled"
 		else
@@ -114,18 +116,31 @@ class GuildInvitesController < ApplicationController
 		end
 	end
 
-	def check_invite_or_request_is_exist
+	def check_invite_is_exist
 		guild = Guild.find_by(id: params[:id])
 		user = User.find(params[:user_id])
-		redirect_to guilds_path, alert: "invite/request allready is sending" if 
-					guild.pending_invites_and_requests?(user)
+		redirect_to guilds_path, alert: "invite allready is sending" if 
+					guild.pending_invites.find_by(user: user)
 	end
 
-	def check_invite_or_request_not_exist
+	def check_join_request_is_exist
+		guild = Guild.find_by(id: params[:id])
+		redirect_to guilds_path, alert: "join request allready is sending" if 
+					guild.pending_join_request.find_by(user: current_user)
+	end
+
+	def check_invite_not_exist
 		guild = Guild.find_by(id: params[:id])
 		user = User.find(params[:user_id])
-		redirect_to guilds_path, alert: "invite/request not found" unless 
-					guild.pending_invites_and_requests?(user)
+		redirect_to guilds_path, alert: "invite not found" unless 
+					guild.pending_invites.find_by(user: user)
+	end
+
+	def check_join_request_not_exist
+		guild = Guild.find_by(id: params[:id])
+		user = User.find(params[:user_id])
+		redirect_to guilds_path, alert: "join request not found" unless 
+					guild.pending_join_request.find_by(user: user)
 	end
 
 end

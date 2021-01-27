@@ -1,13 +1,14 @@
 class GuildsController < ApplicationController
 
 	before_action :check_user_guild_exist, only: [:create]
-	before_action :check_user_guild_not_exist, only: [:add_officer]
+	before_action :check_user_guild_not_exist, only: [:add_officer, :leave_guild]
 	before_action :check_target_not_exist, only: [:add_officer]
 	before_action :check_user_is_not_owner, only: [:add_officer ]
 	before_action :check_target_is_not_member, only: [:add_officer]
 	#before_action :check_target_is_not_officer, only: [:add_officer]
 	before_action :check_target_is_officer, only: [:add_officer]
 	before_action :check_guilds_not_exist, only: [:show]
+	before_action :check_user_alone, only: [:leave_guild], if: :check_user_is_owner
 
 	def index
 		@guilds = Guild.all
@@ -21,9 +22,9 @@ class GuildsController < ApplicationController
 		guild = Guild.new(guild_params)
 		if guild.save
 			guild.guild_members.create(user: current_user, owner: true)
-			redirect_to guild_path(guild)
+			redirect_to guild_path(guild), success: "Guild was created"
 		else
-			redirect_to root_path
+			redirect_to guilds_path, alert: "Can't create guild. Try again!"
 		end
 	end
 
@@ -38,6 +39,19 @@ class GuildsController < ApplicationController
 		else
 			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't add #{member.nickname} to officers"
 		end
+	end
+
+	def leave_guild
+		guild = current_user.guild
+		member = current_user.guild_member
+		if member.delete
+			if guild.guild_members.count == 0
+				guild.destroy
+			end
+			redirect_to guilds_path, success: "You leave guild"
+		else
+			redirect_to guilds_path, allert: "You can't leave guild. Try again!"
+		end 
 	end
 
 	private
@@ -89,6 +103,18 @@ class GuildsController < ApplicationController
 	def check_guilds_not_exist
 		guild = Guild.all.find_by(id: params[:id])
 		redirect_to guilds_path, alert: "Guild not found" unless guild
+	end
+
+	def check_user_alone
+		redirect_to guilds_path, alert: "Guild owner can't leave guild only if member count = 0" if current_user.guild.members.count != 1
+	end
+
+	def check_user_is_owner
+		if current_user.guild_owner
+			return true
+		else
+			return false
+		end
 	end
 
 end

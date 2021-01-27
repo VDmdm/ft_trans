@@ -30,9 +30,15 @@ class Guild < ApplicationRecord
 	validates :anagram, presence: true, uniqueness: true, length: { is: 5 }
 	validates :description, length: { maximum: 100 }
 
-	def pending_invites_and_requests?(user)
-		if self.pending_invites_user.find_by(id: user.id) ||
-			self.pending_join_request_user.find_by(id: user.id)
+	def pending_join_requests?(user)
+		if self.pending_join_request_user.find_by(id: user.id)
+			return true
+		end
+		return false 
+	end
+
+	def pending_invites?(user)
+		if self.pending_invites_user.find_by(id: user.id)
 			return true
 		end
 		return false 
