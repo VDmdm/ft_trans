@@ -15,12 +15,8 @@
                 <% end %>
             </div>
             <div class="friend-invites-list-incoming-element-btn">
-                <a href="#">
-                    <%= image_tag "ok.png" , alt: "accept" %>
-                </a>
-                <a href="#">
-                    <%= image_tag "delete.png" , alt: "decline" %>
-                </a>
+				<%= link_to image_tag("ok.png", alt: "accept"), friends_update_path(inv_id: invite.id) %>
+				<%= link_to image_tag("delete.png", alt: "decline"), friends_destroy_path(inv_id: invite.id) %>
             </div>
         </section>
     <% end %>
@@ -42,9 +38,7 @@
                 <% end %>
             </div>
             <div class="friend-invites-list-incoming-element-btn">
-            <a href="#">
-                <%= image_tag "delete.png" , alt: "decline" %>
-            </a>
+			<%= link_to image_tag("delete.png", alt: "decline"), friends_destroy_path(inv_id: invite.id) %>
         </div>
         </section>
     <% end%>

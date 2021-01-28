@@ -10,8 +10,8 @@
 			<div>
 				<div class="profile-nick"> <!-- У МЕНЯ СДЕЛАЙ ФЛЕКС А У ВЕРХНЕГО НЕ НАДО!!!!-->
 					<h3><%= @user.nickname %></h3>
-					<% if current_user.guild %>
-						<%= link_to "[" + current_user.guild.anagram + "]", guild_path(current_user.guild) %>
+					<% if @user.guild %>
+						<%= link_to "[" + @user.guild.anagram + "]", guild_path(@user.guild) %>
 					<% end %>
 				</div>
 				<div class="profile-rate-ladder">

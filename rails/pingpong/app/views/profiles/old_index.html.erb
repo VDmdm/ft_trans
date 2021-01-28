@@ -1,0 +1,41 @@
+
+<table>
+	<tr>
+		<th>id</th>
+		<th>nickname</th>
+		<th>email</th>
+		<th>action</th>
+	</tr>
+	<% @users.each do |user| %>
+		<tr>
+			<td><%= user.id %></td>
+			<td><%= user.nickname %></td>
+			<td><%= user.email %></td>
+			<td>
+			<% if (current_user.guild_owner || current_user.guild_officer) && !user.guild && current_user.guild && !current_user.guild.pending_invites_and_requests?(user) %>
+				<%= link_to "add to guild", send_invite_path(current_user.guild, user_id: user), method: :post, remote: true %>
+			<% elsif (current_user.guild_owner || current_user.guild_officer) && current_user.guild.pending_invites_and_requests?(user) %>
+				<%= link_to "cancel invites", cancel_invite_path(current_user.guild, user_id: user), method: :post, remote: true %>
+			<% elsif current_user.guild_owner && user.guild == current_user.guild && user != current_user %>
+				<%= link_to "kick from guild", kick_member_path(current_user.guild, user_id: user), method: :post, remote: true %>
+			<% end %>
+			<% if current_user.friends_with?(user) %>
+                <p>is your friend</p>
+			<% elsif Invitation.pending?(current_user.id, user.id) %>
+				<h3>friend request is pending</h3>
+				<%= link_to "decline", friends_destroy_path(inv_id: Invitation.find_by(user_id: current_user.id, friend_id: user.id).id) %>
+            <% elsif Invitation.reacted?(current_user.id, user.id) %>
+				<%= link_to "accept friend invite",  friends_update_path(inv_id: Invitation.all.find_by(user_id: user.id).id) %>	
+            <% elsif user != current_user %>
+                <%= link_to "add friend", friends_add_path(user_id: user.id) %>
+            <% end %>
+			</td></tr>
+	<% end %>
+	<%= will_paginate @users %>
+</table>
+
+<style>
+	td, th {
+		color: white;
+	}
+</style>

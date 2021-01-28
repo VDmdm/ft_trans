@@ -26,9 +26,8 @@
                         <%= image_tag "sword.png", alt: "battle"%>
                     </a>
                 <% end %>
-                <a href="#">
-                    <%= image_tag "delete.png", alt: "delete"%>
-                </a>
+				<%= link_to image_tag("delete.png", alt: "delete"), friends_destroy_path(inv_id:
+				Invitation.find_invitation(current_user.id, friend.id)) %>
             </div>
         </div>
     </section>
