@@ -3,6 +3,8 @@ class User < ApplicationRecord
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 	require 'open-uri'
 
+	enum status: [ :offline, :online, :in_game ]
+
 	after_create :check_user_avatar
 
 	has_many :notifications, foreign_key: :recipient_id
@@ -79,7 +81,7 @@ class User < ApplicationRecord
 	end
 
 	def online?
-		updated_at > 10.minutes.ago
+		self.status == "online" || self.status == "in_game"
 	end
 
 	private 

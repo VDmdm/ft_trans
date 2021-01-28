@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(version: 2021_01_26_130515) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.integer "status", default: 0
     t.integer "score", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
