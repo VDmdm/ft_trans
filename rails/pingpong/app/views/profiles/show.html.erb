@@ -4,14 +4,16 @@
 	<span class="small_line_after"></span>
 	<section class="profile-info">
 		<div>
-		<%= image_tag @user.avatar, class: "profile-info-img" %>
+			<% if @user.avatar.attached? %>
+				<%= image_tag @user.avatar, class: "profile-info-img", alt: "avatar" %>
+			<% end %>
 		</div>
 		<section class="profile-stat">
 			<div>
-				<div class="profile-nick"> <!-- У МЕНЯ СДЕЛАЙ ФЛЕКС А У ВЕРХНЕГО НЕ НАДО!!!!-->
+				<div class="profile-nick">
 					<h3><%= @user.nickname %></h3>
 					<% if @user.guild %>
-						<%= link_to "[" + @user.guild.anagram + "]", guild_path(@user.guild) %>
+						<h3><%= link_to "[" + @user.guild.anagram + "]", guild_path(@user.guild), class: "profile-guild-anag" %></h3>
 					<% end %>
 				</div>
 				<div class="profile-rate-ladder">
@@ -23,58 +25,138 @@
 					<h3 class="profile-rate-ladder-num"><%= @user.rating %></h3>
 				</div>
 			</div>
-			<div>
+			<div class="profile-matches-stat-contour">
 				<div class="profile-matches-stat">
-					<h3 class="profile-wins">WINS</h3>
-					<h3 class="profile-wins profile-matches-stat-num">3</h3>
-				</div>
-				<div class="profile-matches-stat">
-					<h3 class="profile-losses">LOSSES</h3>
-					<h3 class="profile-losses profile-matches-loss-stat-num">543</h3>
+					<div class="profile-match-stat-header">
+						<h3 class="profile-wins">WINS</h3>
+						<h3 class="profile-losses">LOSSES</h3>
+					</div>
+					<div class="profile-matches-stat-value">
+						<h3 class="profile-wins profile-matches-stat-num">3</h3>
+						<h3 class="profile-losses profile-matches-loss-stat-num">543</h3>
+					</div>
 				</div>
 				<div class="profile-info-action">
-					<% if @user.id == current_user.id %>
-						<%= link_to image_tag("gear_", class: "profile-settings-sign"), root_path%>
-					
-					<% elsif !current_user.friends_with?(@user) %>
-						<%= link_to "add", friends_add_path(user_id: @user.id), class: "profile-info-action-add" %>
-					<%end%>
+						<% if @user.id == current_user.id %>
+							<%= link_to image_tag("gear_", class: "profile-settings-sign"), root_path%>
+						
+						<% elsif !current_user.friends_with?(@user) %>
+							<%= link_to "add", friends_add_path(user_id: @user.id), class: "profile-info-action-add" %>
+						<%end%>
 				</div>
 			</div>
 		</section>
 	</section>
 	<span class="line"></span>
+	<h3 style="font-size: 50px;">Match history</h3>
 	 <section class="match-history">
-		<h3 style="font-size: 50px;">Match history</h3>
-		<div class="match-history-table">
-			<div>
-				<h3 class="table-opponent">opponent</h3>
-				<h3 class="table-attribute">deddara</h3>
-				<h3 class="table-attribute">deddara</h3>
-				<h3 class="table-attribute">deddara</h3>
-			</div>
-			<span class="vert_line"></span>
-			<div>
-				<h3 class="table-date">date</h3>
-				<h3 class="table-attribute">24/09/13 15:03</h3>
-				<h3 class="table-attribute">24/09/13 13:12</h3>
-				<h3 class="table-attribute">24/09/13 1:03</h3>
-			</div>
-			<span class="vert_line"></span>
-			<div>
-				<h3 class="table-result">result</h3>
-				<h3 class="table-attribute win-color">WIN</h3>
-				<h3 class="table-attribute loss-color">LOSS</h3>
-				<h3 class="table-attribute win-color">WIN</h3>
-
-			</div>
-			<span class="vert_line"></span>
-			<div>
-				<h3 class="table-score">score</h3>
-				<h3 class="table-attribute">25:10</h3>
-				<h3 class="table-attribute">13:12</h3>
-				<h3 class="table-attribute">43:4</h3>
-			</div>
-		</div>
+		<table>
+			<col>
+			<col>
+			<col>
+			<col>
+			<tr>
+				<th>opponent</th>
+				<th>date</th>
+				<th>result</th>
+				<th>score</th>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="win-color">WIN</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="loss-color">lose</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="win-color">WIN</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="loss-color">lose</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="win-color">WIN</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="loss-color">lose</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="win-color">WIN</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="loss-color">lose</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="win-color">WIN</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="loss-color">lose</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="win-color">WIN</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="loss-color">lose</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="win-color">WIN</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="loss-color">lose</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="win-color">WIN</td>
+				<td>25:10</td>
+			</tr>
+			<tr>
+				<td>deddara</td>
+				<td>24/09/13 15:03</td>
+				<td class="loss-color">lose</td>
+				<td>25:10</td>
+			</tr>
+		</table>
 	 </section>
 </section>

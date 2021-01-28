@@ -22,12 +22,21 @@ main {
     padding-right: auto;
 }
 
-h1, h2, h3, h4, a, p, label, input {
+h1, h2, h3, h4, a, p, label, input, table {
     font-family: "PixelarRegularW01-Regular", sans-serif;
     color: white;
     letter-spacing: 5px;
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    text-align: center;
 }
 
 input {
@@ -78,6 +87,7 @@ button:hover {
 button:focus {
     outline:none;
 }
+
 
 footer {
     font-family: "PixelarRegularW01-Regular", sans-serif;
@@ -167,4 +177,16 @@ footer {
 
 ::-webkit-scrollbar-thumb {
     background-color: #616F39;
+}
+
+/* table */
+
+table th {
+    padding-bottom: 20px;
+    border: none;
+}
+
+col {
+    border-style: solid;
+    border: 1px solid white;
 }

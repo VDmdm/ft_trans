@@ -45,19 +45,20 @@
 
 .profile-info{
 	display: flex;
-	margin-top: 50px;
-	margin-left: 30px;
+	margin: 50px 30px;
 }
 
 .profile-info-img{
 	height: 200px;
-    width: 200px;
+	width: 200px;
+	border: 4px solid white;
 }
 
 .profile-stat{
 	display: flex;
 	margin-left: 40px;
 	font-size: 45px;
+	width: 100%;
 
 }
 
@@ -66,14 +67,24 @@
 }
 
 .profile-guild-anag{
-	margin-top: 5px;
+
 	color: #616F39;;	
 }
 
-.profile-matches-stat{
-	margin-left: 300px;
+.profile-matches-stat {
 	display: flex;
+}
 
+.profile-matches-stat-contour {
+	margin-left: auto;
+}
+
+.profile-matches-stat-value{
+	margin-left: 30px;
+}
+
+.profile-matches-stat h3{
+	text-align: left;
 }
 
 .profile-wins{
@@ -85,14 +96,14 @@
 	color: #B2463E;
 }
 
-.profile-matches-stat-num{
-	margin-left: 70px;
+.profile-matches-stat-num, .profile-matches-loss-stat-num{
+	margin-left: 15px;
 }
 
-.profile-matches-loss-stat-num
-{
-		margin-left: 15px;
+.profile-matches-stat-value h3 {
+	text-align: right;
 }
+
 
 .profile-rate-ladder{
 	display: flex;
@@ -110,8 +121,8 @@
 }
 
 .profile-info-action{
-		margin-top: 15px;
-		margin-left: 500px;
+	margin-top: 15px;
+	text-align: right;
 }
 
 .profile-settings-sign{
@@ -125,52 +136,11 @@
 }
 
 .match-history{
-	margin-top: 40px;
-}
-
-.match-history-table{
-	border: 1px white solid;
-    display: flex;
-    width: 1180px;
-    height: 500px;
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: 300px;
-    font-size: 25px;
-    overflow:auto
-}
-
-.table-opponent{
-	margin-left: 90px;
-	margin-right: 70px;
 	margin-top: 20px;
-	margin-bottom: 30px;
-}
-
-.table-date{
-	margin-left: 115px;
-	margin-right: 115px;
-	margin-top: 20px;
-		margin-bottom: 30px;
-}
-
-.table-score{
-	margin-left: 90px;
-	margin-right: 115px;
-	margin-top: 20px;
-	margin-bottom: 30px;
-}
-
-.table-result{
-	margin-left: 105px;
-	margin-right: 100px;
-	margin-top: 20px;
-	margin-bottom: 30px;
-}
-
-.table-attribute{
-	margin-top:5px; 
-	text-align: center;
+	height: 500px;
+	border: 2px solid white;
+	font-size: 30px;
+	overflow: auto;
 }
 
 .win-color{
