@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>Insert coin to play!</title>
+        <link href="./assets/css/normalize.css" rel="stylesheet" type="text/css">
+        <link href="./assets/css/main_page.css" rel="stylesheet" type="text/css">
+        <link href="./assets/css/main.css" rel="stylesheet" type="text/css">
+        <link href="./assets/css/user_settings.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <header>
+            <div class="navbar">
+                <ul class="navbar-elements">
+                    <li class="navbar-element">
+                        <a href="#">tournaments</a>
+                    </li>
+                    <li class="navbar-element">
+                        <a href="#">stats</a>
+                    </li>
+                    <li class="navbar-element logo">
+                        <a href="#">
+                            <img src="assets/images/logo.png">
+                        </a>
+                    </li>
+                    <li class="navbar-element">
+                        <a href="#">guilds</a>
+                    </li>
+                    <li class="navbar-element">
+                        <a href="#">games</a>
+                    </li>
+                </ul>
+                <div class="dropdown" style="float:right;">
+                    <button class="dropbtn"><img src="assets/images/profile_ico_drop.svg"></button>
+                    <div class="dropdown-content">
+                        <a href="#">profile</a>
+                        <a href="#">friends</a>
+                        <a href="#">logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="profile-settings">
+            <h2 class="profile-settings-title">Profile setting</h2>
+            <section class="profile-settings-section personal-information">
+                <h2 class="profile-settings-title">Personal-information</h2>
+                <form class="personal-information-form" action="">
+                    <div class="personal-information-form-filed">
+                        <label for="email" class="personal-information-field-label">Email</label>
+                        <input type="text" id="email" class="personal-information-field-input">
+                        <button class="personal-information-form-button">create</button>
+                    </div>
+
+                    <div class="personal-information-form-filed">
+                        <label for="nickname" class="personal-information-field-label">Nickname</label>
+                        <input type="text" id="nickname" class="personal-information-field-input">
+                        <button class="personal-information-form-button">create</button>
+                    </div>
+                </form>
+                <a href="#" class="personal-information-link">Change password</a>
+                <a href="#" class="personal-information-link">Turn on two-step authentication</a>
+            </section>
+
+            <section class="profile-settings-section block-users">
+                <h2 class="profile-settings-title">Block users</h2>
+                <section class="block-users-list">
+                    <div class="block-users-user">
+                        <img src="assets/images/ok.png" alt="avatar" class="block-users-user-avatar">
+                        <div class="block-users-user-interaction">
+                            <div class="block-users-user-info">
+                                <a href="#" class="block-users-user-info-nickname">Jalvaroddq</a>
+                                <a href="#" class="block-users-user-info-guilds">[ANAL #]</a>
+                            </div>
+                            <button href="#" class="block-users-user-unblock">unblock</button>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+        </main>
+    </body>
+</html>
