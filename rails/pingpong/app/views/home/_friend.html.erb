@@ -1,4 +1,4 @@
-<a href="#">
+<%= link_to profile_path(friend.id) do %>
     <div class="main-page-friends-list-element">
 		<% if friend.avatar.attached? %>
 			<img src="<%= rails_storage_proxy_path(friend.avatar) %>">
@@ -14,3 +14,4 @@
 		<% end %>
 	</div>
 </a>
+<%end%>

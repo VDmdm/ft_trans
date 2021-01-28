@@ -8,13 +8,9 @@
             </div>
             <div class="main-page-rate-nickname-guild">
                 <div class="main-page-nickname-guild">
-                    <a href="#">
-                        <h4><%= current_user.nickname %></h4>
-                    </a>
+					<h4><%= link_to current_user.nickname, profile_path(current_user.id) %></h4>
                     <% if current_user.guild %>
-                        <a href="#">
-                            <h4 class="main-page-guild">[<%= current_user.guild.anagram %>]</h4>
-                        </a>
+						<h4><%= link_to "[" + current_user.guild.anagram + "]", guild_path(current_user.guild), class: "main-page-guild" %></h4>
                     <% end %>
                 </div>
                 <div class="main-page-rate-ladder">
