@@ -143,26 +143,39 @@
 	margin-left: 90px;
 	margin-right: 70px;
 	margin-top: 20px;
+	margin-bottom: 30px;
 }
 
 .table-date{
 	margin-left: 115px;
 	margin-right: 115px;
 	margin-top: 20px;
+		margin-bottom: 30px;
 }
 
 .table-score{
 	margin-left: 90px;
 	margin-right: 115px;
 	margin-top: 20px;
+	margin-bottom: 30px;
 }
 
 .table-result{
 	margin-left: 105px;
 	margin-right: 100px;
 	margin-top: 20px;
+	margin-bottom: 30px;
 }
 
-.table-opponent-name{
-	margin-top: 30px;
+.table-attribute{
+	margin-top:5px; 
+	text-align: center;
+}
+
+.win-color{
+	color: #B2D430;
+}
+
+.loss-color{
+	color: #B2463E;
 }
