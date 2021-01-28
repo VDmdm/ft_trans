@@ -81,7 +81,7 @@ class User < ApplicationRecord
 	end
 
 	def online?
-		updated_at > 10.minutes.ago
+		self.status == "online" || self.status == "in_game"
 	end
 
 	private 
