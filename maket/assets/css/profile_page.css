@@ -1,0 +1,182 @@
+/* profile_page.css */
+
+.profile_page{
+	display: flex;
+}
+
+.small_line{
+	display: block;
+	border-bottom: 1px white solid;
+	width: 110px;
+	margin-top: 10px;
+	margin-left: 170px;
+}
+
+.medium_line{
+	display: block;
+	border-bottom: 1px white solid;
+	width: 515px;
+	margin-top: -1px;
+	margin-left: 370px;
+}
+
+.line{
+	display: block;
+	border-bottom: 1px white solid;
+	width: 600px;
+	margin-top: 30px;
+	margin-left: 330px;
+}
+
+.vert_line{
+	display: block;
+	border-left: 1px white solid;
+	height: 300px;
+	margin-top: 100px;
+}
+
+.small_line_after{
+	display: block;
+	border-bottom: 1px white solid;
+	width: 110px;
+	margin-top: -1px;
+	margin-left: 975px;
+}
+
+.profile-info{
+	display: flex;
+	margin-top: 50px;
+	margin-left: 30px;
+}
+
+.profile-info-img{
+	height: 200px;
+    width: 200px;
+}
+
+.profile-stat{
+	display: flex;
+	margin-left: 40px;
+	font-size: 45px;
+
+}
+
+.profile-nick{
+	display: flex;
+}
+
+.profile-guild-anag{
+	margin-top: 5px;
+	color: #616F39;;	
+}
+
+.profile-matches-stat{
+	margin-left: 300px;
+	display: flex;
+
+}
+
+.profile-wins{
+	color: #B2D430;
+}
+
+.profile-losses{
+	margin-top:10px;
+	color: #B2463E;
+}
+
+.profile-matches-stat-num{
+	margin-left: 70px;
+}
+
+.profile-matches-loss-stat-num
+{
+		margin-left: 15px;
+}
+
+.profile-rate-ladder{
+	display: flex;
+	margin-top: 15px;
+}
+
+.profile-rate-ladder-sign{
+	width: 50px;
+	height: : 50px;
+}
+
+.profile-rate-ladder-num{
+	margin-left: 20px;
+	font-size: 40px;
+}
+
+.profile-info-action{
+		margin-top: 15px;
+		margin-left: 500px;
+}
+
+.profile-settings-sign{
+	margin-left: 10px;
+	width: 50px;
+	height: 50px;
+}
+
+.profile-info-action-add{
+	font-size: 30px;
+}
+
+.match-history{
+	margin-top: 40px;
+}
+
+.match-history-table{
+	border: 1px white solid;
+    display: flex;
+    width: 1180px;
+    height: 500px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: 300px;
+    font-size: 25px;
+    overflow:auto
+}
+
+.table-opponent{
+	margin-left: 90px;
+	margin-right: 70px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+.table-date{
+	margin-left: 115px;
+	margin-right: 115px;
+	margin-top: 20px;
+		margin-bottom: 30px;
+}
+
+.table-score{
+	margin-left: 90px;
+	margin-right: 115px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+.table-result{
+	margin-left: 105px;
+	margin-right: 100px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+.table-attribute{
+	margin-top:5px; 
+	text-align: center;
+}
+
+.win-color{
+	color: #B2D430;
+}
+
+.loss-color{
+	color: #B2463E;
+}
