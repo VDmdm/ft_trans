@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>Insert coin to play!</title>
+        <link href="./assets/css/normalize.css" rel="stylesheet" type="text/css">
+        <link href="./assets/css/main_page.css" rel="stylesheet" type="text/css">
+        <link href="./assets/css/main.css" rel="stylesheet" type="text/css">
+        <link href="./assets/css/game_room_create.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <header>
+            <div class="navbar">
+                <ul class="navbar-elements">
+                    <li class="navbar-element">
+                        <a href="#">tournaments</a>
+                    </li>
+                    <li class="navbar-element">
+                        <a href="#">stats</a>
+                    </li>
+                    <li class="navbar-element logo">
+                        <a href="#">
+                            <img src="assets/images/logo.png">
+                        </a>
+                    </li>
+                    <li class="navbar-element">
+                        <a href="#">guilds</a>
+                    </li>
+                    <li class="navbar-element">
+                        <a href="#">games</a>
+                    </li>
+                </ul>
+                <div class="dropdown" style="float:right;">
+                    <button class="dropbtn"><img src="assets/images/profile_ico_drop.svg"></button>
+                    <div class="dropdown-content">
+                      <a href="#">profile</a>
+                      <a href="#">friends</a>
+                      <a href="#">logout</a>
+                    </div>
+                  </div>
+            </div>
+        </header>
+
+        <main>
+            <h1 class="game-room-create-title">Create a game</h1>
+            <section class="game-room-form-and-game-preview">
+                <div class="game-room-create-contour-up">
+                    <canvas id="game-preview"></canvas>
+                    <div class="game-room-create-form">
+                        <div class="game-room-create-form-el">
+                            <label>Name</label>
+                            <input type="text" class="game-room-name-input">
+                        </div>
+                        <div class="game-room-create-form-el">
+                            <label>Private?</label>
+                            <input type="checkbox" class="game-room-private-checkbox">
+                            <label class="game-room-rating-label">Rating?</label>
+                            <input type="checkbox" class="game-room-rating-checkbox">
+                        </div>
+                        <div class="game-room-create-form-el">
+                            <label>Passcode</label>
+                            <input type="text" class="game-room-passcode-input">
+                        </div>
+                        <div class="game-room-create-form-el">
+                            <label>Background</label>
+                            <input type="color" class="game-room-bg-color-input">
+                            <label>or</label>
+                            <label for="upload-bg-image" class="upload-file-label">file</label>
+                            <input type="file" id="upload-bg-image">
+                        </div>
+                        <div class="game-room-create-form-el">
+                            <label>Paddle</label>
+                            <input type="color" class="game-room-paddle-color-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="game-room-create-contour-down">
+                    
+                </div>
+
+            </section>
+        </main>
+    </body>
+</html>
