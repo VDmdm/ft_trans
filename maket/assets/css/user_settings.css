@@ -68,7 +68,7 @@
 .block-users-list {
     display: flex;
     flex-wrap: wrap;
-
+    margin-bottom: 20px;
 }
 
 .block-users-user {
@@ -98,6 +98,10 @@
 }
 
 .block-users-user-info-nickname {
+    font-family: PixelarRegularW01-Regular;
+    font-size: 40px;
+    line-height: 37px;
+    letter-spacing: 1px;
     color: #fff;
 }
 
@@ -124,4 +128,10 @@
 
 .block-users-user:nth-child(3n) {
     margin-right: 0;
+}
+
+.arrow {
+    font-size: 25px;
+    line-height: 23px;
+    letter-spacing: 3.09028px;
 }
