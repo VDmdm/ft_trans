@@ -38,3 +38,9 @@ window.friend_invites_list_switch = function(sending) {
         document.getElementById('switch-invites-btn-swnding').className = "";
     }
 }
+
+$(document).on("turbolinks:load", function() {
+	$('#new_room_message').on('ajax:success', function(a, b,c ) {
+	  $(this).find('input[type="text"]').val('');
+	});
+  });
