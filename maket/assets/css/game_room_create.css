@@ -54,6 +54,12 @@ input[type="color"] {
 	height: 40px;
 }
 
+output {
+	font-size: 35px;
+	color: white;
+	font-family: "PixelarRegularW01-Regular", sans-serif;
+}
+
 .game-room-create-form-el {
 	margin-bottom: 25px;
 	display: flex;

@@ -135,7 +135,7 @@ window.start_game_preview = function() {
 
         context.font = "25px PixelarRegularW01-Regular";
         context.fillStyle = paddle_color;
-        context.fillText(player_1_score + ' : ' + player_2_score, canvas.width / 2 - 15, 50);
+        context.fillText(player_1_score + ' : ' + player_2_score, canvas.width / 2 - 15, 30);
 
         context.fillStyle = ball_color;
 		context.fillRect(ball.x, ball.y, ball.radius, ball.radius);
@@ -150,7 +150,7 @@ window.start_game_preview = function() {
         if ((ball.x) + ball.dx <= 0 || (ball.x + grid) + ball.dx >= canvas.width)
             ball.resetting = true;
 
-        if ((ball.y - ball.radius) + ball.dy - grid <= 0 || (ball.y + ball.radius) + ball.dy + grid >= canvas.height)
+        if (ball.y + ball.dy - grid <= 0 || (ball.y + ball.radius) + ball.dy + grid >= canvas.height)
             ball.dy = -1 * ball.dy;
 
         if (collides(ball, leftPaddle) || collides(ball, rightPaddle)) {
@@ -217,7 +217,7 @@ window.start_game_preview = function() {
         else if (right_x >= obj_2.x && right_x <= obj_2.x + obj_2.width &&
                 obj_1.y >= obj_2.y && obj_1.y <= obj_2.y + obj_2.height)
         {
-            obj_1.x = obj_2.x - obj_1.radius;
+            obj_1.x = obj_2.x - grid;
             return true;
         }
             
@@ -288,6 +288,7 @@ window.start_game_preview = function() {
     }
 
     window.change_ballspeed = function(value) {
+        document.getElementById('input_value_speed').value = value;
         speed = 2 * value;
     }
 
@@ -304,6 +305,7 @@ window.start_game_preview = function() {
     }
 
     window.change_ballsize = function(value) {
+        document.getElementById('input_value_size').value = value;
         ball_size = value;
     }
 
