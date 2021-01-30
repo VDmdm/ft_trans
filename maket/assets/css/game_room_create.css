@@ -14,8 +14,6 @@
 }
 
 #game-preview {
-	width: 716px;
-	height: 346px;
 	border: 4px solid white;
 }
 
@@ -82,5 +80,63 @@ input[type="color"] {
 	text-align: center;
 }
 .game-room-paddle-color-input {
-	margin-right: 185px;
+	margin-right: 186px;
+}
+
+.game-room-create-contour-down h3 {
+	font-weight: normal;
+	font-size: 35px;
+}
+
+.game-room-create-settings-create-btn {
+	width: 58%;
+}
+
+.submit-btn {
+	border: 1px solid white;
+	width: 267px;
+	height: 73px;
+	background-color: black;
+	font-size: 35px;
+}
+
+.submit-btn:hover {
+	cursor: pointer;
+	border: 1px solid white;
+}
+
+.game-room-create-contour-down {
+	margin-top: 20px;
+}
+
+.game-room-create-submit-btn {
+	text-align: center;
+	width: 42%;
+	margin-top: 50px;
+}
+
+.game-room-ball-setting-form {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.color-left {
+	margin-left: 20px;
+}
+
+.game-room-ball-setting-left, .game-room-ball-setting-right {
+	display: flex;
+	justify-content: space-between;
+	width: 300px;
+	margin-bottom: 20px;
+}
+
+.checkbox-right {
+	margin-top: 7px;
+}
+
+input[type="range"] {
+	margin-left: 10px;
+	margin-top: 10px;
 }
