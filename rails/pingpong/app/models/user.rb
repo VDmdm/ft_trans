@@ -29,18 +29,21 @@ class User < ApplicationRecord
 	has_many :declined_invites_guild, :through => :declined_invites, :source => :guild
 
 	has_one_attached :avatar
-	  validates :avatar, attached: true, allow_blank: true, content_type: [:png, :jpg, :jpeg, :gif],
-		size: { less_than: 10.megabytes , message: 'filesize to big' }
+	validates :avatar, attached: true, allow_blank: true, content_type: [:png, :jpg, :jpeg, :gif],
+									size: { less_than: 10.megabytes , message: 'filesize to big' }
 
 	validates :nickname, presence: true, uniqueness: true
 
 	has_many :invitations
 	has_many :pending_invitations, -> { where confirmed: false }, class_name: "Invitation", foreign_key: "friend_id"
 
+	has_many :game_rooms
+  	has_one :pending_games_p1, -> { where(status: :pending, war_time: false) }, :class_name => :GameRoom, foreign_key: "p1_id"
+  	has_one :pending_games_p2, -> { where(status: :pending, war_time: false) }, :class_name => :GameRoom, foreign_key: "p2_id"
+
 	devise :database_authenticatable, :registerable,
 	:recoverable, :rememberable, :trackable, :validatable,
 	:omniauthable, omniauth_providers: [:marvin]
-	
   
 	def friends
 		friends_user_sent_inv = Invitation.where(user_id: id, confirmed: true).pluck(:friend_id)
@@ -82,6 +85,10 @@ class User < ApplicationRecord
 
 	def online?
 		self.status == "online" || self.status == "in_game"
+	end
+
+	def pending_games?
+		self.pending_games_p1 || self.pending_games_p2
 	end
 
 	private 

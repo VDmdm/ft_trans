@@ -24,8 +24,7 @@ Rails.application.routes.draw do
   post 'guilds/:id/decline_join_request', to: "guild_invites#decline_join_request", as: :decline_join_request
   post 'guilds/:id/cancel_join_request', to: "guild_invites#cancel_join_request", as: :cancel_join_request
 
-
-  get 'games' , to: "games#index"
+  resources :game_rooms
 
   resources :profiles
 

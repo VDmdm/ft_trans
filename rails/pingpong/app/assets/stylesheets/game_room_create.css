@@ -1,0 +1,106 @@
+.game-room-create-title {
+	font-size: 50px;
+	border-bottom: 1px solid white;
+	display: inline;
+	padding-bottom: 5px ;
+}
+
+.game-room-create-contour-up, .game-room-create-contour-down {
+	display: flex;
+}
+
+.game-room-form-and-game-preview {
+	margin-top: 40px;
+}
+
+#game-preview {
+	border: 4px solid white;
+}
+
+.game-room-create-form {
+	margin-left: 25px;
+	width: 482px;
+}
+
+.game-room-create-form-el {
+	margin-bottom: 25px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.game-room-private-checkbox {
+	margin-top: 10px;
+
+}
+.game-room-rating-checkbox {
+	margin-top: 10px;
+}
+
+#upload-bg-image {
+	opacity: 0;
+	position: absolute;
+	z-index: -1;
+}
+
+.upload-file-label {
+	border: 2px solid white;
+	padding: 0px 20px 0 25px;
+	text-align: center;
+}
+.game-room-paddle-color-input {
+	margin-right: 186px;
+}
+
+.game-room-create-contour-down h3 {
+	font-weight: normal;
+	font-size: 35px;
+}
+
+.game-room-create-settings-create-btn {
+	width: 58%;
+}
+
+.submit-btn {
+	border: 1px solid white;
+	width: 267px;
+	height: 73px;
+	background-color: black;
+	font-size: 35px;
+	color: white;
+}
+
+.submit-btn:hover {
+	cursor: pointer;
+	border: 1px solid white;
+}
+
+.game-room-create-contour-down {
+	margin-top: 20px;
+}
+
+.game-room-create-submit-btn {
+	text-align: center;
+	width: 42%;
+	margin-top: 50px;
+}
+
+.game-room-ball-setting-form {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.color-left {
+	margin-left: 20px;
+}
+
+.game-room-ball-setting-left, .game-room-ball-setting-right {
+	display: flex;
+	justify-content: space-between;
+	width: 300px;
+	margin-bottom: 20px;
+}
+
+.checkbox-right {
+	margin-top: 7px;
+}
