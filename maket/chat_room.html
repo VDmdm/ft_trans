@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="assets/js/chat_rooms.js"></script>
+        <title>Insert coin to play!</title>
+        <link href="./assets/css/normalize.css" rel="stylesheet" type="text/css">
+        <link href="./assets/css/main_page.css" rel="stylesheet" type="text/css">
+        <link href="./assets/css/main.css" rel="stylesheet" type="text/css">
+        <link href="./assets/css/chat_room.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <header>
+            <div class="navbar">
+                <ul class="navbar-elements">
+                    <li class="navbar-element">
+                        <a href="#">tournaments</a>
+                    </li>
+                    <li class="navbar-element">
+                        <a href="#">stats</a>
+                    </li>
+                    <li class="navbar-element logo">
+                        <a href="#">
+                            <img src="assets/images/logo.png">
+                        </a>
+                    </li>
+                    <li class="navbar-element">
+                        <a href="#">guilds</a>
+                    </li>
+                    <li class="navbar-element">
+                        <a href="#">games</a>
+                    </li>
+                </ul>
+                <div class="dropdown" style="float:right;">
+                    <button class="dropbtn"><img src="assets/images/profile_ico_drop.svg"></button>
+                    <div class="dropdown-content">
+                      <a href="#">profile</a>
+                      <a href="#">friends</a>
+                      <a href="#">logout</a>
+                    </div>
+                  </div>
+            </div>
+        </header>
+        <main>
+            <div class="chat-rooms-page-header">
+                <h4>Chat</h4>
+            </div>
+            <section class="chat-rooms-page-interface">
+                <div class="chat-rooms-navigation">
+                    <h4 class="chat-rooms-text">ROOMS</h4>
+                    <span class="chat-rooms-line"></span>
+                    <div class="rooms-btn">
+                        <button id="switch-btn-myrooms" class="btn-active" onclick="room_list_switch(false)">my rooms</button>
+                        <button id="switch-btn-allrooms" onclick="room_list_switch(true)">all rooms</button>
+                    </div>
+                    <div id="block-myrooms" style="display: block;">
+                        <div class="chat-rooms">
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        </div>
+                    </div>
+                    <div id="block-allrooms" style="display: none;">
+                        <div class="chat-rooms">
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        </div>
+                    </div>
+                    <h4 class="chat-rooms-text">Direct messages</h4>
+                    <span class="chat-rooms-line"></span>
+                    <div class="chat-rooms">
+                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                    </div>
+                    <a href="#"><h3 class="chat-rooms-create">Create room</h3></a>
+
+                </div>
+                <div class="messages-interface">
+                    <div class="messages-header">
+                        <a href="#"><img style="width:50px;height:50px;" src="./assets/images/pixil-frame-0.png"></a>
+                        <h3 style="font-size: 25px;margin-top:10px">50</h3>
+                        <h3 class="messages-leave"><a href="#">leave</a></h3>
+                    </div>
+                    <span class="messages-line"></span>
+                    <div class="messages">
+                        <div class="message">
+                            <div class="dropdown-msg">
+                                <a href="#" class="dropbtn-msg"><img src="assets/images/profile_ico_drop.svg"></a>
+                                <div class="dropdown-msg-content">
+                                      <a href="#">profile</a>
+                                      <a href="#">duel</a>
+                                      <a href="#">kick</a>
+                                      <a href="#">ban</a>
+                                </div>
+                            </div>
+                            <h3>dasdsadsa</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+        </footer>
+    </body>
+</html>
