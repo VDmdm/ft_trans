@@ -36,7 +36,7 @@
 	margin-top: 10px;
 }
 
-#upload-bg-image {
+#game_room_upload-bg-image {
 	opacity: 0;
 	position: absolute;
 	z-index: -1;
