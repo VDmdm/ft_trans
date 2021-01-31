@@ -59,5 +59,44 @@
 
 .chat-rooms-room:hover{
     color: #B2D430;
-	
+}
+
+.chat-rooms-create{
+	width: 200px;
+	height: 25px;
+	border: 1px white solid;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+	margin-top: 50px;
+}
+
+.chat-rooms-create:hover{
+    color: #B2D430;
+}
+
+.chat-logo{
+	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+  	margin-top: auto;
+  	margin-bottom: auto;
+	width: 138px;
+	height: 92px;
+}
+
+.rooms-btn button{
+    outline: none;
+    border: none;
+    font-family: "PixelarRegularW01-Regular", sans-serif;
+    color: white;
+    font-size: 24px;
+    margin-top: 10px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    margin-left: 30px;
+}
+
+.btn-active {
+    color: #B2D430 !important;
 }

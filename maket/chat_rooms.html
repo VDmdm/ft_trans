@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="assets/js/chat_rooms.js"></script>
         <title>Insert coin to play!</title>
         <link href="./assets/css/normalize.css" rel="stylesheet" type="text/css">
         <link href="./assets/css/main_page.css" rel="stylesheet" type="text/css">
@@ -50,16 +51,29 @@
                 <div class="chat-rooms-navigation">
                     <h4 class="chat-rooms-text">ROOMS</h4>
                     <span class="chat-rooms-line"></span>
-                    <div class="chat-rooms">
-                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
-                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
-                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
-                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
-                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
-                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
-                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
-                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
-                        <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                    <div class="rooms-btn">
+                        <button id="switch-btn-myrooms" class="btn-active" onclick="room_list_switch(false)">my rooms</button>
+                        <button id="switch-btn-allrooms" onclick="room_list_switch(true)">all rooms</button>
+                    </div>
+                    <div id="block-myrooms" style="display: block;">
+                        <div class="chat-rooms">
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        </div>
+                    </div>
+                    <div id="block-allrooms" style="display: none;">
+                        <div class="chat-rooms">
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                            <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
+                        </div>
                     </div>
                     <h4 class="chat-rooms-text">Direct messages</h4>
                     <span class="chat-rooms-line"></span>
@@ -74,7 +88,9 @@
                         <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
                         <a href="#"><h3 class="chat-rooms-room"> asdadsdd </h3></a>
                     </div>
+                    <a href="#"><h3 class="chat-rooms-create">Create room</h3></a>
                 </div>
+                <img class="chat-logo" src="./assets/images/logo.png">
             </section>
         </main>
         <footer>
