@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Insert coin to play!</title>
+    <link href="./assets/css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/main_page.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/main.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/info_game.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<header>
+    <div class="navbar">
+        <ul class="navbar-elements">
+            <li class="navbar-element">
+                <a href="#">tournaments</a>
+            </li>
+            <li class="navbar-element">
+                <a href="#">stats</a>
+            </li>
+            <li class="navbar-element logo">
+                <a href="#">
+                    <img src="assets/images/logo.png">
+                </a>
+            </li>
+            <li class="navbar-element">
+                <a href="#">guilds</a>
+            </li>
+            <li class="navbar-element">
+                <a href="#">games</a>
+            </li>
+        </ul>
+        <div class="dropdown" style="float:right;">
+            <button class="dropbtn"><img src="assets/images/profile_ico_drop.svg"></button>
+            <div class="dropdown-content">
+                <a href="#">profile</a>
+                <a href="#">friends</a>
+                <a href="#">logout</a>
+            </div>
+        </div>
+    </div>
+</header>
+<main>
+    <section class="games">
+        <h2 class="games-title">Games</h2>
+        <table class="games-table" align="left">
+            <tr class="games-table-title">
+                <th class="table-title games-table-title-id">id</th>
+                <th class="table-title games-table-title-name">name</th>
+                <th class="table-title games-table-title-players">players</th>
+                <th class="table-title games-table-title-type">type</th>
+                <th class="table-title games-table-title-modes">modes</th>
+                <th class="table-title games-table-title-score">score</th>
+            </tr>
+            <tr class="games-table-row">
+                <td class="games-table-row games-table-row-id">id</td>
+                <td class="games-table-row games-table-row-name">1000</td>
+                <td class="games-table-row games-table-row-players">
+                    <p class="games-table-row-players-one">p1: jalvaro</p>
+                    <p class="games-table-row-players-two">p2: none</p>
+                </td>
+                <td class="games-table-row games-table-row-type">public</td>
+                <td class="games-table-row games-table-row-modes">sped</td>
+                <td class="games-table-row games-table-row-score">24/12</td>
+            </tr>
+        </table>
+    </section>
+</main>
+</body>
+</html>

@@ -94,6 +94,11 @@
 
 .guild-table-title-rank {
     width: 100px;
+    padding-left: 20px;
+}
+
+.guild-table-row-rank {
+    padding-left: 20px;
 }
 
 .guild-table-row {
