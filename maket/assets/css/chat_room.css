@@ -3,6 +3,11 @@
 
 }
 
+h3{
+    font-weight: normal;
+
+}
+
 .chat-rooms-page-header h4{
 
     font-size: 40px;
@@ -106,19 +111,31 @@
 }
 
 .messages{
+   overflow:auto;
    word-wrap:  break-word;
+   height: 650px;
 
 }
 
 .messages-header{
     display: flex;
+    width: 900px;
     height: 50px;
+}
+
+.header-room-name{
+    font-size: 30px;
+    margin-top: 5px;
+    margin-left: auto;
+    font-weight: normal;
 }
 
 .messages-leave{
     font-size: 25px;
     margin-top: 10px;
-    margin-left: 750px;
+    font-weight: normal;
+
+   margin-left: auto;
 }
 
 .messages-line{
@@ -180,3 +197,45 @@
   
 .dropdown-msg:hover .dropdown-msg-content {display: flex;}
 .dropdown-msg:hover .dropbtn-msg {background-color: #3e8e41;}
+
+.message-field{
+    margin-left: 20px;
+    padding: 10px;
+    width: 800px;
+    min-height: 50px;
+    border: 1px white solid;
+}
+
+.message-info{
+    font-size: 15px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.send-message{
+    display: flex;
+    margin-top: 35px;
+    margin-left: 35px;
+}
+
+.msg-input{
+    border: 1px solid white !important;
+    width: 750px !important;
+    height: 30px;
+}
+.send-message-button {
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: 3.5px;
+    padding: 1px 20px 7px 20px;
+    background-color: #000;
+    border: 1px solid #FFFFFF;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.send-message-button:hover {
+
+    border: 1px solid #FFFFFF;
+}
