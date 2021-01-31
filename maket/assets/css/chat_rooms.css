@@ -68,21 +68,21 @@
 	margin-right: auto;
 	margin-left: auto;
 	text-align: center;
-	margin-top: 50px;
+	margin-top: 30px;
 }
 
 .chat-rooms-create:hover{
     color: #B2D430;
 }
 
-.chat-logo{
+.welcome-msg{
 	display: block;
-  	margin-left: auto;
-  	margin-right: auto;
-  	margin-top: auto;
-  	margin-bottom: auto;
-	width: 138px;
-	height: 92px;
+	font-size: 30px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto; 
+	margin-top: auto;
+	margin-bottom: auto; 
 }
 
 .rooms-btn button{
