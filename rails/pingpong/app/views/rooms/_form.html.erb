@@ -4,8 +4,8 @@
 	<label for="name3"><br>
 	<div class="room-pass">
 		<h3>Password required</h3>
-		<input class="room-checkbox" type="checkbox" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
-		<%= form.text_field :password, maxlength: 15, id: "name2", name: "name2", disabled: "disabled" %>
+		<input class="room-checkbox" type="checkbox" onclick="var input = document.getElementById('password'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
+		<%= form.text_field :password, maxlength: 15, id: "password", disabled: "disabled" %>
 	</div>
 	<%= form.button "Create" %>
   <% end %>

@@ -15,9 +15,11 @@ class RoomsController < ApplicationController
 	end
 
 	def create
+		p params
 		@room = Room.new parameters
 		
 		if @room.save
+			@room.chat_room_members.create(user: current_user, owner: true)
 			redirect_to rooms_path, success: "Room was created"
 		else
 			redirect_to rooms_path
@@ -32,6 +34,15 @@ class RoomsController < ApplicationController
 		end
 	end
 
+	def password_enter
+		p params[:password]
+		if params[:password] != @room.password
+			redirect_to rooms_path, alert: "Password is incorrect"
+		else
+			redirect_to chat_room_members_new_path(room_id: @room)
+		end
+	end
+
 	private
 	def parameters
 		params.require(:room).permit(:name, :password)
@@ -40,6 +51,7 @@ class RoomsController < ApplicationController
 	def load_rooms
 		@rooms = Room.all
 		@room = Room.find(params[:id]) if params[:id]
+		@room_member = ChatRoomMember.new
 	end
 
 

@@ -301,3 +301,36 @@ input[type="checkbox"] {
     font-size: 60px;
     border: 1px solid white;
 }
+
+.room-password{
+    font-size: 50px;
+    margin-top: 250px;
+    margin-left: 230px;
+    margin-right: auto;
+}
+
+.password-input{
+    text-align: center;
+    padding-left: 10px;
+    font-size: 50px;
+    width: 390px;
+    height: 50px;
+}
+
+.password-button {
+    color: white;
+    cursor: pointer;
+    font-size: 40px;
+    line-height: 30px;
+    letter-spacing: 3.5px;
+    padding: 1px 20px 7px 20px;
+    background-color: #000;
+    border: 1px solid #FFFFFF;
+    margin-left: 150px;
+    margin-bottom: 10px;
+}
+
+.password-button:hover {
+
+    border: 1px solid #FFFFFF;
+}

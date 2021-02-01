@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   resources :room_messages
   resources :rooms
 
+  post 'rooms/password_enter', to: "rooms#password_enter", as: :rooms_password_enter
+
+  post 'chat_room_members/create', to: "chat_room_members#create"
   get 'chat_room_members/leave', to: "chat_room_members#leave"
   get 'chat_room_members/new', to: "chat_room_members#new"
 

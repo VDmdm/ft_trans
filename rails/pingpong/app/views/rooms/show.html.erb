@@ -9,6 +9,24 @@
 <% if @room.is_room_member?(current_user) %>
   <%= render 'rooms/messages' %>
 
+  <% elsif @room.password %>
+
+  <div>
+  <div class="messages-header">
+    <h3 class="header-room-name" style="margin-right:auto;">
+      <%=@room.name%>
+    </h3>
+  </div>
+  <span class="messages-line"></span>
+  <div class="room-password">
+  <%= form_for @room_member, :url => chat_room_members_create_path(room_id: @room), :method => :post, remote: true do |form| %>
+    <%= label_tag :password, 'Password required'%><label for="name3"><br>
+    <%= text_field_tag 'password', nil, class: "password-input" %> </br>
+    <%= form.button "Join", class: "password-button" %>
+    <% end %>
+  </div>
+  </div>
+
   <% else %>
   <div>
   <div class="messages-header">
