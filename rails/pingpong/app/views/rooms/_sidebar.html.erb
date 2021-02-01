@@ -1,0 +1,22 @@
+                <div class="chat-rooms-navigation">
+                    <h4 class="chat-rooms-text">ROOMS</h4>
+                    <span class="chat-rooms-line"></span>
+                    <div class="rooms-btn">
+                        <button id="switch-btn-myrooms" class="btn-active" onclick="room_list_switch(false)">my rooms</button>
+                        <button id="switch-btn-allrooms" onclick="room_list_switch(true)">all rooms</button>
+                    </div>
+                    <div id="block-myrooms" style="display: block;">
+                        <%= render "rooms/rooms" %>
+                    </div>
+                    <div id="block-allrooms" style="display: none;">
+                        <%= render "rooms/rooms" %>
+                    </div>
+                    <h4 class="chat-rooms-text">Direct messages</h4>
+                    <span class="chat-rooms-line"></span>
+                    <div class="chat-rooms">
+                    </div>
+                    <%= link_to new_room_path do %>
+                      <h3 class="chat-rooms-create">Create room</h3>
+                    <%end%>
+
+                </div>

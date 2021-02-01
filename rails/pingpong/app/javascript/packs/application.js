@@ -39,6 +39,23 @@ window.friend_invites_list_switch = function(sending) {
     }
 }
 
+window.room_list_switch = function(allrooms) {
+  if (allrooms)
+  {
+      document.getElementById('block-myrooms').style.display = 'none';
+      document.getElementById('block-allrooms').style.display = 'block';
+      document.getElementById('switch-btn-myrooms').className = "";
+      document.getElementById('switch-btn-allrooms').className = "btn-active";
+  }
+  else
+  {
+      document.getElementById('block-myrooms').style.display = 'block';
+      document.getElementById('block-allrooms').style.display = 'none';
+      document.getElementById('switch-btn-myrooms').className = "btn-active";
+      document.getElementById('switch-btn-allrooms').className = "";
+  }
+}
+
 $(document).on("turbolinks:load", function() {
 	$('#new_room_message').on('ajax:success', function(a, b,c ) {
 	  $(this).find('input[type="text"]').val('');

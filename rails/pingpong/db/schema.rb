@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_122006) do
 
   create_table "rooms", force: :cascade do |t|
     t.string "name"
+    t.string "password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_rooms_on_name", unique: true

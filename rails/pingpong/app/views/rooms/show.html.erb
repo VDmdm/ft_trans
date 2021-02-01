@@ -1,73 +1,83 @@
-<h1>
-  <%= @room.name %>
-</h1>
+<div class="chat-rooms-page-header">
+  <h4>Chat</h4>
+</div>
 
-<div class="row">
-  <div class="col-12 col-md-3">
-    <%= render 'rooms/rooms' %>
-  </div>
+<section class="chat-rooms-page-interface">
 
-  <div class="col">
-    <div class="chat" data-channel-subscribe="room" data-room-id="<%= @room.id %>">
-      <% @room_messages.each do |room_message| %>
-        <div class="chat-message-container">
-          <div class="row no-gutters">
-            <div class="col-auto text-center">
-              <img src="<%= rails_storage_proxy_path(room_message.user.avatar) %>" class="avatar" alt="">
-            </div>
 
-            <div class="col">
-              <div class="message-content">
-                <p class="mb-1">
-                  <%= room_message.message %>
-                </p>
+  <%= render 'rooms/sidebar' %>
 
-                <div class="text-right">
-                  <small>
-                    <%= room_message.created_at %>
-                  </small>
-                </div>
+    <div>
+      <div class="messages-header">
+        <a href="#">
+          <%= image_tag "man.png" , style: "height:55px;width:55px;" %>
+        </a>
+        <h3 style="font-size: 25px;margin-top:10px">50</h3>
+        <h3 class="header-room-name">
+          <%=@room.name%>
+        </h3>
+        <h3 class="messages-leave"><a href="#">leave</a></h3>
+      </div>
+      <span class="messages-line"></span>
+
+      <div class="messages" data-channel-subscribe="room" data-room-id="<%= @room.id %>">
+        <% @room_messages.each do |room_message| %>
+          <div class="message">
+            <div class="dropdown-msg">
+              <a href="#" class="dropbtn-msg">
+                <%= image_tag room_message.user.avatar %>
+              </a>
+              <div class="dropdown-msg-content">
+                <a href="#">profile</a>
+                <a href="#">duel</a>
+                <a href="#">kick</a>
+                <a href="#">ban</a>
               </div>
             </div>
+            <div class="message-field">
+              <h3>
+                <%= room_message.message %>
+              </h3>
+              <h3 class="message-info"><a href="#">deddara</a><a href="#">[ANUS]</a></h3>
+              <h3 class="message-info">
+                <%=room_message.created_at%>
+              </h3>
+            </div>
           </div>
-        </div>
-      <% end %>
-    </div>
-
-    <%= simple_form_for @room_message, remote: true do |form| %>
-      <div class="input-group mb-3">
-        <%= form.input :message, as: :string,
-                                 wrapper: false,
-                                 label: false,
-                                 input_html: {
-                                   class: 'chat-input'
-                                 } %>
-        <div class="input-group-append">
-          <%= form.submit "Send", class: 'btn btn-primary chat-input' %>
-        </div>
-      </div>
-
-      <%= form.input :room_id, as: :hidden %>
-    <% end %>
-  </div>
-</div>
-
-<div class="d-none" data-role="message-template">
-  <div class="chat-message-container">
-    <div class="row no-gutters">
-	<div class="col-auto text-center">
-		<img src="" class="avatar" alt="" data-role="user-avatar">
-  	</div>
-
-      <div class="col">
-        <div class="message-content">
-          <p class="mb-1" data-role="message-text"></p>
-
-          <div class="text-right">
-            <small data-role="message-date"></small>
+          <% end %>
+          <div style="display:none;" data-role="message-template">
+          <div class="message">
+            <div class="dropdown-msg">
+              <a href="#" class="dropbtn-msg">
+                <img src="" class="avatar" alt="" data-role="user-avatar">
+              </a>
+              <div class="dropdown-msg-content">
+                <a href="#">profile</a>
+                <a href="#">duel</a>
+                <a href="#">kick</a>
+                <a href="#">ban</a>
+              </div>
+            </div>
+            <div class="message-field">
+              <h3 data-role="message-text">
+              </h3>
+              <h3 class="message-info"><a href="#">deddara</a><a href="#">[ANUS]</a></h3>
+              <h3 class="message-info" data-role="message-date">
+              </h3>
+          </div>
           </div>
         </div>
       </div>
+      <div class="send-message">
+
+        <%= simple_form_for @room_message, remote: true do |form| %>
+          <%= form.input :message, as: :string, wrapper: false, label: false, input_html: { class: "msg-input" } %>
+            <%= form.submit "Send" , class: 'send-message-button' %>
+              <%= form.input :room_id, as: :hidden %>
+                <% end %>
+      </div>
     </div>
-  </div>
-</div>
+
+
+
+</section>

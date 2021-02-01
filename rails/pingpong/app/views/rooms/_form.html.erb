@@ -1,4 +1,11 @@
-<%= simple_form_for @room, remote: true do |form| %>
-	<%= form.input :name %>
-	<%= form.submit "Save" %>
+<%= form_for @room, remote: true do |form| %>
+	<%= form.label :name, 'Room name ', class: "new-room-label"%>
+	<%= form.text_field :name, placeholder: "max 15", maxlength: 15, class: "new-room-input" %>
+	<label for="name3"><br>
+	<div class="room-pass">
+		<h3>Password required</h3>
+		<input class="room-checkbox" type="checkbox" onclick="var input = document.getElementById('name2'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}" />
+		<%= form.text_field :password, maxlength: 15%>
+	</div>
+	<%= form.button "Create" %>
   <% end %>
