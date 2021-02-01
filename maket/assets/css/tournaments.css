@@ -1,0 +1,153 @@
+.tournaments-title {
+    display: inline-block;
+    font-size: 35px;
+    line-height: 33px;
+    letter-spacing: 4px;
+    margin-bottom: 44px;
+    border-bottom: 1px solid #fff;
+}
+
+.tournaments-list {
+    padding: 0;
+}
+
+.tournaments-item {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: top;
+    width: 1173px;
+    padding: 23px 20px 13px 45px;
+    border: 1px solid #fff;
+    margin-bottom: 50px;
+}
+
+.tournaments-info-name {
+    font-size: 35px;
+    line-height: 33px;
+    letter-spacing: 4px;
+    padding-bottom: 10px;
+}
+
+.tournaments-info-description {
+    height: 100px;
+    width: 660px;
+    font-size: 23px;
+    line-height: 21px;
+    letter-spacing: 3px;
+}
+
+.tournaments-info-date {
+    font-family: PixelarRegularW01-Regular, serif;
+    font-size: 25px;
+    line-height: 23px;
+    letter-spacing: 3px;
+    color: #B2D430;
+}
+
+.tournaments-prizes {
+    text-align: center;
+    margin-right: 129px;
+}
+
+.tournaments-prizes-entry {
+    padding-bottom: 10px;
+}
+
+.tournaments-prizes-entry span {
+    font-family: PixelarRegularW01-Regular, serif;
+    font-size: 35px;
+    line-height: 33px;
+    letter-spacing: 4.32639px;
+    color: #FFFFFF;
+    padding-right: 9px;
+}
+
+.tournaments-prizes-entry-icon {
+    height: 33px;
+    width: 33px;
+}
+
+.tournaments-prizes-title {
+    display: inline-block;
+    font-size: 35px;
+    line-height: 33px;
+    letter-spacing: 4px;
+    color: #FFFFFF;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding-bottom: 3px;
+    margin-bottom: 5px;
+}
+
+.tournaments-prizes-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.tournaments-prizes-item {
+    list-style-type: none;
+    text-align: left;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+.tournaments-prizes-item-text {
+    font-family: PixelarRegularW01-Regular, serif;
+    font-size: 20px;
+    line-height: 19px;
+    letter-spacing: 2px;
+    color: #FFFFFF;
+}
+
+.tournaments-prizes-item-cup {
+    height: 27px;
+    width: 27px;
+    margin-right: 15px;
+}
+
+.tournaments-register-amount-member-icon {
+    height: 40px;
+    width: 40px;
+}
+
+.tournaments-register-amount-member span {
+    font-family: PixelarRegularW01-Regular, serif;
+    font-size: 35px;
+    line-height: 33px;
+    letter-spacing: 4px;
+    color: #FFFFFF;
+}
+
+.tournaments-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: right;
+}
+
+.tournaments-register-ranked {
+    font-family: PixelarRegularW01-Regular, serif;
+    font-size: 23px;
+    line-height: 21px;
+    letter-spacing: 3px;
+    color: #B2D430;
+}
+
+.tournaments-register-button {
+    cursor: pointer;
+    font-size: 25px;
+    line-height: 23px;
+    letter-spacing: 3px;
+    border: 1px solid #fff;
+    background: transparent;
+    padding: 3px 16px;
+}
+
+.tournaments-mods-title span {
+    font-family: PixelarRegularW01-Regular, serif;
+    font-size: 35px;
+    line-height: 33px;
+    letter-spacing: 4px;
+    color: #FFFFFF;
+    padding-right: 9px;
+}
