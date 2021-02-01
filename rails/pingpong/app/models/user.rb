@@ -37,9 +37,9 @@ class User < ApplicationRecord
 	has_many :invitations
 	has_many :pending_invitations, -> { where confirmed: false }, class_name: "Invitation", foreign_key: "friend_id"
 
-	has_many :game_rooms
-  	has_one :pending_games_p1, -> { where(status: :pending, war_time: false) }, :class_name => :GameRoom, foreign_key: "p1_id"
-  	has_one :pending_games_p2, -> { where(status: :pending, war_time: false) }, :class_name => :GameRoom, foreign_key: "p2_id"
+	has_many :game
+  	has_one :pending_games_p1, -> { where(status: :pending, war_time: false) }, :class_name => :Game, foreign_key: "p1_id"
+  	has_one :pending_games_p2, -> { where(status: :pending, war_time: false) }, :class_name => :Game, foreign_key: "p2_id"
 
 	devise :database_authenticatable, :registerable,
 	:recoverable, :rememberable, :trackable, :validatable,

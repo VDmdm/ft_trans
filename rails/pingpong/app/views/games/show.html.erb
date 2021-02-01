@@ -1,0 +1,3 @@
+<h3 class="room_name" data-room-id="<%= @game.id %>"><%= @game.name %></h3>
+
+ <canvas width="1064" height="514" id="game" style="background-color: <%= @game.bg_color %>; background-image: url(<%= url_for (@game.bg_image) if @game.bg_image.attached? %>); background-size: 100% 100%; outline: 4px solid white;"></canvas>

@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2021_01_31_153250) do
     t.index ["friendable_id", "friend_id"], name: "index_friendships_on_friendable_id_and_friend_id", unique: true
   end
 
-  create_table "game_rooms", force: :cascade do |t|
+  create_table "games", force: :cascade do |t|
     t.bigint "p1_id"
     t.bigint "p2_id"
     t.string "name"
@@ -62,31 +62,22 @@ ActiveRecord::Schema.define(version: 2021_01_31_153250) do
     t.string "ball_color", default: "#ffffff"
     t.string "bg_color", default: "#000000"
     t.string "paddle_color", default: "#ffffff"
-    t.float "paddle_speed", default: 6.0
-    t.float "paddle_p1_dy", default: 0.0
-    t.float "paddle_p2_dy", default: 0.0
-    t.float "paddle_p1_y", default: 120.0
-    t.float "paddle_p2_y", default: 120.0
     t.boolean "ball_down_mode", default: false
     t.boolean "ball_speedup_mode", default: false
     t.boolean "random_mode", default: false
-    t.float "ball_radius", default: 10.0
-    t.float "ball_size", default: 2.0
-    t.float "ball_x", default: 358.0
-    t.float "ball_y", default: 173.0
-    t.float "ball_dx", default: 2.0
-    t.float "ball_dy", default: -2.0
+    t.float "ball_size", default: 1.0
     t.float "speed_rate", default: 1.0
     t.integer "p1_score", default: 0
     t.integer "p2_score", default: 0
     t.boolean "war_time", default: false
     t.boolean "resetting", default: false
+    t.boolean "broadcasted", default: false
     t.datetime "started"
     t.datetime "ended"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["p1_id"], name: "index_game_rooms_on_p1_id"
-    t.index ["p2_id"], name: "index_game_rooms_on_p2_id"
+    t.index ["p1_id"], name: "index_games_on_p1_id"
+    t.index ["p2_id"], name: "index_games_on_p2_id"
   end
 
   create_table "guild_invites", force: :cascade do |t|
@@ -178,8 +169,8 @@ ActiveRecord::Schema.define(version: 2021_01_31_153250) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "game_rooms", "users", column: "p1_id"
-  add_foreign_key "game_rooms", "users", column: "p2_id"
+  add_foreign_key "games", "users", column: "p1_id"
+  add_foreign_key "games", "users", column: "p2_id"
   add_foreign_key "guild_members", "guilds"
   add_foreign_key "guild_members", "users"
   add_foreign_key "invitations", "users"

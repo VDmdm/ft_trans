@@ -134,8 +134,8 @@ window.start_game_preview = function() {
 	};
 
 	ball = {
-		x: canvas.width / 2,
-		y: canvas.height / 2,
+		x: canvas.width / 2 - (grid / 2),
+		y: canvas.height / 2 - (grid / 2),
 		radius: grid * ball_size,
 		resetting: false,
 		dx: speed,
@@ -291,7 +291,7 @@ window.start_game_preview = function() {
 	const output = document.getElementById('output');
 
 	if (window.FileList && window.File && window.FileReader) {
-		document.getElementById('game_room_upload-bg-image').addEventListener('change', event => {
+		document.getElementById('game_upload-bg-image').addEventListener('change', event => {
 			output.src = '';
 			file_exist = false;
 			document.getElementById('file_exist').value = false;
