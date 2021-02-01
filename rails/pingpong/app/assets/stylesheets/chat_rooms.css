@@ -290,3 +290,14 @@ input[type="checkbox"] {
 
     border: 1px solid #FFFFFF;
 }
+
+.join-link{
+    margin-top:300px;
+    margin-left: 350px;
+    text-align: center;
+    
+    width: 200px;
+    height: 80px;
+    font-size: 60px;
+    border: 1px solid white;
+}

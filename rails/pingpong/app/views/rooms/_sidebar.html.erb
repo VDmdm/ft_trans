@@ -6,10 +6,31 @@
                         <button id="switch-btn-allrooms" onclick="room_list_switch(true)">all rooms</button>
                     </div>
                     <div id="block-myrooms" style="display: block;">
-                        <%= render "rooms/rooms" %>
+                    <div class="chat-rooms">
+                    <% if current_user.rooms.present? %>
+                    <% current_user.rooms.each do |room| %>
+                        <%= link_to room_path(room) do %>
+                            <h3 class="chat-rooms-room"><%= room.name %></h3>
+                        <%end%>
+                    <% end %>
+                    <% else %>
+                        <h3 style="text-align:center; margin-top: 20px">The are no rooms</h3>
+                    <% end %>
+                </div>                
                     </div>
                     <div id="block-allrooms" style="display: none;">
-                        <%= render "rooms/rooms" %>
+                    <div class="chat-rooms">
+                    <% if @rooms.present? %>
+                    <% @rooms.each do |room| %>
+                        <%= link_to room_path(room) do %>
+                            <h3 class="chat-rooms-room"><%= room.name %></h3>
+                        <%end%>
+                    <% end %>
+                    <% else %>
+                    <h3 style="text-align:center; margin-top: 20px">The are no rooms</h3>
+                    <% end %>
+                </div>
+                
                     </div>
                     <h4 class="chat-rooms-text">Direct messages</h4>
                     <span class="chat-rooms-line"></span>

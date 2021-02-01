@@ -61,3 +61,13 @@ $(document).on("turbolinks:load", function() {
 	  $(this).find('input[type="text"]').val('');
 	});
   });
+
+  $(document).on("turbolinks:load", function(){
+    $('.send-message-button').prop('disabled', true);
+    $('#room_message_message').keyup(function(){
+        if(this.val != "")
+            $('.send-message-button').prop('disabled', false);            
+        else
+            $('.send-message-button').prop('disabled',true);
+    })
+});

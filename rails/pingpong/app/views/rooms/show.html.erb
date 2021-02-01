@@ -5,78 +5,26 @@
 <section class="chat-rooms-page-interface">
 
 
-  <%= render 'rooms/sidebar' %>
+<%= render 'rooms/sidebar' %>
+<% if @room.is_room_member?(current_user) %>
+  <%= render 'rooms/messages' %>
 
-    <div>
-      <div class="messages-header">
-        <a href="#">
-          <%= image_tag "man.png" , style: "height:55px;width:55px;" %>
-        </a>
-        <h3 style="font-size: 25px;margin-top:10px">50</h3>
-        <h3 class="header-room-name">
-          <%=@room.name%>
-        </h3>
-        <h3 class="messages-leave"><a href="#">leave</a></h3>
-      </div>
-      <span class="messages-line"></span>
+  <% else %>
+  <div>
+  <div class="messages-header">
+    <h3 class="header-room-name" style="margin-right:auto;">
+      <%=@room.name%>
+    </h3>
+  </div>
+  <span class="messages-line"></span>
+  <div>
+      <%= link_to chat_room_members_new_path(room_id: @room) do %>
+        <h3 class="join-link">join</h3>
+      <%end%>
+</div>
 
-      <div class="messages" data-channel-subscribe="room" data-room-id="<%= @room.id %>">
-        <% @room_messages.each do |room_message| %>
-          <div class="message">
-            <div class="dropdown-msg">
-              <a href="#" class="dropbtn-msg">
-                <%= image_tag room_message.user.avatar %>
-              </a>
-              <div class="dropdown-msg-content">
-                <a href="#">profile</a>
-                <a href="#">duel</a>
-                <a href="#">kick</a>
-                <a href="#">ban</a>
-              </div>
-            </div>
-            <div class="message-field">
-              <h3>
-                <%= room_message.message %>
-              </h3>
-              <h3 class="message-info"><a href="#">deddara</a><a href="#">[ANUS]</a></h3>
-              <h3 class="message-info">
-                <%=room_message.created_at%>
-              </h3>
-            </div>
-          </div>
-          <% end %>
-          <div style="display:none;" data-role="message-template">
-          <div class="message">
-            <div class="dropdown-msg">
-              <a href="#" class="dropbtn-msg">
-                <img src="" class="avatar" alt="" data-role="user-avatar">
-              </a>
-              <div class="dropdown-msg-content">
-                <a href="#">profile</a>
-                <a href="#">duel</a>
-                <a href="#">kick</a>
-                <a href="#">ban</a>
-              </div>
-            </div>
-            <div class="message-field">
-              <h3 data-role="message-text">
-              </h3>
-              <h3 class="message-info"><a href="#">deddara</a><a href="#">[ANUS]</a></h3>
-              <h3 class="message-info" data-role="message-date">
-              </h3>
-          </div>
-          </div>
-        </div>
-      </div>
-      <div class="send-message">
-
-        <%= simple_form_for @room_message, remote: true do |form| %>
-          <%= form.input :message, as: :string, wrapper: false, label: false, input_html: { class: "msg-input" } %>
-            <%= form.submit "Send" , class: 'send-message-button' %>
-              <%= form.input :room_id, as: :hidden %>
-                <% end %>
-      </div>
-    </div>
+</div>
+  <%end%>
 
 
 

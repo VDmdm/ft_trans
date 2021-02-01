@@ -34,6 +34,9 @@ class User < ApplicationRecord
 
 	validates :nickname, presence: true, uniqueness: true
 
+	has_many :chat_room_members
+	has_many :rooms, :through => :chat_room_members, :source => :room
+
 	has_many :invitations
 	has_many :pending_invitations, -> { where confirmed: false }, class_name: "Invitation", foreign_key: "friend_id"
 
@@ -48,6 +51,12 @@ class User < ApplicationRecord
 		ids = friends_user_sent_inv + friends_user_got_inv
 		User.where(id: ids)
 	end
+
+	# def rooms
+	# 	usr_rooms = ChatRoomMember.where(user_id: id).pluck(:room_id)
+	# 	Room.where(id: usr_rooms)
+	# end
+	
   
 	def friends_with?(user)
 	  Invitation.confirmed_record?(id, user.id)

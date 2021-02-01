@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :room_messages
   resources :rooms
+
+  get 'chat_room_members/leave', to: "chat_room_members#leave"
+  get 'chat_room_members/new', to: "chat_room_members#new"
+
   get 'friends/index'
   root 'home#index'
 
