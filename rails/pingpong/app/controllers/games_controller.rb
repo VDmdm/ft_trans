@@ -2,6 +2,7 @@ class GamesController < ApplicationController
 
 	before_action :check_game_not_exist, only: [:show]
 	before_action :check_user_pending_game_exist, only: [:create]
+	before_action :check_game_is_not_ended, only: [:show]
 
 	def index
 		@games = Game.all
@@ -40,5 +41,10 @@ class GamesController < ApplicationController
 
 	def check_user_pending_game_exist
 		redirect_to games_path, alert: "You allready have a game" if current_user.pending_games?
+	end
+
+	def check_game_is_not_ended
+		game = Game.find_by(id: params[:id])
+		redirect_to games_path, alert: "Game has been ended!" if game.status == "ended"
 	end
 end

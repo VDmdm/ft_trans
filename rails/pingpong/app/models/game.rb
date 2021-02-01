@@ -5,7 +5,7 @@ class Game < ApplicationRecord
     belongs_to :p1, class_name: "User", foreign_key: "p1_id"
     belongs_to :p2, class_name: "User", foreign_key: "p2_id", optional: true
     
-    validates  :name, presence: true, length: { maximum: 15, minimum: 4 }, uniqueness: true
+    validates  :name, presence: true, length: { maximum: 15, minimum: 4 }
 
     validates  :rating, presence: true, allow_blank: true
     validates  :private, presence: true, allow_blank: true
@@ -32,7 +32,9 @@ class Game < ApplicationRecord
                     :paddle_L,
                     :max_speed,
                     :ball_down_rate,
-                    :ball
+                    :ball,
+                    :ball_down_rate,
+                    :score
 
     after_initialize :set_params
 
@@ -43,6 +45,10 @@ class Game < ApplicationRecord
         while true
             render()
             return if GameStateHash.instance.return_value("status_#{self.id}") == 'ended'
+            if (GameStateHash.instance.return_value("status_#{self.id}") != 'active')
+                sleep(1)
+                next
+            end
             check_collision()
             paddle_motion()
             if @ball[:reset]
@@ -65,6 +71,11 @@ class Game < ApplicationRecord
         @paddle_height = @grid * 6
         @min_paddle_y = @grid
         @max_paddle_y = @canvas_height - @grid - @paddle_height
+        @ball_down_rate = 0.05
+        @score = {
+            p1: 0,
+            p2: 0
+        }
 
         @paddle_R = {
             x: @canvas_width - @grid * 1.5,
@@ -83,8 +94,8 @@ class Game < ApplicationRecord
         }
 
         @ball = {
-            x: @canvas_width / 2 - (@grid / 2),
-            y: @canvas_height / 2 - (@grid / 2),
+            x: @canvas_width / 2 - ((@grid * self.ball_size) / 2),
+            y: @canvas_height / 2 -  ((@grid * self.ball_size) / 2),
             radius: @grid * self.ball_size,
             resset: false,
             dx: @speed,
@@ -103,8 +114,8 @@ class Game < ApplicationRecord
                     "ball_radius": self.ball[:radius],
                     "paddle_p1_y": self.paddle_L[:y],
                     "paddle_p2_y": self.paddle_R[:y],
-                    "p1_score": self.p1_score,
-                    "p2_score": self.p2_score }
+                    "p1_score": self.score[:p1],
+                    "p2_score": self.score[:p2] }
             GameChannel.broadcast_to self, data
         end
     end
@@ -141,15 +152,18 @@ class Game < ApplicationRecord
     def collides(obj_1, obj_2)
 		left_x = obj_1[:x]
 		right_x = obj_1[:x] + obj_1[:radius]
-		if (left_x >= obj_2[:x] && left_x <= obj_2[:x] + obj_2[:width] &&
-			obj_1[:y] >= obj_2[:y] && obj_1[:y] <= obj_2[:y] + obj_2[:height])
-            
-            obj_1[:x] = obj_2[:x] + obj_2[:width]
-			return true
-        elsif (right_x >= obj_2[:x] && right_x <= obj_2[:x] + obj_2[:width] &&
-				obj_1[:y] >= obj_2[:y] && obj_1[:y] <= obj_2[:y] + obj_2[:height])
-			obj_1[:x] = obj_2[:x] - obj_1[:radius]
-			return true
+		if ((left_x >= obj_2[:x] && left_x <= obj_2[:x] + obj_2[:width]) &&
+			((obj_1[:y] >= obj_2[:y] && obj_1[:y] <= obj_2[:y] + obj_2[:height]) || 
+            (obj_1[:y] + obj_1[:radius] >= obj_2[:y] &&
+            obj_1[:y] + obj_1[:radius] <= obj_2[:y] + obj_2[:height])))
+                obj_1[:x] = obj_2[:x] + obj_2[:width]
+			    return true
+        elsif ((right_x >= obj_2[:x] && right_x <= obj_2[:x] + obj_2[:width]) &&
+            ((obj_1[:y] >= obj_2[:y] && obj_1[:y] <= obj_2[:y] + obj_2[:height]) || 
+            (obj_1[:y] + obj_1[:radius] >= obj_2[:y] &&
+            obj_1[:y] + obj_1[:radius] <= obj_2[:y] + obj_2[:height])))
+			    obj_1[:x] = obj_2[:x] - obj_1[:radius]
+			    return true
         end
 		return false
     end
@@ -175,31 +189,31 @@ class Game < ApplicationRecord
     def update_game_condition
         if (@ball[:reset])
 			if ((@ball[:x] + @ball[:radius]) + @ball[:dx] >= @canvas_width)
-				self.p1_score += 1
+				@score[:p1] += 1
 			else
-                self.p2_score += 1;
+                @score[:p2] += 1;
             end
-            if (p1_score == 21 || p2_score == 21)
+            if (@score[:p1] == 21 || @score[:p2] == 21)
                 GameStateHash.instance.add_kv("status_#{self.id}", "ended")
                 GameStateHash.instance.delete_key("paddle_p2_#{self.id}")
                 GameStateHash.instance.delete_key("paddle_p1_#{self.id}")
+                self.reload
                 self.status = :ended
+                self.p1_score = @score[:p1]
+                self.p2_score = @score[:p2]
                 self.save
                 return false
             end
-			@ball[:x] = @canvas_width / 2
-			@ball[:y] = @canvas_height / 2
+            @ball[:radius] = @grid * self.ball_size
+			@ball[:x] = @canvas_width / 2 - (@ball[:radius] / 2)
+			@ball[:y] = @canvas_height / 2 - (@ball[:radius] / 2)
 			@ball[:reset] = false
-			@ball[:radius] = @grid * self.ball_size
 			@ball[:dx] = @speed
 			@ball[:dy] = -@speed
 			return true
         end
 		return false
     end
-
-
-
 
 
 end

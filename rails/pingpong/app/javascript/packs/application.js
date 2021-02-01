@@ -249,13 +249,15 @@ window.start_game_preview = function() {
 		var left_x = obj_1.x;
 		var right_x = obj_1.x + (obj_1.radius);
 		if (left_x >= obj_2.x && left_x <= obj_2.x + obj_2.width &&
-			obj_1.y >= obj_2.y && obj_1.y <= obj_2.y + obj_2.height)
+			((obj_1.y >= obj_2.y && obj_1.y <= obj_2.y + obj_2.height) || 
+			  obj_1.y + obj_1.radius >= obj_2.y && obj_1.y + obj_1.radius <= obj_2.y + obj_2.height))
 		{
 			obj_1.x = obj_2.x + obj_2.width;
 			return true;
 		}
 		else if (right_x >= obj_2.x && right_x <= obj_2.x + obj_2.width &&
-				obj_1.y >= obj_2.y && obj_1.y <= obj_2.y + obj_2.height)
+				((obj_1.y >= obj_2.y && obj_1.y <= obj_2.y + obj_2.height) || 
+				(obj_1.y + obj_1.radius >= obj_2.y && obj_1.y + obj_1.radius <= obj_2.y + obj_2.height)))
 		{
 			obj_1.x = obj_2.x - obj_1.radius;
 			return true;

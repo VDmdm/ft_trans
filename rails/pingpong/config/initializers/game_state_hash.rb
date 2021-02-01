@@ -16,7 +16,7 @@ class GameStateHash < Hash
     end
 
     def delete_key(key)
-        self[key].delete if self[key]
+        self.delete(key)
     end
 
 end
