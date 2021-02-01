@@ -115,7 +115,7 @@ window.start_game_preview = function() {
 	grid = 13;
 	paddleHeight = grid * 6;
 	maxPaddleY = canvas.height - grid - paddleHeight;
-	paddleSpeed = 6;
+	paddleSpeed = 4;
 
 	leftPaddle = {
 		x: grid / 2,
@@ -291,7 +291,7 @@ window.start_game_preview = function() {
 	const output = document.getElementById('output');
 
 	if (window.FileList && window.File && window.FileReader) {
-		document.getElementById('upload-bg-image').addEventListener('change', event => {
+		document.getElementById('game_room_upload-bg-image').addEventListener('change', event => {
 			output.src = '';
 			file_exist = false;
 			document.getElementById('file_exist').value = false;

@@ -1,73 +1,77 @@
 <h1 class="game-room-create-title">Create a game</h1>
 <section class="game-room-form-and-game-preview">
-    <div class="game-room-create-contour-up">
-        <canvas id="game-preview" width="716px" height="346px"></canvas>
-        <div class="game-room-create-form">
-            <div class="game-room-create-form-el">
-                <label>Name</label>
-                <input type="text" class="game-room-name-input">
-            </div>
-            <div class="game-room-create-form-el">
-                <label>Private?</label>
-                <input type="checkbox" class="game-room-private-checkbox">
-                <label class="game-room-rating-label">Rating?</label>
-                <input type="checkbox" class="game-room-rating-checkbox">
-            </div>
-            <div class="game-room-create-form-el">
-                <label>Passcode</label>
-                <input type="text" class="game-room-passcode-input">
-            </div>
-            <div class="game-room-create-form-el">
-                <label>Background</label>
-                <input type="color" value="#000000" class="game-room-bg-color-input"
-                    oninput="change_backcolor(this.value)">
-                <label>or</label>
-                <label for="upload-bg-image" class="upload-file-label">file</label>
-                <input type="file" id="upload-bg-image">
-                <input type="hidden" id='file_exist' %>
-                <img id="output" style="display: none;">
-            </div>
-            <div class="game-room-create-form-el">
-                <label>Paddle</label>
-                <input type="color" value="#ffffff" class="game-room-paddle-color-input"
-                    oninput="change_paddlecolor(this.value)">
-            </div>
-        </div>
-    </div>
-    <h4 class="game-room-create-title">Ball settings</h4>
-    <div class="game-room-create-contour-down">
-        <div class="game-room-create-settings-create-btn">
-            <div class="game-room-ball-setting-form">
-                <div class="game-room-ball-setting-left">
-                    <label>Color</label>
-                    <input type="color" value="#ffffff" class="color-left" oninput="change_ballcolor(this.value)">
+    <%= form_for GameRoom.new, remote: true do |form| %>
+        <div class="game-room-create-contour-up">
+            <canvas id="game-preview" width="716px" height="346px"></canvas>
+            <div class="game-room-create-form">
+                <div class="game-room-create-form-el">
+                    <%= form.label :name %>
+                    <%= form.text_field :name, class: "game-room-name-input" %>
                 </div>
-                <div class="game-room-ball-setting-right">
-                    <label>Random?</label>
-                    <input type="checkbox" class="checkbox-right" oninput="change_randommode(this.value)">
+                <div class="game-room-create-form-el">
+                    <%= form.label :private %>
+                    <%= form.check_box :private, class: "game-room-private-checkbox" %>
+                    <%= form.label :rating, class: "game-room-rating-label" %>
+                    <%= form.check_box :rating, class: "game-room-rating-checkbox" %>
                 </div>
-                <div class="game-room-ball-setting-left">
-                    <label>Size</label>
-                    <output id="input_value_size">1</output>
-                    <input type="range" min="0.5" max="2" step="0.1" value="1" oninput="change_ballsize(this.value)">
+                <div class="game-room-create-form-el">
+                    <%= form.label :passcode %>
+                    <%= form.text_field :passcode, class: "game-room-passcode-input" %>
                 </div>
-                <div class="game-room-ball-setting-right">
-                    <label>size down?</label>
-                    <input type="checkbox" class="checkbox-right" oninput="change_balldownmode(this.value)">
+                <div class="game-room-create-form-el">
+                    <%= form.label :bg_color, "Background" %>
+                    <%= form.color_field :bg_color, class: "game-room-bg-color-input",
+                                                    value: "#000000", oninput: "change_backcolor(this.value)" %>
+                    <label>or</label>
+                    <%= form.label "upload-bg-image", "file", class: "upload-file-label" %>
+                    <%= form.file_field :bg_image, id: "game_room_upload-bg-image"%>
+                    <%= hidden_field_tag :file_exist, false, id: 'file_exist' %>
+                    <img id="output" style="display: none;">
                 </div>
-                <div class="game-room-ball-setting-left">
-                    <label>Speed</label>
-                    <output id="input_value_speed">1</output>
-                    <input type="range" min="0.5" max="2" step="0.1" value="1" oninput="change_ballspeed(this.value)">
-                </div>
-                <div class="game-room-ball-setting-right">
-                    <label>speed up?</label>
-                    <input type="checkbox" class="checkbox-right" oninput="change_speedup(this.value)">
+                <div class="game-room-create-form-el">
+                    <%= form.label :paddle_color, "Paddle" %>
+                    <%= form.color_field :paddle_color, class: "game-room-paddle-color-input",
+                                                    value: "#ffffff", oninput: "change_paddlecolor(this.value)" %>
                 </div>
             </div>
         </div>
-        <div class="game-room-create-submit-btn">
-            <button class="submit-btn">Create</button>
+        <h4 class="game-room-create-title">Ball settings</h4>
+        <div class="game-room-create-contour-down">
+            <div class="game-room-create-settings-create-btn">
+                <div class="game-room-ball-setting-form">
+                    <div class="game-room-ball-setting-left">
+                        <%= form.label :ball_color, "Color" %>
+                        <%= form.color_field :ball_color, class: "color-left",
+                                                    value: "#ffffff", oninput: "change_ballcolor(this.value)" %>
+                    </div>
+                    <div class="game-room-ball-setting-right">
+                        <%= form.label :random_mode, "Random?" %>
+                        <%= form.check_box :random_mode, class: "checkbox-right", oninput: "change_randommode(this.value)" %>
+                    </div>
+                    <div class="game-room-ball-setting-left">
+                        <%= form.label :ball_size, "Size" %>
+                        <output id="input_value_size">1</output>
+                        <%= form.range_field :ball_size, value: 1, min: "0.5", max: "2", step: "0.1", oninput: "change_ballsize(this.value)" %>
+                    </div>
+                    <div class="game-room-ball-setting-right">
+                        <%= form.label :ball_down_mode, "size down?" %>
+                        <%= form.check_box :ball_down_mode, class: "checkbox-right", oninput: "change_balldownmode(this.value)" %>
+                    </div>
+                    <div class="game-room-ball-setting-left">
+                        <%= form.label :speed_rate, "Size" %>
+                        <output id="input_value_speed">1</output>
+                        <%= form.range_field :speed_rate, value: 1, min: "0.5", max: "2", step: "0.1", oninput: "change_ballspeed(this.value)" %>
+                    </div>
+                    <div class="game-room-ball-setting-right">
+                        <%= form.label :ball_speedup_mode, "speed up?" %>
+                        <%= form.check_box :ball_speedup_mode, class: "checkbox-right", oninput: "change_speedup(this.value)" %>
+                    </div>
+                </div>
+            </div>
+            <div class="game-room-create-submit-btn">
+                <%= form.submit "Create", class: "submit-btn" %>
+            </div>
+       
         </div>
-    </div>
+    <% end %>
 </section>
