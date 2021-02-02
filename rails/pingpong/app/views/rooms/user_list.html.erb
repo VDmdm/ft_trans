@@ -12,13 +12,13 @@
         <%= link_to image_tag("arrow.png" , style: "height:40px;width:40px;margin-top:5px" ), room_path(@room) %>
           <%= image_tag "man.png" , style: "height:55px;width:55px;" %>
             <h3 style="font-size: 25px;margin-top:10px">
-              <%= @room.chat_room_members.length %>
+              <%= @room.members.length %>
             </h3>
             <h3 class="header-room-name">
               <%=@room.name%>
             </h3>
             <h3 class="messages-leave">
-              <%= link_to "leave" , chat_room_members_leave_path(room_id: @room.id) %>
+              <%= link_to "leave" , chat_room_members_leave_path(room_id: @room.id, user_id: current_user.id) %>
             </h3>
       </div>
       <span class="messages-line"></span>
@@ -43,8 +43,12 @@
                  <a href="#">make admin</a>
                 <%end%>
                 <a href="#">mute</a>
-                  <a href="#">kick</a>
-                  <a href="#">ban</a>
+                <%= link_to "kick", chat_room_members_leave_path(user_id: user.id, room_id: @room.id) %>
+                <% if !@room.is_banned?(user) %>
+                <%= link_to "ban", ban_chat_member_path(user_id: user.id, room_id: @room.id),  method: :post, remote: true %>
+                <%else%>
+                 <%= link_to "unban", unban_chat_member_path(user_id: user.id, room_id: @room.id),  method: :post, remote: true %>
+                 <%end%>
               </div>
               <%end%>
 
@@ -90,10 +94,14 @@
                           <h3>
                             <%= link_to guild_path(user.guild), style: "color:#616F39;" do %>
                               [<%=user.guild.anagram%>]
+                              
                                 <%end%>
-                                <a href="#" style="margin-left:auto;">unban</a>
                           </h3>
+
                           <%end%>
+                          <div style="margin-left:auto;margin-top:auto;margin-bottom:auto;margin-right:auto">
+                          <%= link_to "unban", unban_chat_member_path(user_id: user.id, room_id: @room.id),  method: :post, remote: true %>
+                          </div>
                     </div>
                   </div>
                   <% end %>

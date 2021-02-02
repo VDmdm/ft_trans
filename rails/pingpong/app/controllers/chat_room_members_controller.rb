@@ -36,11 +36,23 @@ class ChatRoomMembersController < ApplicationController
 
 	def ban
 		record = ChatRoomMember.all.find_by(user_id: params[:user_id], room_id: params[:room_id])
-		record.update_attribute(banned: true)
+		
+		if record.update_attribute(:banned, true)
+			redirect_to room_path(params[:room_id]), success: "Successfully banned"
+		else
+			redirect_to room_path(params[:room_id]), success: "Failed to ban"
+		end
+		# <%= link_to "decline join request", decline_join_request_path(@guild, user_id: member), method: :post, remote: true %>
 	end
 
 	def unban
-
+		record = ChatRoomMember.all.find_by(user_id: params[:user_id], room_id: params[:room_id])
+		
+		if record.update_attribute(:banned, false)
+			redirect_to room_path(params[:room_id]), success: "Successfully unbanned"
+		else
+			redirect_to room_path(params[:room_id]), success: "Failed to unban"
+		end
 	end
 
 	def make_admin

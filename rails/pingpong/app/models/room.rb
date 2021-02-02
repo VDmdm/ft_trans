@@ -32,4 +32,11 @@ class Room < ApplicationRecord
 		end
 		return false
 	end
+
+	def is_banned?(user)
+		if self.banned_users.find_by(id: user.id)
+			return true
+		end
+		return false
+	end
 end

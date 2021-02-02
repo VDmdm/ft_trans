@@ -2,7 +2,7 @@
   <div class="messages-header">
     <%= link_to (image_tag "man.png" , style: "height:55px;width:55px;" ), rooms_users_path %>
       <h3 style="font-size: 25px;margin-top:10px">
-        <%= @room.chat_room_members.length %>
+        <%= @room.members.length %>
       </h3>
       <h3 class="header-room-name">
         <%=@room.name%>
@@ -27,7 +27,11 @@
                   <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
                     <a href="#">mute</a>
                     <%= link_to "kick", chat_room_members_leave_path(user_id: room_message.user.id, room_id: @room.id) %>
-                    <%= link_to "ban", ban_chat_member_path(user_id: room_message.user.id, room_id: @room.id) %>
+                    <% if !@room.is_banned?(room_message.user) %>
+                    <%= link_to "ban", ban_chat_member_path(user_id: room_message.user.id, room_id: @room.id),  method: :post, remote: true %>
+                    <%else%>
+                     <%= link_to "unban", unban_chat_member_path(user_id: room_message.user.id, room_id: @room.id),  method: :post, remote: true %>
+                     <%end%>
                     <%end%>
               </div>
               <%end%>
@@ -65,8 +69,10 @@
                         <a href="#">block</a>
                         <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
                           <a href="#">mute</a>
-                          <a href="#">kick</a>
-                          <a href="#">ban</a>
+                          <%= link_to "kick", chat_room_members_leave_path, "data-role"=> "kick-href" %>
+                          <%= link_to ban_chat_member_path, "data-role"=> "ban-href", method: :post, remote: true do %>
+                          <span data-role="ban-text"></span>
+                          <%end%>
                           <%end%>
                   </div>
             </div>

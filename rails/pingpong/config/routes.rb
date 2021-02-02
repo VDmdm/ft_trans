@@ -6,10 +6,11 @@ Rails.application.routes.draw do
   get   'rooms/users/:id', to: 'rooms#user_list',  as: :rooms_users
   post 'rooms/password_enter', to: "rooms#password_enter", as: :rooms_password_enter
 
-  post 'chat_room_members/create', to: "chat_room_members#create"
   get 'chat_room_members/leave', to: "chat_room_members#leave"
   get 'chat_room_members/new', to: "chat_room_members#new"
-  get 'chat_room_members/ban', to: "chat_room_members##ban", as: :ban_chat_member
+  post 'chat_room_members/create', to: "chat_room_members#create"
+  post 'chat_room_members/ban', to: "chat_room_members#ban", as: :ban_chat_member
+  post 'chat_room_members/unban', to: "chat_room_members#unban", as: :unban_chat_member
 
   get 'friends/index'
   root 'home#index'

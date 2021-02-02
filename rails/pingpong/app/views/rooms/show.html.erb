@@ -9,7 +9,7 @@
 <% if @room.is_room_member?(current_user) %>
   <%= render 'rooms/messages' %>
 
-  <% elsif @room.password %>
+<% elsif @room.password %>
 
   <div>
   <div class="messages-header">
@@ -26,7 +26,18 @@
     <% end %>
   </div>
   </div>
-
+<% elsif @room.is_banned?(current_user) %>
+<div>
+<div class="messages-header">
+  <h3 class="header-room-name" style="margin-right:auto;">
+    <%=@room.name%>
+  </h3>
+</div>
+<span class="messages-line"></span>
+  <div class="msg-welcome-msg" style="margin-top:300px;">
+    <h3 style="color:#B2463E">YOU HAVE BEEN DOOMED HERE</h3>
+  </div>
+</div>
   <% else %>
   <div>
   <div class="messages-header">

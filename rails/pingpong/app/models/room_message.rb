@@ -6,9 +6,9 @@ class RoomMessage < ApplicationRecord
   validates :message, presence: true
   def as_json(options)
     if (user.guild)
-      super(options).merge(user_avatar: rails_blob_path(user.avatar, only_path: true), user_nickname: user.nickname, user_guild: user.guild.anagram, user_guild_id: user.guild.id)
+      super(options).merge(user_avatar: rails_blob_path(user.avatar, only_path: true), user_nickname: user.nickname, user_guild: user.guild.anagram, user_guild_id: user.guild.id, banned_users: self.room.banned_users)
     else
-      super(options).merge(user_avatar: rails_blob_path(user.avatar, only_path: true), user_nickname: user.nickname)
+      super(options).merge(user_avatar: rails_blob_path(user.avatar, only_path: true), user_nickname: user.nickname, banned_users: self.room.banned_users)
     end
 
   end
