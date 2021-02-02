@@ -1,0 +1,76 @@
+<div class="chat-rooms-page-header">
+  <h4>Chat</h4>
+</div>
+
+<section class="chat-rooms-page-interface">
+
+
+  <%= render 'rooms/sidebar' %>
+
+    <div class="messages-interface">
+      <div class="messages-header">
+      <%= link_to image_tag("arrow.png" , style: "height:40px;width:40px;margin-top:5px"), room_path(@room) %>
+        <%= image_tag "man.png" , style: "height:55px;width:55px;" %>
+        <h3 style="font-size: 25px;margin-top:10px">
+          <%= @room.chat_room_members.length %>
+        </h3>
+        <h3 class="header-room-name">
+          <%=@room.name%>
+        </h3>
+        <h3 class="messages-leave">
+          <%= link_to "leave" , chat_room_members_leave_path(room_id: @room.id) %>
+        </h3>
+      </div>
+      <span class="messages-line"></span>
+      <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
+        <div class="room-users" style="height:400px">
+      <%else%>
+            <div class="room-users">
+      <%end%>
+                <% @users.each do |user| %>
+                  <div class="room-user">
+                    <div class="room-user-content">
+                      <%= link_to image_tag(user.avatar, style: "width: 50px; height: 50px; margin-right:10px;" ),
+                        profile_path(user) %>
+                        <h3>
+                          <%= link_to user.nickname, profile_path(user)%>
+                        </h3>
+                        <% if user.guild %>
+                          <h3>
+                            <%= link_to guild_path(user.guild), style: "color:#616F39;" do %>
+                              [<%=user.guild.anagram%>]
+                                <%end%>
+                          </h3>
+                          <%end%>
+                    </div>
+                  </div>
+                  
+                  <% end %>
+            </div>
+            <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
+            <h3 class="chat-rooms-text">Banned users</h3>
+            <span class="chat-rooms-line"></span>
+            <div class="room-users", style="height: 300px">
+            <% @banned_users.each do |user| %>
+              <div class="room-user">
+                <div class="room-user-content">
+                  <%= link_to image_tag(user.avatar, style: "width: 50px; height: 50px; margin-right:10px;" ),
+                    profile_path(user) %>
+                    <h3>
+                      <%= link_to user.nickname, profile_path(user)%>
+                    </h3>
+                    <% if user.guild %>
+                      <h3>
+                        <%= link_to guild_path(user.guild), style: "color:#616F39;" do %>
+                          [<%=user.guild.anagram%>]
+                            <%end%>
+                      </h3>
+                      <%end%>
+                </div>
+              </div>
+              <% end %>
+            </div>
+            <% end %>
+        </div>
+
+</section>

@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resources :room_messages
   resources :rooms
 
+
+  get   'rooms/users/:id', to: 'rooms#user_list',  as: :rooms_users
   post 'rooms/password_enter', to: "rooms#password_enter", as: :rooms_password_enter
 
   post 'chat_room_members/create', to: "chat_room_members#create"

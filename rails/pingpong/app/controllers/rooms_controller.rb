@@ -9,13 +9,18 @@ class RoomsController < ApplicationController
 		@room = Room.new
 	end
 
+	def user_list
+		room = Room.all.find(params[:id])
+		@users = room.members
+		@banned_users = room.banned_users
+	end
+
 	def show
 		@room_message = RoomMessage.new room: @room
 		@room_messages = @room.room_messages.includes(:user)
 	end
 
 	def create
-		p params
 		@room = Room.new parameters
 		
 		if @room.save

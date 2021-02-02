@@ -334,3 +334,25 @@ input[type="checkbox"] {
 
     border: 1px solid #FFFFFF;
 }
+
+.room-users{
+    height: 750px;
+    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.room-user{
+    height: 80px;
+    min-width: 280px;
+    border: 1px solid white;
+    display: flex;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.room-user-content{
+    margin-top: 15px;
+    margin-left: 15px;
+    display: flex;
+}
