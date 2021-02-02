@@ -4,7 +4,6 @@ class ChatRoomMembersController < ApplicationController
 
 
 	def new
-		p params
 		member = ChatRoomMember.new(user: current_user, room_id: params[:room_id])
 		if member.save
 			redirect_to room_path(member.room_id)
@@ -14,7 +13,6 @@ class ChatRoomMembersController < ApplicationController
 	end
 
 	def create
-		p params
 		member = ChatRoomMember.new(user: current_user, room_id: params[:room_id])
 		if member.save
 			redirect_to room_path(member.room_id)

@@ -3,7 +3,7 @@
         <a href="#">
           <%= image_tag "man.png" , style: "height:55px;width:55px;" %>
         </a>
-        <h3 style="font-size: 25px;margin-top:10px">50</h3>
+        <h3 style="font-size: 25px;margin-top:10px"><%= @room.chat_room_members.length %></h3>
         <h3 class="header-room-name">
           <%=@room.name%>
         </h3>
@@ -47,7 +47,7 @@
                 <img src="" class="avatar" alt="" data-role="user-avatar">
               </a>
               <div class="dropdown-msg-content">
-                <%= link_to profile_path, "data-role" => "user-id" do %>
+                <%= link_to profiles_path, "data-role" => "user-id" do %>
                   <span data-role="user-nickname"></span>
                 <%end%>
                 <a href="#">duel</a>

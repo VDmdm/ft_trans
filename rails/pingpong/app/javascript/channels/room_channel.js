@@ -17,7 +17,7 @@ $(document).on("turbolinks:load", function() {
 		  received: function(data) {
 			var content = messageTemplate.children().clone(true, true);
 			content.find('[data-role="user-avatar"]').attr('src', data.user_avatar);
-			content.find('[data-role="user-id"]').attr('a', data.user_id);
+			content.find('[data-role="user-id"]').attr('href', function() { return $(this).attr("href") + "/"+data.user_id});
 			content.find('[data-role="user-nickname"]').text(data.user_nickname);
 			content.find('[data-role="user-guild"]').text(data.user_guild);
 			content.find('[data-role="user-guild-id"]').attr('a', data.user_guild_id);
