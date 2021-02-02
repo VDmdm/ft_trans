@@ -1,9 +1,51 @@
-<h1>guilds</h1>
-
 <% @guilds.each do |guild| %>
-
 	<h3> <%= link_to guild.name, guild_path(guild) %> </h3>
-
 <%end%>
 
-<h2><%= link_to "Create a guild", new_guild_path %> </h2>
+<section class="guilds">
+	<h2 class="guilds-title">Guilds <%= link_to "+", new_guild_path %></h2>
+	<div class="guilds-invite">
+		<h3 class="guilds-invite-title">You have some invites</h3>
+		<ul class="guilds-invite-list">
+			<li class="guilds-invite-item">
+				<img src="assets/images/sword.png" alt="avatar" class="guilds-invite-item-avatar">
+				<div class="guilds-invite-item-wrap">
+					<span class="guilds-invite-item-name">Anal</span>
+					<span class="guilds-invite-item-anagram">[ZHOPA]</span>
+				</div>
+				<div class="guilds-invite-item-action">
+					<button class="guilds-invite-item-accept">
+						<%= image_tag "ok.png", class: "guilds-invite-item-accept-icon" %>
+					</button>
+					<button class="guilds-invite-item-cancel">
+						<%= image_tag "delete.png", class: "guilds-invite-item-cancel-icon" %>
+					</button>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<table class="guild-table" align="left">
+		<tr class="guild-table-title">
+			<th class="table-title guild-table-title-rank">rank</th>
+			<th class="table-title guild-table-title-score">score</th>
+			<th class="table-title guild-table-title-name">name</th>
+			<th class="table-title guild-table-title-owner">owner</th>
+			<th class="table-title guild-table-title-wars">wars</th>
+		</tr>
+		<tr class="guild-table-row">
+			<td class="guild-table-row guild-table-row-rank">100</td>
+			<td class="guild-table-row guild-table-row-score">1000</td>
+			<td class="guild-table-row guild-table-row-name">Anal power!!!</td>
+			<td class="guild-table-row guild-table-row-owner">deddara</td>
+			<td class="guild-table-row guild-table-row-wars">24/12</td>
+		</tr>
+		<tr class="guild-table-row">
+			<td class="guild-table-row guild-table-row-rank">100</td>
+			<td class="guild-table-row guild-table-row-score">1000</td>
+			<td class="guild-table-row guild-table-row-name">Anal power!!!</td>
+			<td class="guild-table-row guild-table-row-owner">deddara</td>
+			<td class="guild-table-row guild-table-row-wars">24/12</td>
+		</tr>
+	</table>
+</section>
