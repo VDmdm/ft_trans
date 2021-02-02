@@ -27,7 +27,7 @@
               <h3>
                 <%= room_message.message %>
               </h3>
-              <h3 class="message-info"><%= link_to "deddara", profile_path(room_message.user)%>
+              <h3 class="message-info"><%= link_to room_message.user.nickname, profile_path(room_message.user)%>
               <% if room_message.user.guild %>
               <%= link_to guild_path(room_message.user.guild), style: "color:#616F39;" do %>
                 [<%=room_message.user.guild.anagram%>]  
@@ -43,9 +43,9 @@
           <div style="display:none;" data-role="message-template">
           <div class="message">
             <div class="dropdown-msg">
-              <a href="#">
+              <%= link_to profiles_path, "data-role" => "user-id" do %>
                 <img src="" class="avatar" alt="" data-role="user-avatar">
-              </a>
+              <%end%>
               <div class="dropdown-msg-content">
                 <%= link_to profiles_path, "data-role" => "user-id" do %>
                   <span data-role="user-nickname"></span>
@@ -59,11 +59,11 @@
               <h3 data-role="message-text">
               </h3>
               <h3 class="message-info">
-              <%= link_to profile_path, "data-role" => "user-id" do %>
+              <%= link_to profiles_path, "data-role" => "user-id" do %>
                 <span data-role="user-nickname"></span>
               <%end%>
-              <%= link_to guild_path, "data-role" => "user-guild-id", style: "color:#616F39;" do %>
-                [<span data-role="user-guild"></span>]
+              <%= link_to guilds_path, "data-role" => "user-guild-id", style: "color:#616F39;display:;" do %>
+                <span data-role="user-guild"></span>
               <%end%>
               </h3>
               <h3 class="message-info" data-role="message-date">
