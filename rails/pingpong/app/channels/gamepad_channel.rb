@@ -6,6 +6,7 @@ class GamepadChannel < ApplicationCable::Channel
 		# stream_from "some_channel"
 		game = Game.find(params[:game_room])
 		if (current_user == game.p1 || current_user == game.p2)
+			GameStateHash.instance.add_kv("#{status}_status_#{game.id}", "not ready")
 			stream_for game
 		else
 			return
@@ -14,6 +15,16 @@ class GamepadChannel < ApplicationCable::Channel
 
 	def unsubscribed
 		# Any cleanup needed when channel is unsubscribed
+		if current_user.pending_games_p1 
+			game = current_user.pending_games_p1
+			status = "p1"	
+		elsif current_user.pending_games_p2
+			game = current_user.pending_games_p2
+			status = "p2"
+		end
+		if GameStateHash.instance.return_value("#{status}_status_#{game.id}") != "leave"
+			GameStateHash.instance.add_kv("#{status}_status_#{game.id}", "lags")
+		end
 	end
 
 	def receive(data)

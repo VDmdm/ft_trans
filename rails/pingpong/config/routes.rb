@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   post 'guilds/:id/cancel_join_request', to: "guild_invites#cancel_join_request", as: :cancel_join_request
 
   resources :games
+  post 'games/:id/join_player', to: "games#join_player", as: :game_join_player
+  post 'games/:id/switch_ready', to: "games#switch_ready", as: :game_switch_ready
+  post 'games/:id/leave_player', to: "games#leave_player", as: :game_leave_player
 
   resources :profiles
 

@@ -1,8 +1,10 @@
 class GamesController < ApplicationController
 
-	before_action :check_game_not_exist, only: [:show]
-	before_action :check_user_pending_game_exist, only: [:create]
-	before_action :check_game_is_not_ended, only: [:show]
+	before_action :check_game_not_exist, only: [:show, :join_player]
+	before_action :check_user_pending_game_exist, only: [:create, :join_player]
+	before_action :check_game_is_ended, only: [:show, :join_player, :leave_games]
+	before_action :check_game_allready_have_p2, only: [:join_player]
+	before_action :check_passcode_wrong, only: [:join_player]
 
 	def index
 		@games = Game.all
@@ -26,12 +28,58 @@ class GamesController < ApplicationController
 		@game = Game.find(params[:id])
 	end
 
+	def join_player
+		game = Game.find(params[:id])
+        game.p2 = current_user
+        unless game.save
+            redirect_to games_path, alert: game.errors.full_messages.join("; ")
+        else
+            redirect_to game_path(game_room.id), success: "success!"
+        end
+	end
+
+	def leave_player
+		game = Game.find(params[:id])
+		if current_user == game.p1
+			if (GameStateHash.instance.return_value("status_#{game.id}") == 'waiting')
+            	game.destroy
+				redirect_to games_path, notice: "Game has been destroyed!"
+			else
+				GameStateHash.instance.add_kv("#p1_status_#{game.id}", "leave")
+				redirect_to game_path(game_room.id), success: "You leave!"
+			end
+		elsif current_user == game.p2
+			if (GameStateHash.instance.return_value("status_#{game.id}") == 'waiting')
+				game.p2 = nil
+				game.save
+			else
+				GameStateHash.instance.add_kv("#p2_status_#{game.id}", "leave")
+			end
+			redirect_to game_path(game_room.id, success: "You leave!")
+        end
+	end
+
+	def switch_ready
+		game = Game.find(params[:id])
+		if current_user == game.p1
+			string = "p1"
+		else
+			string = "p2"
+		end
+		status = GameStateHash.instance.return_value("p1_status_#{game.id}")
+		if !status
+			GameStateHash.instance.add_kv("#{status}_status_#{game.id}", "ready")
+		elsif status == "ready"
+			GameStateHash.instance.add_kv("#{status}_status_#{game.id}", "not ready")
+		end
+	end
+
 	private
 	def game_params
-		params.require(:game).permit(		:name, :private, :rating, :passcode, :bg_color,
-											:paddle_color, :ball_color, :ball_down_mode,
-											:ball_speedup_mode, :random_mode, :ball_size,
-											:speed_rate, :bg_image );
+		params.require(:game).permit(	:name, :private, :rating, :passcode, :bg_color,
+										:paddle_color, :ball_color, :ball_down_mode,
+										:ball_speedup_mode, :random_mode, :ball_size,
+										:speed_rate, :bg_image );
 	end
 
 	def check_game_not_exist
@@ -43,8 +91,19 @@ class GamesController < ApplicationController
 		redirect_to games_path, alert: "You allready have a game" if current_user.pending_games?
 	end
 
-	def check_game_is_not_ended
+	def check_game_is_ended
 		game = Game.find_by(id: params[:id])
 		redirect_to games_path, alert: "Game has been ended!" if game.status == "ended"
+	end
+
+	def check_game_allready_have_p2
+		game = Game.find_by(id: params[:id])
+		redirect_to game_path(game), alert: "Game is full" if game.p2
+	end
+
+	def check_passcode_wrong
+		game = Game.find_by(id: params[:id])
+		redirect_to game_path(game), alert: "Wrong passcode" if game.private &&
+												game.passcode != params[:passcode]
 	end
 end
