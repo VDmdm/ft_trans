@@ -178,7 +178,7 @@
     left: 0;
     background-color: black;
     min-width: 100px;
-    min-height: 150px;
+    min-height: 80px;
     z-index: 1;
     border: 1px white solid;
     font-size: 25px;
@@ -346,7 +346,6 @@ input[type="checkbox"] {
     height: 80px;
     min-width: 280px;
     border: 1px solid white;
-    display: flex;
     margin-left: 20px;
     margin-top: 20px;
 }

@@ -19,8 +19,12 @@ $(document).on("turbolinks:load", function() {
 			var time = data.updated_at.substring(11, 19) + " UTC";
 			var content = messageTemplate.children().clone(true, true);
 			content.find('[data-role="user-avatar"]').attr('src', data.user_avatar);
-			content.find('[data-role="user-id"]').attr('href', function() { return $(this).attr("href") + "/"+data.user_id});
+			content.find('[data-role="user-id"]').attr('href', function() { return $(this).attr("href") + "/" + data.user_id});
 			content.find('[data-role="user-nickname"]').text(data.user_nickname);
+			// if (data.user_id == data.current_user_id)
+			 if (content.find('[data-role="user-id"]').attr('id') == data.user_id)
+				content.find('[data-role="curr_user"]').css('display', 'none');
+
 			if (!data.user_guild)
 				content.find('[data-role="user-guild"]').css('display', 'hidden');
 			else{

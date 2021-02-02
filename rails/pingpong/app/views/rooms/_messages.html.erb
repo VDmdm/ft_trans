@@ -1,81 +1,99 @@
 <div>
-      <div class="messages-header">
-        <%= link_to (image_tag "man.png", style: "height:55px;width:55px;"), rooms_users_path %>
-        <h3 style="font-size: 25px;margin-top:10px"><%= @room.chat_room_members.length %></h3>
-        <h3 class="header-room-name">
-          <%=@room.name%>
-        </h3>
-        <h3 class="messages-leave"><%= link_to "leave", chat_room_members_leave_path(room_id: @room.id) %></h3>
-      </div>
-      <span class="messages-line"></span>
+  <div class="messages-header">
+    <%= link_to (image_tag "man.png" , style: "height:55px;width:55px;" ), rooms_users_path %>
+      <h3 style="font-size: 25px;margin-top:10px">
+        <%= @room.chat_room_members.length %>
+      </h3>
+      <h3 class="header-room-name">
+        <%=@room.name%>
+      </h3>
+      <h3 class="messages-leave">
+        <%= link_to "leave" , chat_room_members_leave_path(user_id: current_user.id, room_id: @room.id) %>
+      </h3>
+  </div>
+  <span class="messages-line"></span>
 
-      <div class="messages" data-channel-subscribe="room" data-room-id="<%= @room.id %>">
-        <% @room_messages.each do |room_message| %>
-          <div class="message">
-            <div class="dropdown-msg">
-              <%= link_to image_tag(room_message.user.avatar),  profile_path(room_message.user) %>
+  <div class="messages" data-channel-subscribe="room" data-room-id="<%= @room.id %>">
+    <% @room_messages.each do |room_message| %>
+      <div class="message">
+        <div class="dropdown-msg">
+          <%= link_to image_tag(room_message.user.avatar), profile_path(room_message.user) %>
+            <% if room_message.user.id !=current_user.id %>
               <div class="dropdown-msg-content">
                 <%= link_to room_message.user.nickname, profile_path(room_message.user) %>
-                <a href="#">duel</a>
-                <a href="#">kick</a>
-                <a href="#">ban</a>
+                  <a href="#">duel</a>
+                  <a href="#">block</a>
+
+                  <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
+                    <a href="#">mute</a>
+                    <%= link_to "kick", chat_room_members_leave_path(user_id: room_message.user.id, room_id: @room.id) %>
+                    <%= link_to "ban", ban_chat_member_path(user_id: room_message.user.id, room_id: @room.id) %>
+                    <%end%>
               </div>
-            </div>
-            <div class="message-field">
-              <h3>
-                <%= room_message.message %>
-              </h3>
-              <h3 class="message-info"><%= link_to room_message.user.nickname, profile_path(room_message.user)%>
-              <% if room_message.user.guild %>
-              <%= link_to guild_path(room_message.user.guild), style: "color:#616F39;" do %>
-                [<%=room_message.user.guild.anagram%>]  
-                <%end%>
-              </h3>
               <%end%>
-              <h3 class="message-info">
-                <%=room_message.created_at%>
-              </h3>
-            </div>
-          </div>
-          <% end %>
-          <div style="display:none;" data-role="message-template">
+        </div>
+        <div class="message-field">
+          <h3>
+            <%= room_message.message %>
+          </h3>
+          <h3 class="message-info">
+            <%= link_to room_message.user.nickname, profile_path(room_message.user)%>
+              <% if room_message.user.guild %>
+                <%= link_to guild_path(room_message.user.guild), style: "color:#616F39;" do %>
+                  [<%=room_message.user.guild.anagram%>]
+                    <%end%>
+          </h3>
+          <%end%>
+            <h3 class="message-info">
+              <%=room_message.created_at%>
+            </h3>
+        </div>
+      </div>
+      <% end %>
+        <div style="display:none;" data-role="message-template">
           <div class="message">
             <div class="dropdown-msg">
-              <%= link_to profiles_path, "data-role" => "user-id" do %>
+              <%= link_to profiles_path, "data-role"=> "user-id", id: current_user.id do
+                %>
                 <img src="" class="avatar" alt="" data-role="user-avatar">
-              <%end%>
-              <div class="dropdown-msg-content">
-                <%= link_to profiles_path, "data-role" => "user-id" do %>
-                  <span data-role="user-nickname"></span>
                 <%end%>
-                <a href="#">duel</a>
-                <a href="#">kick</a>
-                <a href="#">ban</a>
-              </div>
+                  <div class="dropdown-msg-content" data-role="curr_user" style="display;">
+                    <%= link_to profiles_path, "data-role"=> "user-id" do %>
+                      <span data-role="user-nickname"></span>
+                      <%end%>
+                        <a href="#">duel</a>
+                        <a href="#">block</a>
+                        <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
+                          <a href="#">mute</a>
+                          <a href="#">kick</a>
+                          <a href="#">ban</a>
+                          <%end%>
+                  </div>
             </div>
             <div class="message-field">
               <h3 data-role="message-text">
               </h3>
               <h3 class="message-info">
-              <%= link_to profiles_path, "data-role" => "user-id" do %>
-                <span data-role="user-nickname"></span>
-              <%end%>
-              <%= link_to guilds_path, "data-role" => "user-guild-id", style: "color:#616F39;display:;" do %>
-                <span data-role="user-guild"></span>
-              <%end%>
+                <%= link_to profiles_path, "data-role"=> "user-id" do %>
+                  <span data-role="user-nickname"></span>
+                  <%end%>
+                    <%= link_to guilds_path, "data-role"=> "user-guild-id", style: "color:#616F39;display:;" do %>
+                      <span data-role="user-guild"></span>
+                      <%end%>
               </h3>
               <h3 class="message-info" data-role="message-date">
               </h3>
-          </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="send-message">
+  </div>
+  <div class="send-message">
 
-        <%= simple_form_for @room_message, remote: true do |form| %>
-          <%= form.input :message, as: :string, wrapper: false, label: false,required: false, input_html: { class: "msg-input" } %>
-            <%= form.submit "Send" , class: 'send-message-button', disabled: "true" %>
-              <%= form.input :room_id, as: :hidden %>
-                <% end %>
-      </div>
-    </div>
+    <%= simple_form_for @room_message, remote: true do |form| %>
+      <%= form.input :message, as: :string, wrapper: false, label: false,required: false, input_html: {
+        class: "msg-input" } %>
+        <%= form.submit "Send" , class: 'send-message-button' , disabled: "true" %>
+          <%= form.input :room_id, as: :hidden %>
+            <% end %>
+  </div>
+</div>
