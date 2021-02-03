@@ -34,6 +34,13 @@ $(document).on("turbolinks:load", function() {
 						return;
 					}
 				}
+				console.log(data.blocked_users);
+
+				for (var i = 0; i < data.blocked_users.length; i++) {
+					if (data.blocked_users[i].id == current_user){
+						return;
+					}
+				}
 				for (var i = 0; i < data.active_users.length; i++) {
 					if (data.active_users[i].id == current_user){
 						break;
@@ -68,6 +75,7 @@ $(document).on("turbolinks:load", function() {
 				content.find('[data-role="user-guild-id"]').attr('href', function() { return $(this).attr("href") + "/" + data.user_guild_id});
 			}
 			content.find('[data-role="kick-href"]').attr('href', function() { return $(this).attr("href") + "?room_id=" + data.room_id + "&user_id=" + data.user_id});
+			content.find('[data-role="block-href"]').attr('href', function() { return $(this).attr("href") + "?room_id=" + data.room_id + "&blocked_id=" + data.user_id});
 			content.find('[data-role="message-text"]').text(data.message);
 			content.find('[data-role="message-date"]').text(year + " " + time);
 			if (data.message.length != 0)

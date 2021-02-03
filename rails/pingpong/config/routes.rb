@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   post 'chat_room_members/unmute', to: "chat_room_members#unmute", as: :unmute_chat_member
   post 'chat_room_members/add_adm', to: "chat_room_members#make_admin", as: :add_adm_member
   post 'chat_room_members/remove_adm', to: "chat_room_members#remove_admin", as: :remove_adm_member
+  post 'chat_room_members/block', to: "chat_room_members#block", as: :block
+  post 'chat_room_members/unblock', to: "chat_room_members#unblock", as: :unblock
 
   get 'friends/index'
   root 'home#index'

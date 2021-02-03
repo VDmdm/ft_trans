@@ -34,6 +34,24 @@ class ChatRoomMembersController < ApplicationController
 		end
 	end
 
+	def block
+		block = BlockedUser.new(user_id: current_user.id, blocked_id: params[:blocked_id])
+		if block.save
+			redirect_to room_path(params[:room_id]), success: "User have been blocked"
+		else
+			redirect_to room_path(params[:room_id]), alert: "Failed to block user"
+		end
+	end
+
+	def unblock
+		block = BlockedUser.all.find_by(user_id: current_user.id, blocked_id: params[:blocked_id])
+		if block.destroy
+			redirect_to room_path(params[:room_id]), success: "User have been unblocked"
+		else
+			redirect_to room_path(params[:room_id]), alert: "Failed to unblock user"
+		end
+	end
+
 	def ban
 		record = ChatRoomMember.all.find_by(user_id: params[:user_id], room_id: params[:room_id])
 		

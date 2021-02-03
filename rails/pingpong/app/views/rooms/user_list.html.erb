@@ -82,7 +82,11 @@
                           </div>
                           <div  style="display:flex;">
                               <a href="#" style="margin-left:auto;">block</a>
-
+                              <% if !current_user.is_blocked?(user) %>
+                              <%= link_to "block", block_path(blocked_id: user.id, room_id: @room.id),  method: :post, remote: true, style: "margin-left:auto;" %>
+                              <%else%>
+                               <%= link_to "unblock", unblock_path(blocked_id: user.id, room_id: @room.id),  method: :post, remote: true, style: "margin-left:auto;" %>
+                               <%end%>
                           </div>
                         </div>
                     </div>

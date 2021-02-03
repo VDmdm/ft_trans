@@ -19,6 +19,8 @@
 
   <div class="messages" data-channel-subscribe="room" data-room-id="<%= @room.id %>">
     <% @room_messages.each do |room_message| %>
+  <% if !current_user.is_blocked?(room_message.user) %>
+
       <div class="message">
         <div class="dropdown-msg">
           <%= link_to image_tag(room_message.user.avatar), profile_path(room_message.user) %>
@@ -26,7 +28,11 @@
               <div class="dropdown-msg-content">
                 <%= link_to room_message.user.nickname, profile_path(room_message.user) %>
                   <a href="#">duel</a>
-                  <a href="#">block</a>
+                  <% if !current_user.is_blocked?(room_message.user) %>
+                    <%= link_to "block", block_path(blocked_id: room_message.user.id, room_id: @room.id),  method: :post, remote: true %>
+                    <%else%>
+                     <%= link_to "unblock", unblock_path(blocked_id: room_message.user.id, room_id: @room.id),  method: :post, remote: true %>
+                     <%end%>
 
                   <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
                     
@@ -63,6 +69,7 @@
         </div>
       </div>
       <% end %>
+      <%end%>
         <div style="display:none;" data-role="message-template">
           <div class="message">
             <div class="dropdown-msg">
@@ -75,7 +82,7 @@
                       <span data-role="user-nickname"></span>
                       <%end%>
                         <a href="#">duel</a>
-                        <a href="#">block</a>
+                        <%= link_to "block", block_path, "data-role"=> "block-href", method: :post, remote: true  %>
                         <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
                         <%= link_to mute_chat_member_path, "data-role"=> "mute-href", method: :post, remote: true do %>
                           <span data-role="mute-text"></span>

@@ -62,6 +62,15 @@ class User < ApplicationRecord
 	def friends_with?(user)
 	  Invitation.confirmed_record?(id, user.id)
 	end
+
+	def blocked_by
+		blck = BlockedUser.where(blocked_id: id).pluck(:user_id)
+		User.where(id: blck)
+	end
+
+	def is_blocked?(user)
+		!BlockedUser.where(user_id: id,  blocked_id: user.id).empty?
+	end
   
 	def send_friend_invite(user)
 	  invitations.create(friend_id: user.id)
