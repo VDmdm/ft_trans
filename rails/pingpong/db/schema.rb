@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 2021_02_01_152327) do
     t.boolean "owner", default: false
     t.boolean "admin", default: false
     t.boolean "banned", default: false
+    t.boolean "kicked", default: false
+    t.boolean "muted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_chat_room_members_on_room_id"

@@ -32,11 +32,15 @@ class RoomsController < ApplicationController
 	end
 
 	def update
-		if @room.update_attributes(parameters)
+		if @room.update(parameters)
 			redirect_to rooms_path, success: "Room was updated"
 		else
 			render :new
 		end
+	end
+
+	def room_settings
+
 	end
 
 	def password_enter

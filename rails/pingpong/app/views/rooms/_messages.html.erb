@@ -7,9 +7,13 @@
       <h3 class="header-room-name">
         <%=@room.name%>
       </h3>
+
       <h3 class="messages-leave">
         <%= link_to "leave" , chat_room_members_leave_path(user_id: current_user.id, room_id: @room.id) %>
       </h3>
+      <% if @room.is_owner?(current_user) %>
+      <%= link_to image_tag("gear_.png", style: "width:30px; height:30px;"), room_settings_path, style: "margin-top: 10px;"%>
+    <%end%>
   </div>
   <span class="messages-line"></span>
 
@@ -25,7 +29,12 @@
                   <a href="#">block</a>
 
                   <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
-                    <a href="#">mute</a>
+                    
+                  <% if !@room.is_muted?(room_message.user) %>
+                    <%= link_to "mute", mute_chat_member_path(user_id: room_message.user.id, room_id: @room.id),  method: :post, remote: true %>
+                    <%else%>
+                     <%= link_to "unmute", unmute_chat_member_path(user_id: room_message.user.id, room_id: @room.id),  method: :post, remote: true %>
+                     <%end%>
                     <%= link_to "kick", chat_room_members_leave_path(user_id: room_message.user.id, room_id: @room.id) %>
                     <% if !@room.is_banned?(room_message.user) %>
                     <%= link_to "ban", ban_chat_member_path(user_id: room_message.user.id, room_id: @room.id),  method: :post, remote: true %>
@@ -68,7 +77,9 @@
                         <a href="#">duel</a>
                         <a href="#">block</a>
                         <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
-                          <a href="#">mute</a>
+                        <%= link_to mute_chat_member_path, "data-role"=> "mute-href", method: :post, remote: true do %>
+                          <span data-role="mute-text"></span>
+                          <%end%>
                           <%= link_to "kick", chat_room_members_leave_path, "data-role"=> "kick-href" %>
                           <%= link_to ban_chat_member_path, "data-role"=> "ban-href", method: :post, remote: true do %>
                           <span data-role="ban-text"></span>

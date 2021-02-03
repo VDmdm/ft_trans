@@ -5,4 +5,9 @@ class RoomChannel < ApplicationCable::Channel
 		  stream_for room
 	  end
 	end
+
+	def unsubscribed
+		room = Room.find params[:room]
+		stop_stream_for room
+	  end
 end

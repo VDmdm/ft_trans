@@ -9,7 +9,7 @@
 <% if @room.is_room_member?(current_user) %>
   <%= render 'rooms/messages' %>
 
-<% elsif @room.password %>
+<% elsif @room.password and @room.password.length() != 0 %>
 
   <div>
   <div class="messages-header">

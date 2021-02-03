@@ -8,7 +8,7 @@ $(document).on("turbolinks:load", function() {
   
 	  $element.animate({ scrollTop: $element.prop("scrollHeight")}, 1000)        
   
-	  consumer.subscriptions.create(
+	  var channel = consumer.subscriptions.create(
 		{
 		  channel: "RoomChannel",
 		  room: room_id
@@ -17,8 +17,10 @@ $(document).on("turbolinks:load", function() {
 		  received: function(data) {
 			var year = data.updated_at.substring(0, 10);
 			var banned = "ban";
+			var muted = "mute";
 			var time = data.updated_at.substring(11, 19) + " UTC";
 			var content = messageTemplate.children().clone(true, true);
+			var current_user = content.find('[data-role="user-id"]').attr('id');
 			content.find('[data-role="user-avatar"]').attr('src', data.user_avatar);
 			content.find('[data-role="user-id"]').attr('href', function() { return $(this).attr("href") + "/" + data.user_id});
 			content.find('[data-role="user-nickname"]').text(data.user_nickname);
@@ -26,12 +28,38 @@ $(document).on("turbolinks:load", function() {
 			 if (content.find('[data-role="user-id"]').attr('id') == data.user_id)
 				content.find('[data-role="curr_user"]').css('display', 'none');
 
+				for (var i = 0; i < data.banned_users.length; i++) {
+					if (data.banned_users[i].id == current_user){
+						consumer.subscriptions.remove(channel);
+						return;
+					}
+				}
+				for (var i = 0; i < data.active_users.length; i++) {
+					if (data.active_users[i].id == current_user){
+						break;
+					}
+
+					if ((i + 1) == data.active_users.length){
+						consumer.subscriptions.remove(channel);
+							return;
+					}
+				}
+
 			for (var i = 0; i < data.banned_users.length; i++) {
-				if (data.banned_users[0].id == data.user_id)
+				if (data.banned_users[i].id == data.user_id){
 					banned = "unban";
+				}
+			}
+			for (var i = 0; i < data.muted_users.length; i++) {
+				if (data.muted_users[i].id == data.user_id){
+					muted = "unmute";
+				}
 			}
 			content.find('[data-role="ban-text"]').text(banned);
 			content.find('[data-role="ban-href"]').attr('href', "/chat_room_members/" + banned + "?room_id=" + data.room_id + "&user_id=" + data.user_id);
+			
+			content.find('[data-role="mute-text"]').text(muted);
+			content.find('[data-role="mute-href"]').attr('href', "/chat_room_members/" + muted + "?room_id=" + data.room_id + "&user_id=" + data.user_id);
 
 			if (!data.user_guild)
 				content.find('[data-role="user-guild"]').css('display', 'hidden');
