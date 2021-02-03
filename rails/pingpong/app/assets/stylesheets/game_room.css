@@ -1,0 +1,43 @@
+.game-title {
+    font-size: 50px;
+    line-height: 46px;
+    letter-spacing: 6px;
+    display: inline-block;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 33px;
+}
+
+.game-block {
+    max-width: 1064px;
+    margin-left: 89px;
+}
+
+.game-field-nicknames {
+    display: flex;
+    justify-content: space-between;
+}
+
+.game-field-nickname-player {
+    font-family: PixelarRegularW01-Regular, serif;
+    font-size: 40px;
+    line-height: 37px;
+    letter-spacing: 5px;
+    color: #FFFFFF;
+    padding-bottom: 4px;
+}
+
+#game {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.game-block-action {
+    display: flex;
+    justify-content: space-between;
+}
+
+.game-block-action-link {
+    font-size: 50px;
+    line-height: 46px;
+    letter-spacing: 6px;
+}

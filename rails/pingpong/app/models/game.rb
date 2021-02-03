@@ -44,7 +44,6 @@ class Game < ApplicationRecord
         GameStateHash.instance.add_kv("paddle_p2_#{self.id}", 0)
         while true
             render()
-            return if GameStateHash.instance.return_value("status_#{self.id}") == 'ended'
             if (GameStateHash.instance.return_value("status_#{self.id}") != 'active')
                 sleep(1)
                 next
@@ -53,11 +52,12 @@ class Game < ApplicationRecord
             paddle_motion()
             if @ball[:reset]
                 update_game_condition()
-                @ball[:reset] = false
+                reset_games()
                 sleep(2)
             else
                 sleep(0.003)
             end
+            return if check_game_state?()
         end
     end
 
@@ -115,7 +115,9 @@ class Game < ApplicationRecord
                     "paddle_p1_y": self.paddle_L[:y],
                     "paddle_p2_y": self.paddle_R[:y],
                     "p1_score": self.score[:p1],
-                    "p2_score": self.score[:p2] }
+                    "p2_score": self.score[:p2],
+                    "p1_nickname": GameStateHash.instance.return_value("p1_nickname_#{self.id}"),
+                    "p2_nickname": GameStateHash.instance.return_value("p2_nickname_#{self.id}")}
             GameChannel.broadcast_to self, data
         end
     end
@@ -193,27 +195,32 @@ class Game < ApplicationRecord
 			else
                 @score[:p2] += 1;
             end
-            if (@score[:p1] == 21 || @score[:p2] == 21)
-                GameStateHash.instance.add_kv("status_#{self.id}", "ended")
-                GameStateHash.instance.delete_key("paddle_p2_#{self.id}")
-                GameStateHash.instance.delete_key("paddle_p1_#{self.id}")
-                self.reload
-                self.status = :ended
-                self.p1_score = @score[:p1]
-                self.p2_score = @score[:p2]
-                self.save
-                return false
-            end
-            @ball[:radius] = @grid * self.ball_size
-			@ball[:x] = @canvas_width / 2 - (@ball[:radius] / 2)
-			@ball[:y] = @canvas_height / 2 - (@ball[:radius] / 2)
-			@ball[:reset] = false
-			@ball[:dx] = @speed
-			@ball[:dy] = -@speed
 			return true
         end
 		return false
     end
+    
+    def reset_games
+        @ball[:radius] = @grid * self.ball_size
+        @ball[:x] = @canvas_width / 2 - (@ball[:radius] / 2)
+        @ball[:y] = @canvas_height / 2 - (@ball[:radius] / 2)
+        @ball[:reset] = false
+        @ball[:dx] = @speed
+        @ball[:dy] = -@speed
+    end
 
-
+    def check_game_state?
+        if (@score[:p1] == 21 || @score[:p2] == 21)
+            GameStateHash.instance.add_kv("status_#{self.id}", "ended")
+            GameStateHash.instance.delete_key("paddle_p2_#{self.id}")
+            GameStateHash.instance.delete_key("paddle_p1_#{self.id}")
+            self.reload
+            self.status = :ended
+            self.p1_score = @score[:p1]
+            self.p2_score = @score[:p2]
+            self.save
+            return true
+        end
+        return GameStateHash.instance.return_value("status_#{self.id}") == 'ended'
+    end
 end

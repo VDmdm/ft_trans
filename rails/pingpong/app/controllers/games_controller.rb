@@ -18,7 +18,11 @@ class GamesController < ApplicationController
 		game = Game.new(game_params)
 		game.p1 = current_user
 		if game.save
+			GameStateHash.instance.add_kv("p1_status_#{game.id}", "not ready")
+			GameStateHash.instance.add_kv("status_#{game.id}", "waiting")
+			GameStateHash.instance.add_kv("p1_nickname_#{game.id}", game.p1.nickname)
 			redirect_to game_path(game), success: "Game was created!"
+			
 		else
 			redirect_to new_game_path, alert: game.errors.full_messages.join("; ")
 		end
@@ -34,28 +38,31 @@ class GamesController < ApplicationController
         unless game.save
             redirect_to games_path, alert: game.errors.full_messages.join("; ")
         else
-            redirect_to game_path(game_room.id), success: "success!"
+			GameStateHash.instance.add_kv("p2_status_#{game.id}", "not ready")
+			GameStateHash.instance.add_kv("p2_nickname_#{game.id}", game.p2.nickname)
+			redirect_to game_path(game), success: "success!"
         end
 	end
 
 	def leave_player
 		game = Game.find(params[:id])
 		if current_user == game.p1
-			if (GameStateHash.instance.return_value("status_#{game.id}") == 'waiting')
+			if GameStateHash.instance.return_value("status_#{game.id}") == 'waiting'
             	game.destroy
 				redirect_to games_path, notice: "Game has been destroyed!"
 			else
-				GameStateHash.instance.add_kv("#p1_status_#{game.id}", "leave")
-				redirect_to game_path(game_room.id), success: "You leave!"
+				GameStateHash.instance.add_kv("p1_status_#{game.id}", "leave")
+				redirect_to game_path(game), success: "You leave!"
 			end
 		elsif current_user == game.p2
 			if (GameStateHash.instance.return_value("status_#{game.id}") == 'waiting')
+				GameStateHash.instance.delete("p2_nickname_#{game.id}")
 				game.p2 = nil
 				game.save
 			else
-				GameStateHash.instance.add_kv("#p2_status_#{game.id}", "leave")
+				GameStateHash.instance.add_kv("p2_status_#{game.id}", "leave")
 			end
-			redirect_to game_path(game_room.id, success: "You leave!")
+			redirect_to game_path(game), success: "You leave!"
         end
 	end
 
@@ -66,11 +73,18 @@ class GamesController < ApplicationController
 		else
 			string = "p2"
 		end
-		status = GameStateHash.instance.return_value("p1_status_#{game.id}")
-		if !status
-			GameStateHash.instance.add_kv("#{status}_status_#{game.id}", "ready")
+		status = GameStateHash.instance.return_value("#{string}_status_#{game.id}")
+		if status == "not ready"
+			GameStateHash.instance.add_kv("#{string}_status_#{game.id}", "ready")
+			p string
 		elsif status == "ready"
-			GameStateHash.instance.add_kv("#{status}_status_#{game.id}", "not ready")
+			GameStateHash.instance.add_kv("#{string}_status_#{game.id}", "not ready")
+		end
+		p GameStateHash.instance.return_value("p1_status_#{game.id}")
+		p GameStateHash.instance.return_value("p2_status_#{game.id}")
+
+		if GameStateHash.instance.return_value("p1_status_#{game.id}") == "ready" && GameStateHash.instance.return_value("p2_status_#{game.id}") == "ready"
+			GameStateHash.instance.add_kv("status_#{game.id}", "active")
 		end
 	end
 
