@@ -20,8 +20,9 @@
             <h3 class="messages-leave">
               <%= link_to "leave" , chat_room_members_leave_path(room_id: @room.id, user_id: current_user.id) %>
             </h3>
-      <%= link_to image_tag("gear_.png", style: "width:30px; height:30px;"), room_settings_path, style: "margin-top: 10px;"%>
-
+            <% if @room.is_owner?(current_user) %>
+            <%= link_to image_tag("gear_.png", style: "width:30px; height:30px;"), room_settings_path, style: "margin-top: 10px;"%>
+          <%end%>
       </div>
       <span class="messages-line"></span>
       <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>

@@ -37,6 +37,7 @@ class User < ApplicationRecord
 	has_many :chat_room_members
 	has_many :rooms, :through => :chat_room_members, :source => :room
 
+	has_many :blocked_users
 	has_many :invitations
 	has_many :pending_invitations, -> { where confirmed: false }, class_name: "Invitation", foreign_key: "friend_id"
 
