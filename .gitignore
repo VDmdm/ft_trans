@@ -1,1 +1,4 @@
 .DS_Store
+.idea
+.devcontainer
+rails/pingpong/vendor/bundle
