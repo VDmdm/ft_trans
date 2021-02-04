@@ -65,10 +65,10 @@ $(document).on("turbolinks:load", function() {
 				}
 			}
 			content.find('[data-role="ban-text"]').text(banned);
-			content.find('[data-role="ban-href"]').attr('href', "/chat_room_members/" + banned + "?room_id=" + data.room_id + "&user_id=" + data.user_id);
+			content.find('[data-role="ban-href"]').attr('href', "/rooms/" + data.room_id + "/" + banned + "?user_id=" + data.user_id);
 			
 			content.find('[data-role="mute-text"]').text(muted);
-			content.find('[data-role="mute-href"]').attr('href', "/chat_room_members/" + muted + "?room_id=" + data.room_id + "&user_id=" + data.user_id);
+			content.find('[data-role="mute-href"]').attr('href', "/rooms/" + data.room_id + "/" + muted + "?user_id=" + data.user_id);
 
 			if (!data.user_guild)
 				content.find('[data-role="user-guild"]').css('display', 'hidden');
@@ -76,8 +76,8 @@ $(document).on("turbolinks:load", function() {
 				content.find('[data-role="user-guild"]').text('[' + data.user_guild + ']');
 				content.find('[data-role="user-guild-id"]').attr('href', function() { return $(this).attr("href") + "/" + data.user_guild_id});
 			}
-			content.find('[data-role="kick-href"]').attr('href', function() { return $(this).attr("href") + "?room_id=" + data.room_id + "&user_id=" + data.user_id});
-			content.find('[data-role="block-href"]').attr('href', function() { return $(this).attr("href") + "?room_id=" + data.room_id + "&blocked_id=" + data.user_id});
+			content.find('[data-role="kick-href"]').attr('href', function() { return $(this).attr("href") +  "?user_id=" + data.user_id});
+			content.find('[data-role="block-href"]').attr('href', function() { return $(this).attr("href") + "?blocked_id=" + data.user_id});
 			content.find('[data-role="message-text"]').text(data.message);
 			content.find('[data-role="message-date"]').text(year + " " + time);
 			if (data.message.length != 0)

@@ -3,21 +3,21 @@ Rails.application.routes.draw do
   resources :rooms
 
 
-  get   'rooms/users/:id', to: 'rooms#user_list',  as: :rooms_users
-  get   'rooms/settings/:id', to: 'rooms#room_settings',  as: :room_settings
+  get   'rooms/:id/users', to: 'rooms#user_list',  as: :rooms_users
+  get   'rooms/:id/settings', to: 'rooms#room_settings',  as: :room_settings
   post 'rooms/password_enter', to: "rooms#password_enter", as: :rooms_password_enter
-
-  get 'chat_room_members/leave', to: "chat_room_members#leave"
-  get 'chat_room_members/new', to: "chat_room_members#new"
-  post 'chat_room_members/create', to: "chat_room_members#create"
-  post 'chat_room_members/ban', to: "chat_room_members#ban", as: :ban_chat_member
-  post 'chat_room_members/unban', to: "chat_room_members#unban", as: :unban_chat_member
-  post 'chat_room_members/mute', to: "chat_room_members#mute", as: :mute_chat_member
-  post 'chat_room_members/unmute', to: "chat_room_members#unmute", as: :unmute_chat_member
-  post 'chat_room_members/add_adm', to: "chat_room_members#make_admin", as: :add_adm_member
-  post 'chat_room_members/remove_adm', to: "chat_room_members#remove_admin", as: :remove_adm_member
-  post 'chat_room_members/block', to: "chat_room_members#block", as: :block
-  post 'chat_room_members/unblock', to: "chat_room_members#unblock", as: :unblock
+  post 'rooms/:id/leave', to: "chat_room_members#leave", as: :chat_room_members_leave
+  post 'rooms/:id/kick', to: "chat_room_members#kick", as: :chat_room_members_kick
+  post 'rooms/:id/new', to: "chat_room_members#new", as: :new_room_member
+  post 'rooms/:id/create', to: "chat_room_members#create", as: :join_room_pass
+  post 'rooms/:id/ban', to: "chat_room_members#ban", as: :ban_chat_member
+  post 'rooms/:id/unban', to: "chat_room_members#unban", as: :unban_chat_member
+  post 'rooms/:id/mute', to: "chat_room_members#mute", as: :mute_chat_member
+  post 'rooms/:id/unmute', to: "chat_room_members#unmute", as: :unmute_chat_member
+  post 'rooms/:id/add_adm', to: "chat_room_members#make_admin", as: :add_adm_member
+  post 'rooms/:id/remove_adm', to: "chat_room_members#remove_admin", as: :remove_adm_member
+  post 'rooms/:id/block', to: "chat_room_members#block", as: :block
+  post 'rooms/:id/unblock', to: "chat_room_members#unblock", as: :unblock
 
   get 'friends/index'
   root 'home#index'

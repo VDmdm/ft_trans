@@ -19,7 +19,7 @@
   </div>
   <span class="messages-line"></span>
   <div class="room-password">
-  <%= form_for @room_member, :url => chat_room_members_create_path(room_id: @room), :method => :post, remote: true do |form| %>
+  <%= form_for @room_member, :url => join_room_pass_path, :method => :post, remote: true do |form| %>
     <%= label_tag :password, 'Password required'%><label for="name3"><br>
     <%= text_field_tag 'password', nil, class: "password-input" %> </br>
     <%= form.button "Join", class: "password-button" %>
@@ -47,7 +47,7 @@
   </div>
   <span class="messages-line"></span>
   <div>
-      <%= link_to chat_room_members_new_path(room_id: @room) do %>
+      <%= link_to new_room_member_path, :method => :post, remote: true do %>
         <h3 class="join-link">join</h3>
       <%end%>
 </div>

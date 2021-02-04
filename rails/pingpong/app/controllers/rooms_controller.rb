@@ -1,7 +1,10 @@
 class RoomsController < ApplicationController
 	before_action :check_room_exist, only: [:show, :user_list, :room_settings, :password_enter]
 	before_action :load_rooms
-
+	before_action :check_if_member, only: [:user_list, :room_settings]
+	before_action :check_if_banned, only: [:show, :user_list, :room_settings]
+	before_action :check_rights, only: [:room_settings, :update]
+	
 	def index
 		@rooms = Room.all
 	end
@@ -44,12 +47,13 @@ class RoomsController < ApplicationController
 
 	end
 
-	def password_enter
-		if params[:password] != @room.password
-			redirect_to rooms_path, alert: "Password is incorrect"
-		else
-			redirect_to chat_room_members_new_path(room_id: @room)
-		end
+
+	
+	def load_rooms
+		@rooms = Room.all
+		@room = Room.find(params[:id]) if params[:id]
+		@room_member = ChatRoomMember.new
+		
 	end
 
 	private
@@ -57,14 +61,23 @@ class RoomsController < ApplicationController
 		params.require(:room).permit(:name, :password)
 	end
 
-	def load_rooms
-		@rooms = Room.all
-		@room = Room.find(params[:id]) if params[:id]
-		@room_member = ChatRoomMember.new
-	end
-
 	def check_room_exist
 		redirect_to rooms_path, alert: "Room not exist" if !Room.all.find_by(id: params[:id])
+	end
+
+	def check_if_member
+		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: @room.id)
+		redirect_to rooms_path, alert: "Not a member!" if !record
+	end
+
+	def check_if_banned
+		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: @room.id)
+		redirect_to rooms_path, alert: "banned" if record and record.banned
+	end
+
+	def check_rights
+		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: @room.id)
+		redirect_to rooms_path, alert: "Don't have enough rights!" if !record.owner
 	end
 
 end
