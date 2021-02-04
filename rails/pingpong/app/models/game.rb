@@ -44,8 +44,9 @@ class Game < ApplicationRecord
         GameStateHash.instance.add_kv("paddle_p2_#{self.id}", 0)
         while true
             render()
+            return if check_game_state?()
             if (GameStateHash.instance.return_value("status_#{self.id}") != 'active')
-                sleep(1)
+                sleep(0.5)
                 next
             end
             check_collision()
@@ -57,7 +58,6 @@ class Game < ApplicationRecord
             else
                 sleep(0.003)
             end
-            return if check_game_state?()
         end
     end
 
@@ -117,7 +117,10 @@ class Game < ApplicationRecord
                     "p1_score": self.score[:p1],
                     "p2_score": self.score[:p2],
                     "p1_nickname": GameStateHash.instance.return_value("p1_nickname_#{self.id}"),
-                    "p2_nickname": GameStateHash.instance.return_value("p2_nickname_#{self.id}")}
+                    "p2_nickname": GameStateHash.instance.return_value("p2_nickname_#{self.id}"),
+                    "p1_status": GameStateHash.instance.return_value("p1_status_#{self.id}"),
+                    "p2_status": GameStateHash.instance.return_value("p2_status_#{self.id}")
+                }
             GameChannel.broadcast_to self, data
         end
     end

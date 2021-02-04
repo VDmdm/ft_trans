@@ -95,6 +95,7 @@ window.drawFrame = function() {
 }
 
 $(document).on("turbolinks:load", function() {
+		var nickname = $('#nickname').text()
 		if (this.subscribe) {
 			consumer.subscriptions.remove(this.subscribe);
 			console.log("unsubing");
@@ -122,7 +123,39 @@ $(document).on("turbolinks:load", function() {
 				rightPaddle.y = data.paddle_p2_y;
 				player_1_score = data.p1_score;
 				player_2_score = data.p2_score;
+				if ($('.p1').text() != data.p1_nickname)
+					$('.p1').text(data.p1_nickname);
+				if (data.p2_nickname)
+					$('.p2').text(data.p2_nickname);
+				else
+					$('.p2').text("waiting...");
+				
 				drawFrame();
+				if (nickname == data.p1_nickname)
+				{
+					if (data.p1_status == "ready")	
+						$('#ready_btn').text("not ready?");
+					else if (data.p1_status == "not ready")
+					{
+						$('#ready_btn').text("ready?");
+						$('.p1').css("color","white");
+					}
+				}
+				else if (nickname == data.p2_nickname)
+				{
+					if (data.p2_status == "ready")
+						$('#ready_btn').text("not ready?");
+					else if (data.p2_status == "not ready")
+						$('#ready_btn').text("ready?");
+				}
+				if (data.p1_status == "ready")
+					$('.p1').css("color","yellow");
+				else
+					$('.p1').css("color","white");
+				if (data.p2_status == "ready")
+					$('.p2').css("color","yellow");
+				else
+					$('.p2').css("color","white");
 			},
 		});
 		this.subscribe = subscribe

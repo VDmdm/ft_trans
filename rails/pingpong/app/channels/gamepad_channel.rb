@@ -5,7 +5,15 @@ class GamepadChannel < ApplicationCable::Channel
 	def subscribed
 		# stream_from "some_channel"
 		game = Game.find(params[:game_room])
-		if (current_user == game.p1 || current_user == game.p2)
+		if current_user == game.p1
+			status = "p1"
+		elsif current_user == game.p2
+			status = "p2"
+		else
+			status = "none"
+		if status != "none"
+			if GameStateHash.instance.add_kv("#{status}_status_#{game.id}") == "lags"
+				GameStateHash.instance.add_kv("#{status}_status_#{game.id}", "not_ready")
 			stream_for game
 		else
 			return
@@ -39,7 +47,6 @@ class GamepadChannel < ApplicationCable::Channel
 			end
 		end
 		if current_user.pending_games_p2 && current_user.pending_games_p2.id == id.to_i
-			p "yes"
 			if data["pad"] > 0
 				GameStateHash.instance.add_kv("paddle_p2_#{data["game_room"]}", 6)
 			elsif data["pad"] == 0
