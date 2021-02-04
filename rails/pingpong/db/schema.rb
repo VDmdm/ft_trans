@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_195718) do
+ActiveRecord::Schema.define(version: 2021_02_04_183940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,24 @@ ActiveRecord::Schema.define(version: 2021_02_03_195718) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_chat_room_members_on_room_id"
     t.index ["user_id"], name: "index_chat_room_members_on_user_id"
+  end
+
+  create_table "direct_messages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "direct_room_id", null: false
+    t.text "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["direct_room_id"], name: "index_direct_messages_on_direct_room_id"
+    t.index ["user_id"], name: "index_direct_messages_on_user_id"
+  end
+
+  create_table "direct_rooms", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "dude_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_direct_rooms_on_user_id"
   end
 
   create_table "friendships", force: :cascade do |t|
@@ -183,6 +201,9 @@ ActiveRecord::Schema.define(version: 2021_02_03_195718) do
   add_foreign_key "blocked_users", "users"
   add_foreign_key "chat_room_members", "rooms"
   add_foreign_key "chat_room_members", "users"
+  add_foreign_key "direct_messages", "direct_rooms"
+  add_foreign_key "direct_messages", "users"
+  add_foreign_key "direct_rooms", "users"
   add_foreign_key "guild_members", "guilds"
   add_foreign_key "guild_members", "users"
   add_foreign_key "invitations", "users"

@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   resources :rooms
 
 
-  get   'rooms/:id/users', to: 'rooms#user_list',  as: :rooms_users
-  get   'rooms/:id/settings', to: 'rooms#room_settings',  as: :room_settings
+  get  'rooms/:id/users', to: 'rooms#user_list',  as: :rooms_users
+  get  'rooms/:id/settings', to: 'rooms#room_settings',  as: :room_settings
   post 'rooms/password_enter', to: "rooms#password_enter", as: :rooms_password_enter
   post 'rooms/:id/leave', to: "chat_room_members#leave", as: :chat_room_members_leave
   post 'rooms/:id/kick', to: "chat_room_members#kick", as: :chat_room_members_kick
@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   post 'rooms/:id/remove_adm', to: "chat_room_members#remove_admin", as: :remove_adm_member
   post 'rooms/:id/block', to: "chat_room_members#block", as: :block
   post 'rooms/:id/unblock', to: "chat_room_members#unblock", as: :unblock
+
+  get 'direct/:id', to: "direct_rooms#show", as: :direct_rooms
+  post 'direct', to: "direct_rooms#find_room", as: :direct_rooms_find
 
   get 'friends/index'
   root 'home#index'
