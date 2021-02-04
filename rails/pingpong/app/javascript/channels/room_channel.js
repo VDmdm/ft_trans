@@ -25,6 +25,8 @@ $(document).on("turbolinks:load", function() {
 			content.find('[data-role="user-id"]').attr('href', function() { return $(this).attr("href") + "/" + data.user_id});
 			content.find('[data-role="user-nickname"]').text(data.user_nickname);
 			// if (data.user_id == data.current_user_id)
+			if(current_user == data.user_id)	
+				content.find('[data-role="message-field"]').css('border', '1px solid #B2D430');
 			 if (content.find('[data-role="user-id"]').attr('id') == data.user_id)
 				content.find('[data-role="curr_user"]').css('display', 'none');
 

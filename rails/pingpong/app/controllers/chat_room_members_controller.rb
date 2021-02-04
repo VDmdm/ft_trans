@@ -1,5 +1,6 @@
 class ChatRoomMembersController < ApplicationController
 
+	before_action :check_room_exist
 	before_action :check_password, only: [:create]
 
 
@@ -116,5 +117,9 @@ class ChatRoomMembersController < ApplicationController
 
 	def check_password
 		redirect_to rooms_path, alert: "incorrect password" if params[:password] != Room.all.find_by(id: params[:room_id]).password
+	end
+
+	def check_room_exist
+		redirect_to rooms_path, alert: "Room not exist" if !Room.all.find_by(id: params[:room_id])
 	end
 end

@@ -51,7 +51,7 @@
               </div>
               <%end%>
         </div>
-        <div class="message-field">
+        <div class="message-field" <% if room_message.user.id == current_user.id %> style="border:1px #B2D430 solid" <%end%>>
           <h3>
             <%= room_message.message %>
           </h3>
@@ -94,7 +94,7 @@
                           <%end%>
                   </div>
             </div>
-            <div class="message-field">
+            <div class="message-field" data-role="message-field" >
               <h3 data-role="message-text">
               </h3>
               <h3 class="message-info">

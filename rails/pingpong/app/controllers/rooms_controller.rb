@@ -1,4 +1,5 @@
 class RoomsController < ApplicationController
+	before_action :check_room_exist, only: [:show, :user_list, :room_settings, :password_enter]
 	before_action :load_rooms
 
 	def index
@@ -44,7 +45,6 @@ class RoomsController < ApplicationController
 	end
 
 	def password_enter
-		p params[:password]
 		if params[:password] != @room.password
 			redirect_to rooms_path, alert: "Password is incorrect"
 		else
@@ -63,5 +63,8 @@ class RoomsController < ApplicationController
 		@room_member = ChatRoomMember.new
 	end
 
+	def check_room_exist
+		redirect_to rooms_path, alert: "Room not exist" if !Room.all.find_by(id: params[:id])
+	end
 
 end
