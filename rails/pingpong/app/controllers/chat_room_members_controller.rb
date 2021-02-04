@@ -2,10 +2,13 @@ class ChatRoomMembersController < ApplicationController
 
 	before_action :check_room_exist
 	before_action :check_if_member, only: [:leave, :ban, :unban, :mute, :unmute, :make_admin, :remove_admin, :kick]
+	before_action :check_if_yourself, only: [:ban, :unban, :mute, :unmute, :make_admin, :remove_admin, :kick]
 	before_action :check_rights, only: [:ban, :unban, :mute, :unmute, :kick]
 	before_action :check_owner_rights, only: [:make_admin, :remove_admin]
+	before_action :check_if_on_owner, only: [:ban, :unban, :mute, :unmute, :kick]
+	before_action :check_if_on_admin , only: [:ban, :unban, :mute, :unmute, :kick]
 	before_action :check_if_banned, only: [:new, :create, :ban, :make_admin]
-	before_action :check_if_yourself, only: [:ban, :unban, :mute, :unmute, :make_admin, :remove_admin, :kick]
+	before_action :check_user_existence, only: [:block, :unblock]
 	before_action :check_if_block_yourself, only: [:block, :unblock]
 	before_action :check_if_already_blocked, only: [:block, :unblock]
 	before_action :check_password, only: [:create]
@@ -162,6 +165,12 @@ class ChatRoomMembersController < ApplicationController
 		redirect_to rooms_path, alert: "Can't do on yourself!" if record.user_id == current_user.id
 	end
 
+	def check_user_existence
+		if params[:blocked_id]
+			usr = User.all.find(params[:blocked_id])
+			redirect_to rooms_path, alert: "User doesn't exist!" if !usr
+		end
+	end
 	def check_if_block_yourself
 		if params[:blocked_id]
 			redirect_to rooms_path, alert: "Can't block or unblock yourself!" if (current_user.id == params[:blocked_id].to_i)
@@ -177,12 +186,23 @@ class ChatRoomMembersController < ApplicationController
 
 	def check_rights
 		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: params[:id])
-		redirect_to rooms_path, alert: "Don't have enough rights!" if !record.admin
+		redirect_to rooms_path, alert: "Don't have enough rights!" if !record.admin and !record.owner
 	end
 
 	def check_owner_rights
 		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: params[:id])
 		redirect_to rooms_path, alert: "Don't have enough rights!" if !record.owner
+	end
+
+	def check_if_on_owner
+		record = ChatRoomMember.all.find_by(user_id: params[:user_id], room_id: params[:id])
+		redirect_to rooms_path, alert: "Don't have enough rights!" if record.owner
+	end
+
+	def check_if_on_admin
+		record = ChatRoomMember.all.find_by(user_id: params[:user_id], room_id: params[:id])
+		record2 = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: params[:id])
+		redirect_to rooms_path, alert: "Don't have enough rights!" if !record2.owner and record.admin
 	end
 
 end

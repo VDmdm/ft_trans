@@ -2,7 +2,7 @@ class RoomsController < ApplicationController
 	before_action :check_room_exist, only: [:show, :user_list, :room_settings, :password_enter]
 	before_action :load_rooms
 	before_action :check_if_member, only: [:user_list, :room_settings]
-	before_action :check_if_banned, only: [:show, :user_list, :room_settings]
+	before_action :check_if_banned, only: [:user_list, :room_settings]
 	before_action :check_rights, only: [:room_settings, :update]
 	
 	def index
