@@ -95,14 +95,13 @@ window.drawFrame = function() {
 }
 
 $(document).on("turbolinks:load", function() {
-		var nickname = $('#nickname').text()
 		if (this.subscribe) {
 			consumer.subscriptions.remove(this.subscribe);
 			console.log("unsubing");
 		}
 		if (document.getElementById('game')) {
 			start_game();
-			var subscribe = consumer.subscriptions.create({ channel: 'GameChannel', game: $('.room_name').attr("data-room-id")}, {
+			var subscribe = consumer.subscriptions.create({ channel: 'GameChannel', game: $('#room-name').attr("data-room-id")}, {
 			connected() {
 				// Called when the subscription is ready for use on the server
 			},
@@ -158,6 +157,7 @@ $(document).on("turbolinks:load", function() {
 					$('.p2').css("color","white");
 			},
 		});
-		this.subscribe = subscribe
+		console.log("sub");
+		this.subscribe = subscribe;
 	}
 })

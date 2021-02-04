@@ -8,7 +8,7 @@ $(document).on("turbolinks:load", function() {
     this.sub = null;
   }
   if (document.getElementById('game')) {
-    var sub = consumer.subscriptions.create({ channel: 'GamepadChannel', game_room: $('.room_name').attr("data-room-id")}, {
+    var sub = consumer.subscriptions.create({ channel: 'GamepadChannel', game_room: $('#room-name').attr("data-room-id")}, {
       connected() {
         // Called when the subscription is ready for use on the server
       },
@@ -26,11 +26,11 @@ $(document).on("turbolinks:load", function() {
       if (this.sub)
       {
         if ((e.keyCode === 38 || e.keyCode === 87) && prev != -1) {
-          this.sub.send({ game_room: $('.room_name').attr("data-room-id"), pad: -1 });
+          this.sub.send({ game_room: $('#room-name').attr("data-room-id"), pad: -1 });
           prev = -1;
         }
         else if (e.keyCode === 40 || e.keyCode === 83 && prev != 1) {
-          this.sub.send({ game_room: $('.room_name').attr("data-room-id"), pad: 1 });
+          this.sub.send({ game_room: $('#room-name').attr("data-room-id"), pad: 1 });
           prev = 1;
         }
       }
@@ -39,11 +39,11 @@ $(document).on("turbolinks:load", function() {
       if (this.sub)
       {
         if (e.keyCode === 38 || e.keyCode === 87) {
-          this.sub.send({ game_room: $('.room_name').attr("data-room-id"), pad: 0 });
+          this.sub.send({ game_room: $('#room-name').attr("data-room-id"), pad: 0 });
           prev = 0;
         }
         else if (e.keyCode === 40 || e.keyCode === 83) {
-          this.sub.send({ game_room: $('.room_name').attr("data-room-id"), pad: 0 });
+          this.sub.send({ game_room: $('#room-name').attr("data-room-id"), pad: 0 });
           prev = 0;
         }
       }

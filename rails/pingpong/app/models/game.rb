@@ -46,7 +46,7 @@ class Game < ApplicationRecord
             render()
             return if check_game_state?()
             if (GameStateHash.instance.return_value("status_#{self.id}") != 'active')
-                sleep(0.5)
+                sleep(3)
                 next
             end
             check_collision()
@@ -56,7 +56,7 @@ class Game < ApplicationRecord
                 reset_games()
                 sleep(2)
             else
-                sleep(0.003)
+                sleep(0.03)
             end
         end
     end
@@ -66,7 +66,7 @@ class Game < ApplicationRecord
         @canvas_width = 1064
         @canvas_height = 514
         @grid = 20
-        @speed = 2 * self.speed_rate
+        @speed = 15 * self.speed_rate
         @max_speed = 6
         @paddle_height = @grid * 6
         @min_paddle_y = @grid
@@ -128,13 +128,13 @@ class Game < ApplicationRecord
     def check_collision
         @ball[:y] += @ball[:dy]
         @ball[:x] += @ball[:dx]
-        if (@ball[:x] + @ball[:dx] <= 0 ||
-            @ball[:x] + @ball[:radius] + @ball[:dx] >= @canvas_width)
+        if (@ball[:x] <= 0 ||
+            @ball[:x] + @ball[:radius] >= @canvas_width)
             @ball[:reset] = true;
         end
 
-        if (@ball[:y] + @ball[:dy] - @grid <= 0 ||
-            (@ball[:y] + @ball[:radius]) + @ball[:dy] + @grid >= @canvas_height)
+        if (@ball[:y] + @ball[:dy] - @ball[:radius] <= 0 ||
+            (@ball[:y] + @ball[:radius]) + @ball[:dy] + @ball[:radius] >= @canvas_height)
             @ball[:dy] = -1 * @ball[:dy];
         end
 
@@ -157,13 +157,13 @@ class Game < ApplicationRecord
     def collides(obj_1, obj_2)
 		left_x = obj_1[:x]
 		right_x = obj_1[:x] + obj_1[:radius]
-		if ((left_x >= obj_2[:x] && left_x <= obj_2[:x] + obj_2[:width]) &&
+		if ((left_x - 10 >= obj_2[:x] && left_x -10 <= obj_2[:x] + obj_2[:width]) &&
 			((obj_1[:y] >= obj_2[:y] && obj_1[:y] <= obj_2[:y] + obj_2[:height]) || 
             (obj_1[:y] + obj_1[:radius] >= obj_2[:y] &&
             obj_1[:y] + obj_1[:radius] <= obj_2[:y] + obj_2[:height])))
                 obj_1[:x] = obj_2[:x] + obj_2[:width]
 			    return true
-        elsif ((right_x >= obj_2[:x] && right_x <= obj_2[:x] + obj_2[:width]) &&
+        elsif ((right_x - 10 >= obj_2[:x] && right_x -10 <= obj_2[:x] + obj_2[:width]) &&
             ((obj_1[:y] >= obj_2[:y] && obj_1[:y] <= obj_2[:y] + obj_2[:height]) || 
             (obj_1[:y] + obj_1[:radius] >= obj_2[:y] &&
             obj_1[:y] + obj_1[:radius] <= obj_2[:y] + obj_2[:height])))
