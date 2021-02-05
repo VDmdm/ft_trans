@@ -53,6 +53,12 @@ class User < ApplicationRecord
 		User.where(id: ids)
 	end
 
+	def direct_rooms
+		rooms_where_user = DirectRoom.where(user_id: id).pluck(:id)
+		rooms_where_dude = DirectRoom.where(dude_id: id).pluck(:id)
+		ids = rooms_where_user + rooms_where_dude
+		DirectRoom.where(id: ids)
+	end
 	# def rooms
 	# 	usr_rooms = ChatRoomMember.where(user_id: id).pluck(:room_id)
 	# 	Room.where(id: usr_rooms)

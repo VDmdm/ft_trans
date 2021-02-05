@@ -41,7 +41,9 @@
                     <%else%>
                      <%= link_to "unmute", unmute_chat_member_path(user_id: room_message.user.id),  method: :post, remote: true %>
                      <%end%>
+                     <% if @room.is_room_member?(room_message.user) %>
                     <%= link_to "kick", chat_room_members_kick_path(user_id: room_message.user.id),  method: :post, remote: true %>
+                    <%end%>
                     <% if !@room.is_banned?(room_message.user) %>
                     <%= link_to "ban", ban_chat_member_path(user_id: room_message.user.id),  method: :post, remote: true %>
                     <%else%>

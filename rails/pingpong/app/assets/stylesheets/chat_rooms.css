@@ -356,3 +356,14 @@ input[type="checkbox"] {
     margin-left: 15px;
     display: flex;
 }
+
+.direct-user-info{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.direct-user-text-info{
+    margin-left: 10px;
+    font-size: 40px;
+}

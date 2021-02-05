@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :room_messages
   resources :rooms
-
+  resources :direct_messages
+  resources :direct_rooms
 
   get  'rooms/:id/users', to: 'rooms#user_list',  as: :rooms_users
   get  'rooms/:id/settings', to: 'rooms#room_settings',  as: :room_settings
@@ -19,7 +20,9 @@ Rails.application.routes.draw do
   post 'rooms/:id/block', to: "chat_room_members#block", as: :block
   post 'rooms/:id/unblock', to: "chat_room_members#unblock", as: :unblock
 
-  get 'direct/:id', to: "direct_rooms#show", as: :direct_rooms
+  post 'direct/:id/block', to: "direct_rooms#block", as: :direct_block
+  post 'direct/:id/unblock', to: "direct_rooms#unblock", as: :direct_unblock
+
   post 'direct', to: "direct_rooms#find_room", as: :direct_rooms_find
 
   get 'friends/index'

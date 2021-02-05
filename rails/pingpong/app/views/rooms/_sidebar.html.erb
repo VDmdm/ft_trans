@@ -35,6 +35,15 @@
                     <h4 class="chat-rooms-text">Direct messages</h4>
                     <span class="chat-rooms-line"></span>
                     <div class="chat-rooms">
+                            <% current_user.direct_rooms.each do |room|  %>
+                                <%= link_to direct_room_path(room) do %>
+                                    <% if room.user_id == current_user.id %>
+                                    <h3 class="chat-rooms-room"><%= User.all.find(room.dude_id).nickname %></h3>
+                                    <%else%>
+                                    <h3 class="chat-rooms-room"><%= room.user.nickname %></h3>
+                                    <%end%>
+                                <%end%>
+                            <%end%>
                     </div>
                     <%= link_to new_room_path do %>
                       <h3 class="chat-rooms-create">Create room</h3>

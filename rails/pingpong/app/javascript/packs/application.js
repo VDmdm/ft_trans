@@ -62,6 +62,13 @@ $(document).on("turbolinks:load", function() {
 	});
   });
 
+  $(document).on("turbolinks:load", function() {
+    $('#new_direct_message').on('ajax:success', function(a, b,c ) {
+      $(this).find('input[type="text"]').val('');
+    });
+    });
+  
+
   $(document).on("turbolinks:load", function(){
     $('.send-message-button').prop('disabled', true);
     $('#room_message_message').keyup(function(){
@@ -70,4 +77,14 @@ $(document).on("turbolinks:load", function() {
         else
             $('.send-message-button').prop('disabled',true);
     })
+});
+
+$(document).on("turbolinks:load", function(){
+  $('.send-message-button').prop('disabled', true);
+  $('#direct_message_message').keyup(function(){
+      if(this.val != "")
+          $('.send-message-button').prop('disabled', false);            
+      else
+          $('.send-message-button').prop('disabled',true);
+  })
 });
