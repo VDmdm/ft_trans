@@ -1,0 +1,106 @@
+<div class="chat-rooms-page-header">
+  <h4>Chat</h4>
+</div>
+
+<section class="chat-rooms-page-interface">
+<%= render 'rooms/sidebar' %>
+<div>
+  <div class="messages-header">
+    <div class="direct-user-info"> 
+      <%= link_to image_tag(@dude.avatar, style: "width:50px;height:50px;"), profile_path(@dude)%>
+      <div class="direct-user-text-info">
+      <%= link_to @dude.nickname, profile_path(@dude) %>
+      <% if @dude.guild %>
+                <%= link_to guild_path(@dude.guild), style: "color:#616F39;" do %>
+                  [<%=@dude.guild.anagram%>]
+                    <%end%>
+                    <%end%>
+      </div>
+
+      </div>
+      <%= link_to "delete chat", direct_room_path(@room), method: :delete, style: "font-size:20px;margin-top:10px;margin-left:auto" %>
+
+
+  </div>
+  <span class="messages-line"></span>
+
+  <div class="messages" data-channel-subscribe="direct" data-room-id="<%= @room.id %>">
+    <% @room_messages.each do |room_message| %>
+      <div class="message">
+        <div class="dropdown-msg">
+          <%= link_to image_tag(room_message.user.avatar), profile_path(room_message.user) %>
+            <% if room_message.user.id !=current_user.id %>
+              <div class="dropdown-msg-content">
+              <%= link_to room_message.user.nickname, profile_path(room_message.user) %>
+                  <a href="#">duel</a>
+                  <% if !current_user.is_blocked?(room_message.user) %>
+                    <%= link_to "block", direct_block_path(blocked_id: room_message.user.id),  method: :post, remote: true %>
+                    <%else%>
+                     <%= link_to "unblock", direct_unblock_path(blocked_id: room_message.user.id),  method: :post, remote: true %>
+                     <%end%>
+              </div>
+              <%end%>
+        </div>
+        <div class="message-field" <% if room_message.user.id == current_user.id %> style="border:1px #B2D430 solid" <%end%>>
+          <h3>
+            <%= room_message.message %>
+          </h3>
+          <h3 class="message-info">
+            <%= link_to room_message.user.nickname, profile_path(room_message.user)%>
+              <% if room_message.user.guild %>
+                <%= link_to guild_path(room_message.user.guild), style: "color:#616F39;" do %>
+                  [<%=room_message.user.guild.anagram%>]
+                    <%end%>
+          </h3>
+          <%end%>
+            <h3 class="message-info">
+              <%=room_message.created_at%>
+            </h3>
+        </div>
+      </div>
+      <% end %>
+        <div style="display:none;" data-role="direct-message-template">
+          <div class="message">
+            <div class="dropdown-msg">
+              <%= link_to profiles_path, "data-role"=> "user-id", id: current_user.id do
+                %>
+                <img src="" class="avatar" alt="" data-role="user-avatar">
+                <%end%>
+                  <div class="dropdown-msg-content" data-role="curr_user" style="display;">
+                  <%= link_to profiles_path, "data-role"=> "user-id" do %>
+                    <span data-role="user-nickname"></span>
+                    <%end%>
+                      <a href="#">duel</a>
+                      <%= link_to "block", direct_block_path, "data-role"=> "block-href", method: :post, remote: true  %>
+                  </div>
+            </div>
+            <div class="message-field" data-role="message-field" >
+              <h3 data-role="message-text">
+              </h3>
+              <h3 class="message-info">
+                <%= link_to profiles_path, "data-role"=> "user-id" do %>
+                  <span data-role="user-nickname"></span>
+                  <%end%>
+                    <%= link_to guilds_path, "data-role"=> "user-guild-id", style: "color:#616F39;display:;" do %>
+                      <span data-role="user-guild"></span>
+                      <%end%>
+              </h3>
+              <h3 class="message-info" data-role="message-date">
+              </h3>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <div class="send-message">
+
+    <%= simple_form_for @room_message, remote: true do |form| %>
+      <%= form.input :message, as: :string, wrapper: false, label: false,required: false, input_html: {
+        class: "msg-input" } %>
+        <%= form.submit "Send" , class: 'send-message-button', disabled: "true" %>
+          <%= form.input :direct_room_id, as: :hidden %>
+            <% end %>
+  </div>
+</div>
+
+  </section>

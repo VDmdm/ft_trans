@@ -34,6 +34,10 @@ class User < ApplicationRecord
 
 	validates :nickname, presence: true, uniqueness: true
 
+	has_many :chat_room_members
+	has_many :rooms, :through => :chat_room_members, :source => :room
+
+	has_many :blocked_users
 	has_many :invitations
 	has_many :pending_invitations, -> { where confirmed: false }, class_name: "Invitation", foreign_key: "friend_id"
 
@@ -51,9 +55,30 @@ class User < ApplicationRecord
 		ids = friends_user_sent_inv + friends_user_got_inv
 		User.where(id: ids)
 	end
+
+	def direct_rooms
+		rooms_where_user = DirectRoom.where(user_id: id).pluck(:id)
+		rooms_where_dude = DirectRoom.where(dude_id: id).pluck(:id)
+		ids = rooms_where_user + rooms_where_dude
+		DirectRoom.where(id: ids)
+	end
+	# def rooms
+	# 	usr_rooms = ChatRoomMember.where(user_id: id).pluck(:room_id)
+	# 	Room.where(id: usr_rooms)
+	# end
+	
   
 	def friends_with?(user)
 	  Invitation.confirmed_record?(id, user.id)
+	end
+
+	def blocked_by
+		blck = BlockedUser.where(blocked_id: id).pluck(:user_id)
+		User.where(id: blck)
+	end
+
+	def is_blocked?(user)
+		!BlockedUser.where(user_id: id,  blocked_id: user.id).empty?
 	end
   
 	def send_friend_invite(user)

@@ -1,0 +1,125 @@
+<div>
+  <div class="messages-header">
+    <%= link_to (image_tag "man.png" , style: "height:55px;width:55px;" ), rooms_users_path %>
+      <h3 style="font-size: 25px;margin-top:10px">
+        <%= @room.members.length %>
+      </h3>
+      <h3 class="header-room-name">
+        <%=@room.name%>
+      </h3>
+
+      <h3 class="messages-leave">
+        <%= link_to "leave" , chat_room_members_leave_path(user_id: current_user.id), method: :post, remote: true %>
+      </h3>
+      <% if @room.is_owner?(current_user) %>
+      <%= link_to image_tag("gear_.png", style: "width:30px; height:30px;"), room_settings_path, style: "margin-top: 10px;"%>
+    <%end%>
+  </div>
+  <span class="messages-line"></span>
+
+  <div class="messages" data-channel-subscribe="room" data-room-id="<%= @room.id %>">
+    <% @room_messages.each do |room_message| %>
+  <% if !current_user.is_blocked?(room_message.user) %>
+
+      <div class="message">
+        <div class="dropdown-msg">
+          <%= link_to image_tag(room_message.user.avatar), profile_path(room_message.user) %>
+            <% if room_message.user.id !=current_user.id %>
+              <div class="dropdown-msg-content">
+                <%= link_to room_message.user.nickname, profile_path(room_message.user) %>
+                  <a href="#">duel</a>
+                  <% if !current_user.is_blocked?(room_message.user) %>
+                    <%= link_to "block", block_path(blocked_id: room_message.user.id),  method: :post, remote: true %>
+                    <%else%>
+                     <%= link_to "unblock", unblock_path(blocked_id: room_message.user.id),  method: :post, remote: true %>
+                     <%end%>
+
+                  <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
+                    
+                  <% if !@room.is_muted?(room_message.user) %>
+                    <%= link_to "mute", mute_chat_member_path(user_id: room_message.user.id),  method: :post, remote: true %>
+                    <%else%>
+                     <%= link_to "unmute", unmute_chat_member_path(user_id: room_message.user.id),  method: :post, remote: true %>
+                     <%end%>
+                     <% if @room.is_room_member?(room_message.user) %>
+                    <%= link_to "kick", chat_room_members_kick_path(user_id: room_message.user.id),  method: :post, remote: true %>
+                    <%end%>
+                    <% if !@room.is_banned?(room_message.user) %>
+                    <%= link_to "ban", ban_chat_member_path(user_id: room_message.user.id),  method: :post, remote: true %>
+                    <%else%>
+                     <%= link_to "unban", unban_chat_member_path(user_id: room_message.user.id),  method: :post, remote: true %>
+                     <%end%>
+                    <%end%>
+              </div>
+              <%end%>
+        </div>
+        <div class="message-field" <% if room_message.user.id == current_user.id %> style="border:1px #B2D430 solid" <%end%>>
+          <h3>
+            <%= room_message.message %>
+          </h3>
+          <h3 class="message-info">
+            <%= link_to room_message.user.nickname, profile_path(room_message.user)%>
+              <% if room_message.user.guild %>
+                <%= link_to guild_path(room_message.user.guild), style: "color:#616F39;" do %>
+                  [<%=room_message.user.guild.anagram%>]
+                    <%end%>
+          </h3>
+          <%end%>
+            <h3 class="message-info">
+              <%=room_message.created_at%>
+            </h3>
+        </div>
+      </div>
+      <% end %>
+      <%end%>
+        <div style="display:none;" data-role="message-template">
+          <div class="message">
+            <div class="dropdown-msg">
+              <%= link_to profiles_path, "data-role"=> "user-id", id: current_user.id do
+                %>
+                <img src="" class="avatar" alt="" data-role="user-avatar">
+                <%end%>
+                  <div class="dropdown-msg-content" data-role="curr_user" style="display;">
+                    <%= link_to profiles_path, "data-role"=> "user-id" do %>
+                      <span data-role="user-nickname"></span>
+                      <%end%>
+                        <a href="#">duel</a>
+                        <%= link_to "block", block_path, "data-role"=> "block-href", method: :post, remote: true  %>
+                        <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
+                        <%= link_to mute_chat_member_path, "data-role"=> "mute-href", method: :post, remote: true do %>
+                          <span data-role="mute-text"></span>
+                          <%end%>
+                          <%= link_to "kick", chat_room_members_kick_path, "data-role"=> "kick-href",  method: :post, remote: true %>
+                          <%= link_to ban_chat_member_path, "data-role"=> "ban-href", method: :post, remote: true do %>
+                          <span data-role="ban-text"></span>
+                          <%end%>
+                          <%end%>
+                  </div>
+            </div>
+            <div class="message-field" data-role="message-field" >
+              <h3 data-role="message-text">
+              </h3>
+              <h3 class="message-info">
+                <%= link_to profiles_path, "data-role"=> "user-id" do %>
+                  <span data-role="user-nickname"></span>
+                  <%end%>
+                    <%= link_to guilds_path, "data-role"=> "user-guild-id", style: "color:#616F39;display:;" do %>
+                      <span data-role="user-guild"></span>
+                      <%end%>
+              </h3>
+              <h3 class="message-info" data-role="message-date">
+              </h3>
+            </div>
+          </div>
+        </div>
+  </div>
+  <div class="send-message">
+
+    <%= simple_form_for @room_message, remote: true do |form| %>
+      <%= form.input :message, as: :string, wrapper: false, label: false,required: false, input_html: {
+        class: "msg-input" } %>
+        <%= form.submit "Send" , class: 'send-message-button' , disabled: "true" %>
+          <%= form.input :room_id, as: :hidden %>
+            <% end %>
+  </div>
+</div>
