@@ -8,6 +8,7 @@ var player_2_score;
 var ball_color;
 var paddle_color;
 var grid;
+var game_id = null;
 var paddleHeight;
 
 var leftPaddle = {
@@ -95,15 +96,17 @@ window.drawFrame = function() {
 }
 
 $(document).on("turbolinks:load", function() {
-		if (this.subscribe) {
+		if (this.subscribe && (!document.getElementById('game') || (game_id && game_id != $('#room-name').attr("data-room-id")))) {
 			consumer.subscriptions.remove(this.subscribe);
 			console.log("unsubing");
+			game_id = null;
 		}
 		if (document.getElementById('game')) {
 			start_game();
 			var subscribe = consumer.subscriptions.create({ channel: 'GameChannel', game: $('#room-name').attr("data-room-id")}, {
 			connected() {
 				// Called when the subscription is ready for use on the server
+				game_id = $('#room-name').attr("data-room-id");
 			},
 
 			disconnected() {

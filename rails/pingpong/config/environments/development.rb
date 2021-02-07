@@ -58,7 +58,7 @@ Rails.application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  #ActionCable.server.config.logger = Logger.new(nil)
+  ActionCable.server.config.logger = Logger.new(nil)
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
