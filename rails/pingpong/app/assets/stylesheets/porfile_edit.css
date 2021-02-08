@@ -1,0 +1,137 @@
+.profile-settings {
+    font-family: PixelarRegularW01-Regular;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: 4px;
+}
+
+.profile-settings-section {
+    padding-left: 23px;
+}
+
+.profile-settings-title {
+    display: inline;
+    font-size: 35px;
+    line-height: 33px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.personal-information {
+    margin-top: 50px;
+}
+
+.block-users {
+    margin-top: 37px;
+}
+
+.personal-information-form-filed {
+    display: flex;
+    margin-top: 37px;
+}
+
+.personal-information-field-label {
+    min-width: 145px;
+    opacity: 0.5;
+    font-size: 30px;
+}
+
+.personal-information-field-input {
+    display: inline;
+    margin-right: 56px;
+    width: 100%;
+    max-height: 34px;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+}
+
+.personal-information-form-button {
+    cursor: pointer;
+    font-size: 30px;
+    line-height: 28px;
+    letter-spacing: 3.5px;
+    padding: 1px 20px 7px 20px;
+    color: #FFF;
+    background-color: #000;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+}
+
+.personal-information-link {
+    display: block;
+    font-size: 30px;
+    line-height: 28px;
+    letter-spacing: 3.70833px;
+    margin-top: 21px;
+}
+
+.block-users-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.block-users-user {
+    margin-top: 23px;
+    display: flex;
+}
+
+.block-users-user-avatar {
+    width: 59px;
+    height: 52px;
+    border: 3px solid #FFFFFF;
+    box-sizing: border-box;
+    margin-right: 9px;
+}
+
+.block-users-user-interaction {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.block-users-user-info {
+    display: inline-block;
+    font-size: 24px;
+    line-height: 22px;
+    letter-spacing: 2.96667px;
+}
+
+.block-users-user-info-nickname {
+    font-family: PixelarRegularW01-Regular, serif;
+    font-size: 40px;
+    line-height: 37px;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.block-users-user-info-guilds {
+    color: #616F39;
+}
+
+.block-users-user-unblock {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 25px;
+    line-height: 23px;
+    letter-spacing: 3.09028px;
+    color: #FFFFFF;
+    padding: 0;
+    margin-top: 7px;
+    background: transparent;
+    max-height: 0;
+}
+
+.block-users-user {
+    margin-right: 141px;
+}
+
+.block-users-user:nth-child(3n) {
+    margin-right: 0;
+}
+
+.arrow {
+    font-size: 25px;
+    line-height: 23px;
+    letter-spacing: 3.09028px;
+}
