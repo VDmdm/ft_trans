@@ -1,0 +1,52 @@
+                <div class="chat-rooms-navigation">
+                    <h4 class="chat-rooms-text">ROOMS</h4>
+                    <span class="chat-rooms-line"></span>
+                    <div class="rooms-btn">
+                        <button id="switch-btn-myrooms" class="btn-active" onclick="room_list_switch(false)">my rooms</button>
+                        <button id="switch-btn-allrooms" onclick="room_list_switch(true)">all rooms</button>
+                    </div>
+                    <div id="block-myrooms" style="display: block;">
+                    <div class="chat-rooms">
+                    <% if current_user.rooms.present? %>
+                    <% current_user.rooms.each do |room| %>
+                        <%= link_to room_path(room) do %>
+                            <h3 class="chat-rooms-room"><%= room.name %></h3>
+                        <%end%>
+                    <% end %>
+                    <% else %>
+                        <h3 style="text-align:center; margin-top: 20px">The are no rooms</h3>
+                    <% end %>
+                </div>                
+                    </div>
+                    <div id="block-allrooms" style="display: none;">
+                    <div class="chat-rooms">
+                    <% if @rooms.present? %>
+                    <% @rooms.each do |room| %>
+                        <%= link_to room_path(room) do %>
+                            <h3 class="chat-rooms-room"><%= room.name %></h3>
+                        <%end%>
+                    <% end %>
+                    <% else %>
+                    <h3 style="text-align:center; margin-top: 20px">The are no rooms</h3>
+                    <% end %>
+                </div>
+                
+                    </div>
+                    <h4 class="chat-rooms-text">Direct messages</h4>
+                    <span class="chat-rooms-line"></span>
+                    <div class="chat-rooms">
+                            <% current_user.direct_rooms.each do |room|  %>
+                                <%= link_to direct_room_path(room) do %>
+                                    <% if room.user_id == current_user.id %>
+                                    <h3 class="chat-rooms-room"><%= User.all.find(room.dude_id).nickname %></h3>
+                                    <%else%>
+                                    <h3 class="chat-rooms-room"><%= room.user.nickname %></h3>
+                                    <%end%>
+                                <%end%>
+                            <%end%>
+                    </div>
+                    <%= link_to new_room_path do %>
+                      <h3 class="chat-rooms-create">Create room</h3>
+                    <%end%>
+
+                </div>

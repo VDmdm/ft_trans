@@ -1,0 +1,60 @@
+<div class="chat-rooms-page-header">
+  <h4>Chat</h4>
+</div>
+
+<section class="chat-rooms-page-interface">
+
+
+<%= render 'rooms/sidebar' %>
+<% if @room.is_room_member?(current_user) %>
+  <%= render 'rooms/messages' %>
+
+<% elsif @room.password and @room.password.length() != 0 %>
+
+  <div>
+  <div class="messages-header">
+    <h3 class="header-room-name" style="margin-right:auto;">
+      <%=@room.name%>
+    </h3>
+  </div>
+  <span class="messages-line"></span>
+  <div class="room-password">
+  <%= form_for @room_member, :url => join_room_pass_path, :method => :post, remote: true do |form| %>
+    <%= label_tag :password, 'Password required'%><label for="name3"><br>
+    <%= text_field_tag 'password', nil, class: "password-input" %> </br>
+    <%= form.button "Join", class: "password-button" %>
+    <% end %>
+  </div>
+  </div>
+<% elsif @room.is_banned?(current_user) %>
+<div>
+<div class="messages-header">
+  <h3 class="header-room-name" style="margin-right:auto;">
+    <%=@room.name%>
+  </h3>
+</div>
+<span class="messages-line"></span>
+  <div class="msg-welcome-msg" style="margin-top:300px;">
+    <h3 style="color:#B2463E">YOU HAVE BEEN DOOMED HERE</h3>
+  </div>
+</div>
+  <% else %>
+  <div>
+  <div class="messages-header">
+    <h3 class="header-room-name" style="margin-right:auto;">
+      <%=@room.name%>
+    </h3>
+  </div>
+  <span class="messages-line"></span>
+  <div>
+      <%= link_to new_room_member_path, :method => :post, remote: true do %>
+        <h3 class="join-link">join</h3>
+      <%end%>
+</div>
+
+</div>
+  <%end%>
+
+
+
+</section>

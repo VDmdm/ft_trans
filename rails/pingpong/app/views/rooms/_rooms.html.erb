@@ -1,0 +1,11 @@
+<div class="chat-rooms">
+	<% if @rooms.present? %>
+	<% @rooms.each do |room| %>
+		<%= link_to room_path(room) do %>
+			<h3 class="chat-rooms-room"><%= room.name %></h3>
+		<%end%>
+	<% end %>
+	<% else %>
+		The are no rooms
+	<% end %>
+</div>

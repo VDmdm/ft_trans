@@ -4,17 +4,24 @@ class GamepadChannel < ApplicationCable::Channel
 
 	def subscribed
 		# stream_from "some_channel"
-		game = Game.find(params[:game_room])
-		if (current_user == game.p1 || current_user == game.p2)
-			stream_for game
+		game = Game.find_by(id: params[:gamepad])
+		if current_user == game.p1
+			status = "p1"
+		elsif current_user == game.p2
+			status = "p2"
 		else
-			return
+			status = "none"
+		end
+		if status != "none"
+			stream_for "gamepad_#{params[:gamepad]}"
+		else
+			reject
 		end
 	end
 
 	def unsubscribed
 		# Any cleanup needed when channel is unsubscribed
-		if current_user.pending_games_p1 
+		if current_user.pending_games_p1
 			game = current_user.pending_games_p1
 			status = "p1"
 		elsif current_user.pending_games_p2
@@ -28,24 +35,23 @@ class GamepadChannel < ApplicationCable::Channel
 	end
 
 	def receive(data)
-		id = data["game_room"]
+		id = data["gamepad"]
 		if current_user.pending_games_p1 && current_user.pending_games_p1.id == id.to_i
 			if data["pad"] > 0
-				GameStateHash.instance.add_kv("paddle_p1_#{data["game_room"]}", 6)
+				GameStateHash.instance.add_kv("paddle_p1_#{data["gamepad"]}", 30)
 			elsif data["pad"] == 0
-				GameStateHash.instance.add_kv("paddle_p1_#{data["game_room"]}", 0)
+				GameStateHash.instance.add_kv("paddle_p1_#{data["gamepad"]}", 0)
 			elsif data["pad"] < 0
-				GameStateHash.instance.add_kv("paddle_p1_#{data["game_room"]}", -6)
+				GameStateHash.instance.add_kv("paddle_p1_#{data["gamepad"]}", -30)
 			end
 		end
 		if current_user.pending_games_p2 && current_user.pending_games_p2.id == id.to_i
-			p "yes"
 			if data["pad"] > 0
-				GameStateHash.instance.add_kv("paddle_p2_#{data["game_room"]}", 6)
+				GameStateHash.instance.add_kv("paddle_p2_#{data["gamepad"]}", 30)
 			elsif data["pad"] == 0
-				GameStateHash.instance.add_kv("paddle_p2_#{data["game_room"]}", 0)
+				GameStateHash.instance.add_kv("paddle_p2_#{data["gamepad"]}", 0)
 			elsif data["pad"] < 0
-				GameStateHash.instance.add_kv("paddle_p2_#{data["game_room"]}", -6)
+				GameStateHash.instance.add_kv("paddle_p2_#{data["gamepad"]}", -30)
 			end
 		end
 	end

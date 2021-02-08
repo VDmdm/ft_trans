@@ -1,25 +1,29 @@
 <section class="game">
-    <h2 class="game-title room_name" data-room-id="<%= @game.id %>">Room: <%= @game.name %>
+    <h2 class="game-title " id="room-name" data-room-id="<%= @game.id %>">Room: <%= @game.name %>
     </h2>
     <div class="game-block">
         <div class="game-field-nicknames">
-            <span class="game-field-nickname-player">Deddara</span>
-            <span class="game-field-nickname-player">Deddara</span>
+            <span class="game-field-nickname-player p1"></span>
+            <span class="game-field-nickname-player p2"></span>
         </div>
-
         <canvas width="1064" height="514" id="game"
             style="background-color: <%= @game.bg_color %>; background-image: url(<%= url_for (@game.bg_image) if @game.bg_image.attached? %>); background-size: 100% 100%; outline: 4px solid white;"></canvas>
         <div class="game-block-action">
-            <% if @game.p1==current_user || @game.p2==current_user %>
+             <% if @game.p1==current_user || @game.p2==current_user %>
                 <%= link_to "leave" , game_leave_player_path(@game), method: :post, class: "game-block-action-link",
                     remote: true %>
-                    <% end %>
-                        <%= link_to "ready?" , game_switch_ready_path(@game), method: :post, class: "game-block-action-link",
-                            remote: true %>
-                        <% unless current_user.pending_games? %>
-                            <%= link_to "join" , game_join_player_path(@game), method: :post, class: "game-block-action-link",
-                            remote: true %>
-                            <% end %>
+                <% if GameStateHash.instance.return_value("p2_status_#{@game.id}") == "not ready" %>
+                    <%= link_to "ready?" , game_switch_ready_path(@game), method: :post, class: "game-block-action-link",
+                    remote: true, id: "ready_btn" %>
+                <% else %>
+                    <%= link_to "not ready?" , game_switch_ready_path(@game), method: :post, class: "game-block-action-link",
+                    remote: true, id: "ready_btn" %>
+                <% end %>
+            <% end %>
+            <% unless current_user.pending_games? %>
+                <%= link_to "join" , game_join_player_path(@game), method: :post, class: "game-block-action-link",
+                remote: true %>
+            <% end %>
         </div>
     </div>
 </section>
