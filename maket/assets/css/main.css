@@ -247,7 +247,7 @@ col {
 
 .info-window {
     text-align: center;
-    /*display: none;*/
+    display: none;
     position: fixed;
     border: 3px solid #FFFFFF;
     height: 718px;
