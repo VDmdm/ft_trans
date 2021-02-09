@@ -2,7 +2,10 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/underscore.js"></script>
+        <script src="assets/js/backbone.js"></script>
+        <script src="assets/js/info_table.js"></script>
         <title>Insert coin to play!</title>
         <link href="./assets/css/normalize.css" rel="stylesheet" type="text/css">
         <link href="./assets/css/main_page.css" rel="stylesheet" type="text/css">
@@ -206,8 +209,35 @@
                     </section>
                 </section>
             </section>
+
+            <div class="info-window">
+                <h3 class="info-window-title">
+                    info table
+                </h3>
+                <a class="info-window-close" href="#">X</a>
+                <nav class="info-window-nav">
+                    <ul class="info-window-nav-list">
+                        <li class="info-window-nav-item">
+                            <a href="#help_site" class="info-window-nav-item-link">site</a>
+                        </li>
+                        <li class="info-window-nav-item">
+                            <a href="#help_game" class="info-window-nav-item-link">game</a>
+                        </li>
+                        <li class="info-window-nav-item"><a href="#help_guilds" class="info-window-nav-item-link">guilds</a></li>
+                        <li class="info-window-nav-item"><a href="#help_tournament" class="info-window-nav-item-link">tournament</a></li>
+                    </ul>
+                </nav>
+                <div class="info-window-nav-item-info" id="info-window-nav-item-site">
+                    Lorem Ipsum site
+                </div>
+                <div class="info-window-nav-item-info" id="info-window-nav-item-game">
+                    Lorem Ipsum game
+                </div>
+            </div>
         </main>
-        <footer>
+        <footer class="footer">
+            <span>11001001100101110010011001001100001111001011000011101010110000111011001110110110000111100101101111110100111011011101001110001111000011101000</span>
+            <a class="footer-help" href="#help">help</a>
         </footer>
     </body>
 </html>
