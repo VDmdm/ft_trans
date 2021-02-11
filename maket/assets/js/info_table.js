@@ -9,6 +9,8 @@ var Controller = Backbone.Router.extend({
 
     show_help_window: function () {
         $(".info-window").fadeIn("slow/400/fast");
+        $(".info-window-nav-item-info").hide();
+        $("#info-window-nav-item-site").show();
     },
 
     show_site: function () {
