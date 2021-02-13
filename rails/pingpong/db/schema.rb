@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(version: 2021_02_04_183940) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.integer "status", default: 0
-    t.integer "score", default: 0
+    t.integer "score", default: 1000
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "nickname"

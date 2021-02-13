@@ -72,3 +72,7 @@
 input[type="file"] {
     display: none;
 }
+
+.anagram-entry-field {
+    text-transform: uppercase;
+}

@@ -1,0 +1,50 @@
+<h1><%= @guild.name %> </h1>
+
+<h2>Members:</h2>
+<p><%= @guild.owner.nickname %> </p>
+<h2>Members:</h2>
+<% @guild.members.each do |member| %>
+	<p><%= member.nickname %> </p>
+	<% if current_user.guild_owner && @guild == current_user.guild && member != current_user %>
+		<% if !member.guild_officer %>
+			<%= link_to "add to officer", add_officer_path(@guild, user_id: member), method: :post, remote: true %>
+		<% else %>
+			<%= link_to "remove from officer", remove_officer_path(@guild, user_id: member), method: :post, remote: true %>
+		<% end %>
+	<% end %>
+<% end %>
+<h2>Officers:</h2>
+<% @guild.officers.each do |member| %>
+	<p><%= member.nickname %> </p>
+<% end %>
+
+<h2>Pending invites:</h2>
+<h2>Incoming </h2>
+<% @guild.pending_join_request_user.each do |member| %>
+	<p><%= member.nickname %> </p>
+	<% if current_user.guild == @guild && current_user.guild_owner || current_user.guild_officer %>
+		<%= link_to "accept join request", accept_join_request_path(@guild, user_id: member), method: :post, remote: true %>
+		<%= link_to "decline join request", decline_join_request_path(@guild, user_id: member), method: :post, remote: true %>
+	<% end %>
+<% end %>
+<h2>Sending </h2>
+<% @guild.pending_invites_user.each do |member| %>
+	<p><%= member.nickname %> </p>
+	
+<% end %>
+
+<% if !current_user.guild && !@guild.pending_join_requests?(current_user) %>
+	<%= link_to "Send join request", send_join_request_path(@guild), method: :post, remote: true %>
+<% end %>
+<% if !current_user.guild && @guild.pending_join_requests?(current_user) %>
+	<%= link_to "cancel join request", cancel_join_request_path(@guild, user_id: current_user), method: :post, remote: true %>
+<% end %>
+
+<% if !current_user.guild && @guild.pending_invites?(current_user) %>
+	<%= link_to "accept invite ", accept_invite_path(@guild, user_id: current_user), method: :post, remote: true %>
+	<%= link_to "decline invite", decline_invite_path(@guild, user_id: current_user), method: :post, remote: true %>
+<% end %>
+
+<% if current_user.guild == @guild %>
+	<%= link_to "leave guild", leave_guild_path(@guild), remote: true, method: :post %>
+<% end %>

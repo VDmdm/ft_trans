@@ -16,11 +16,11 @@ class User < ApplicationRecord
 
 	has_many :guild_invites, :dependent => :delete_all
 	# Pending sending invites
-	has_many :pending_sending_invites, -> { where(status: :pending, dir: :incoming) }, :class_name => :GuildInvite
-	has_many :pending_sending_invites_guild, :through => :pending_sending_invites, :source => :guild
+	has_many :pending_join_requests, -> { where(status: :pending, dir: :join_request) }, :class_name => :GuildInvite
+	has_many :pending_join_requests_guild, :through => :pending_join_requests, :source => :guild
 	# Pending incoming invites
-	has_many :pending_incoming_invites, -> { where(status: :pending, dir: :sending) }, :class_name => :GuildInvite
-	has_many :pending_incoming_invites_guild, :through => :pending_incoming_invites, :source => :guild
+	has_many :pending_invites, -> { where(status: :pending, dir: :invite) }, :class_name => :GuildInvite
+	has_many :pending_invites_guild, :through => :pending_invites, :source => :guild
 	# accepted invites
 	has_many :accepted_invites, -> { where(status: :accept) }, :class_name => :GuildInvite
 	has_many :accepted_invites_guild, :through => :accepted_invites, :source => :guild
@@ -41,9 +41,11 @@ class User < ApplicationRecord
 	has_many :invitations
 	has_many :pending_invitations, -> { where confirmed: false }, class_name: "Invitation", foreign_key: "friend_id"
 
-	has_many :game
+	has_many :games
   	has_one :pending_games_p1, -> { where(status: :pending, war_time: false) }, :class_name => :Game, foreign_key: "p1_id"
   	has_one :pending_games_p2, -> { where(status: :pending, war_time: false) }, :class_name => :Game, foreign_key: "p2_id"
+  	has_many :win_games, :class_name => :Game, foreign_key: "winner_id"
+  	has_many :lose_games, :class_name => :Game, foreign_key: "loser_id"
 
 	devise :database_authenticatable, :registerable,
 	:recoverable, :rememberable, :trackable, :validatable,
@@ -105,7 +107,7 @@ class User < ApplicationRecord
 	end
 
 	def rating
-		User.order(:score).index(self) + 1
+		User.order(score: :desc).index(self) + 1
 	end
 
 	def online?

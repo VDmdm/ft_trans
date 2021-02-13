@@ -51,4 +51,7 @@ class Guild < ApplicationRecord
 		return false 
 	end
 
+	def rating
+		Guild.order(points: :desc).index(self) + 1
+	end
 end

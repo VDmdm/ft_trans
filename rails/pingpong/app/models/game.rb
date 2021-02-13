@@ -133,14 +133,16 @@ class Game < ApplicationRecord
             GameStateHash.instance.return_value("p2_status_#{self.id}") == 'lags'
             GameStateHash.instance.add_kv("status_#{self.id}", "paused")
             return false
-        elsif   GameStateHash.instance.return_value("p1_status_#{self.id}") == 'not ready' ||
-                GameStateHash.instance.return_value("p2_status_#{self.id}") == 'not ready'
+        elsif   (GameStateHash.instance.return_value("status_#{self.id}") == 'active' &&
+                (GameStateHash.instance.return_value("p1_status_#{self.id}") == 'not ready' ||
+                GameStateHash.instance.return_value("p2_status_#{self.id}") == 'not ready'))
             GameStateHash.instance.add_kv("status_#{self.id}", "paused")
             return false
-        else
+        elsif GameStateHash.instance.return_value("status_#{self.id}") == 'active'
             return true
+        else
+            return false
         end
-
     end
 
     def check_collision
@@ -231,26 +233,54 @@ class Game < ApplicationRecord
     end
 
     def check_game_state?
-        if (@score[:p1] == 21 || @score[:p2] == 21)
+        if GameStateHash.instance.return_value("status_#{self.id}") == "canceled"
+            return true
+        end
+        if @score[:p1] == 21 || @score[:p2] == 21 || GameStateHash.instance.return_value("p1_status_#{self.id}") == 'leave' || 
+                                                    GameStateHash.instance.return_value("p2_status_#{self.id}") == 'leave'
             GameStateHash.instance.add_kv("status_#{self.id}", "ended")
             GameStateHash.instance.delete_key("paddle_p2_#{self.id}")
             GameStateHash.instance.delete_key("paddle_p1_#{self.id}")
             self.reload
             self.status = :ended
-            if @score[:p1] == 21
+            if @score[:p1] == 21 || GameStateHash.instance.return_value("p2_status_#{self.id}") == 'leave'
                 GameStateHash.instance.add_kv("winner_#{self.id}", "p1")
                 self.winner = self.p1
                 self.loser = self.p2
+                if self.rating
+                    self.p1.update_attribute(:score, self.p1.score - 25)
+                    self.p2.update_attribute(:score, self.p2.score + 25)
+                end
+                if self.p1.guild
+                    if self.rating
+                        self.p1.guild.update_attribute(:points, self.p1.guild.points + 100)
+                    elsif self.p1.guild != self.p2.guild
+                        self.p1.guild.update_attribute(:points, self.p1.guild.points + 25)
+                    end
+                end
             else
                 GameStateHash.instance.add_kv("winner_#{self.id}", "p2")
                 self.winner = self.p2
                 self.loser = self.p1
+                if self.rating
+                    self.p2.update_attribute(:score, self.p2.score + 25)
+                    self.p1.update_attribute(:score, self.p1.score - 25)
+                end
+                if self.p1.guild
+                    if self.rating
+                        self.p2.guild.update_attribute(:points, self.p2.guild.points + 100)
+                    elsif self.p1.guild != self.p2.guild
+                        self.p2.guild.update_attribute(:points, self.p2.guild.points + 25)
+                    end
+                end
             end
             self.p1_score = @score[:p1]
             self.p2_score = @score[:p2]
+            self.ended = DateTime.now
             self.save
             render()
         end
         return GameStateHash.instance.return_value("status_#{self.id}") == 'ended'
     end
+    
 end

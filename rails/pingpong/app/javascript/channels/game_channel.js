@@ -95,11 +95,11 @@ window.drawFrame = function() {
 		context.font = "40px PixelarRegularW01-Regular";
 		if (typeof(winner) == "string" && winner == "p1") {
 			context.fillText("win", 50, 50);
-			context.fillText("loose", canvas.width - 120, 50);
+			context.fillText("lose", canvas.width - 120, 50);
 		}
 		else if (typeof(winner) == "string" && winner == "p2") {
-			context.fillText("loose", 40, 50);
-			context.fillText("win", canvas.width - 40, 50);
+			context.fillText("lose", 40, 50);
+			context.fillText("win", canvas.width - 110, 50);
 		}
 
 		context.fillStyle = ball_color;

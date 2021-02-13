@@ -1,50 +1,72 @@
-<h1><%= @guild.name %> </h1>
-
-<h2>Members:</h2>
-<p><%= @guild.owner.nickname %> </p>
-<h2>Members:</h2>
-<% @guild.members.each do |member| %>
-	<p><%= member.nickname %> </p>
-	<% if current_user.guild_owner && @guild == current_user.guild && member != current_user %>
-		<% if !member.guild_officer %>
-			<%= link_to "add to officer", add_officer_path(@guild, user_id: member), method: :post, remote: true %>
-		<% else %>
-			<%= link_to "remove from officer", remove_officer_path(@guild, user_id: member), method: :post, remote: true %>
+<section class="guild">
+    <div class="guild-name-wrap">
+        <span class="guild-name"><%= @guild.name %></span>
+        <span class="guild-anagram"><%= @guild.anagram %></span>
+    </div>
+    <div class="guild-info">
+        <% if @guild.avatar.attached? %>
+			<%= image_tag @guild.avatar, class: "guild-avatar", alt: "avatar" %>
 		<% end %>
-	<% end %>
-<% end %>
-<h2>Officers:</h2>
-<% @guild.officers.each do |member| %>
-	<p><%= member.nickname %> </p>
-<% end %>
+        <div class="guild-description-wrap">
+            <p class="guild-description"><%= @guild.description %></p>
+            <% if !current_user.guild %>
+                <% if @invite %>
+                    <%= button_to "ACCEPT INVITE", accept_invite_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
+                    <%= button_to "DECLINE INVITE", decline_invite_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
+                <% elsif @join_request %>
+                    <%= button_to "CANCEL JOIN REQUEST", cancel_join_request_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
+                <% else %>
+                    <%= button_to "SEND JOIN REQUEST", send_join_request_path(@guild), class: "guild-description-join", remote: true %>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="guild-stats">
+            <div class="guild-stat">
+                <%= image_tag "cup.png", class: "guild-stats-icon" %>
+                <span class="guild-stat-info"><%= @guild.rating %></span>
+            </div>
+            <div class="guild-stat">
+                <%= image_tag "ball.png", class: "guild-stats-icon" %>
+                <span class="guild-stat-info"><%= @guild.points %></span>
+            </div>
+            <div class="guild-stat">
+                <%= image_tag "sword.png", class: "guild-stats-icon" %>
+                <span class="guild-stat-info">25 / 12</span>
+            </div>
+            <div class="guild-stat">
+                <img src="assets/images/sword.png" alt="cup" class="guild-stats-icon">
+                <span class="guild-stat-info">26%</span>
+            </div>
+        </div>
+    </div>
 
-<h2>Pending invites:</h2>
-<h2>Incoming </h2>
-<% @guild.pending_join_request_user.each do |member| %>
-	<p><%= member.nickname %> </p>
-	<% if current_user.guild == @guild && current_user.guild_owner || current_user.guild_officer %>
-		<%= link_to "accept join request", accept_join_request_path(@guild, user_id: member), method: :post, remote: true %>
-		<%= link_to "decline join request", decline_join_request_path(@guild, user_id: member), method: :post, remote: true %>
-	<% end %>
-<% end %>
-<h2>Sending </h2>
-<% @guild.pending_invites_user.each do |member| %>
-	<p><%= member.nickname %> </p>
-	
-<% end %>
-
-<% if !current_user.guild && !@guild.pending_join_requests?(current_user) %>
-	<%= link_to "Send join request", send_join_request_path(@guild), method: :post, remote: true %>
-<% end %>
-<% if !current_user.guild && @guild.pending_join_requests?(current_user) %>
-	<%= link_to "cancel join request", cancel_join_request_path(@guild, user_id: current_user), method: :post, remote: true %>
-<% end %>
-
-<% if !current_user.guild && @guild.pending_invites?(current_user) %>
-	<%= link_to "accept invite ", accept_invite_path(@guild, user_id: current_user), method: :post, remote: true %>
-	<%= link_to "decline invite", decline_invite_path(@guild, user_id: current_user), method: :post, remote: true %>
-<% end %>
-
-<% if current_user.guild == @guild %>
-	<%= link_to "leave guild", leave_guild_path(@guild), remote: true, method: :post %>
-<% end %>
+    <div class="guild-lists-wrap">
+        <div class="guild-users-list">
+        </div>
+        <div class="guild-war-history-list">
+            <h3 class="guild-war-history-list-title">War history</h3>
+            <ul class="war-history-list">
+                <li class="war-history-item">
+                    <div class="war-history-item-wrap">
+                        <span class="war-history-item-name">Anal POWER!!!</span>
+                        <span class="war-history-item-anagram">[ANAL#]</span>
+                    </div>
+                    <div class="war-history-total-result">
+                        <span class="total-result-score total-result-score-win">56:40 WIN</span>
+                        <time class="total-result-time">12/12/2012</time>
+                    </div>
+                </li>
+                <li class="war-history-item">
+                    <div class="war-history-item-wrap">
+                        <span class="war-history-item-name">Anal POWER!!!</span>
+                        <span class="war-history-item-anagram">[ANAL#]</span>
+                    </div>
+                    <div class="war-history-total-result">
+                        <span class="total-result-score total-result-score-lose">26:40 LOST</span>
+                        <time class="total-result-time">12/12/2012</time>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

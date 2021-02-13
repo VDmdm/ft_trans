@@ -9,7 +9,7 @@
 
 	<div class="create-guild-form-field">
 		<%= form.label :anagram, 'anagram', class:"create-guild-field-label"%>
-		<%= form.text_field :anagram, placeholder: "5 characters", minlength: 5, maxlength: 5 %>
+		<%= form.text_field :anagram, placeholder: "5 characters", minlength: 5, maxlength: 5, class: "anagram-entry-field" %>
 	</div>
 
 	<div class="create-guild-form-field">
@@ -19,8 +19,8 @@
 	</div>
 
 	<div class="create-guild-form-field create-guild-form-field-description">
-		<label for="description" class="create-guild-field-label">description</label>
-		<input type="text" id="description">
+		<%= form.label :description, 'description', class:"create-guild-field-label"%>
+		<%= form.text_field :description, placeholder: "50 characters", minlength: 0, maxlength: 50, size: "100px" %>
 	</div>
 
 	<%= form.submit 'create', class: "create-guild-form-button"%>
