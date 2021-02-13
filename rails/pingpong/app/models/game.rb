@@ -4,6 +4,8 @@ class Game < ApplicationRecord
 	enum status: [ :pending, :ended ]
     belongs_to :p1, class_name: "User", foreign_key: "p1_id"
     belongs_to :p2, class_name: "User", foreign_key: "p2_id", optional: true
+    belongs_to :winner, class_name: "User", foreign_key: "winner_id", optional: true
+    belongs_to :loser, class_name: "User", foreign_key: "loser_id", optional: true
     
     validates  :name, presence: true, length: { maximum: 15, minimum: 4 }
 
@@ -45,8 +47,8 @@ class Game < ApplicationRecord
         while true
             render()
             return if check_game_state?()
-            if (GameStateHash.instance.return_value("status_#{self.id}") != 'active')
-                sleep(3)
+            unless (game_active?())
+                sleep(0.5)
                 next
             end
             check_collision()
@@ -105,24 +107,40 @@ class Game < ApplicationRecord
     end
 
     def render
-        def render
-            data = {"paddle_color": self.paddle_color,
-                    "ball_color": self.ball_color,
-                    "ball_size": self.ball_size,
-                    "ball_x": self.ball[:x],
-                    "ball_y":  self.ball[:y],
-                    "ball_radius": self.ball[:radius],
-                    "paddle_p1_y": self.paddle_L[:y],
-                    "paddle_p2_y": self.paddle_R[:y],
-                    "p1_score": self.score[:p1],
-                    "p2_score": self.score[:p2],
-                    "p1_nickname": GameStateHash.instance.return_value("p1_nickname_#{self.id}"),
-                    "p2_nickname": GameStateHash.instance.return_value("p2_nickname_#{self.id}"),
-                    "p1_status": GameStateHash.instance.return_value("p1_status_#{self.id}"),
-                    "p2_status": GameStateHash.instance.return_value("p2_status_#{self.id}")
-                }
-            GameChannel.broadcast_to self, data
+        data = {
+            "paddle_color": self.paddle_color,
+            "ball_color": self.ball_color,
+            "ball_size": self.ball_size,
+            "ball_x": self.ball[:x],
+            "ball_y":  self.ball[:y],
+            "ball_radius": self.ball[:radius],
+            "paddle_p1_y": self.paddle_L[:y],
+            "paddle_p2_y": self.paddle_R[:y],
+            "p1_score": self.score[:p1],
+            "p2_score": self.score[:p2],
+            "p1_nickname": GameStateHash.instance.return_value("p1_nickname_#{self.id}"),
+            "p2_nickname": GameStateHash.instance.return_value("p2_nickname_#{self.id}"),
+            "p1_status": GameStateHash.instance.return_value("p1_status_#{self.id}"),
+            "p2_status": GameStateHash.instance.return_value("p2_status_#{self.id}"),
+            "game_status": GameStateHash.instance.return_value("status_#{self.id}"),
+            "winner": GameStateHash.instance.return_value("winner_#{self.id}")
+        }
+        GameChannel.broadcast_to self, data
+    end
+
+    def game_active?
+        if  GameStateHash.instance.return_value("p1_status_#{self.id}") == 'lags' ||
+            GameStateHash.instance.return_value("p2_status_#{self.id}") == 'lags'
+            GameStateHash.instance.add_kv("status_#{self.id}", "paused")
+            return false
+        elsif   GameStateHash.instance.return_value("p1_status_#{self.id}") == 'not ready' ||
+                GameStateHash.instance.return_value("p2_status_#{self.id}") == 'not ready'
+            GameStateHash.instance.add_kv("status_#{self.id}", "paused")
+            return false
+        else
+            return true
         end
+
     end
 
     def check_collision
@@ -219,10 +237,19 @@ class Game < ApplicationRecord
             GameStateHash.instance.delete_key("paddle_p1_#{self.id}")
             self.reload
             self.status = :ended
+            if @score[:p1] == 21
+                GameStateHash.instance.add_kv("winner_#{self.id}", "p1")
+                self.winner = self.p1
+                self.loser = self.p2
+            else
+                GameStateHash.instance.add_kv("winner_#{self.id}", "p2")
+                self.winner = self.p2
+                self.loser = self.p1
+            end
             self.p1_score = @score[:p1]
             self.p2_score = @score[:p2]
             self.save
-            return true
+            render()
         end
         return GameStateHash.instance.return_value("status_#{self.id}") == 'ended'
     end

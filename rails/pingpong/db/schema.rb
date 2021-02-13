@@ -94,6 +94,8 @@ ActiveRecord::Schema.define(version: 2021_02_04_183940) do
   create_table "games", force: :cascade do |t|
     t.bigint "p1_id"
     t.bigint "p2_id"
+    t.bigint "winner_id"
+    t.bigint "loser_id"
     t.string "name"
     t.integer "status", default: 0
     t.boolean "rating", default: false
@@ -116,8 +118,10 @@ ActiveRecord::Schema.define(version: 2021_02_04_183940) do
     t.datetime "ended"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["loser_id"], name: "index_games_on_loser_id"
     t.index ["p1_id"], name: "index_games_on_p1_id"
     t.index ["p2_id"], name: "index_games_on_p2_id"
+    t.index ["winner_id"], name: "index_games_on_winner_id"
   end
 
   create_table "guild_invites", force: :cascade do |t|
@@ -233,8 +237,10 @@ ActiveRecord::Schema.define(version: 2021_02_04_183940) do
   add_foreign_key "direct_messages", "direct_rooms"
   add_foreign_key "direct_messages", "users"
   add_foreign_key "direct_rooms", "users"
+  add_foreign_key "games", "users", column: "loser_id"
   add_foreign_key "games", "users", column: "p1_id"
   add_foreign_key "games", "users", column: "p2_id"
+  add_foreign_key "games", "users", column: "winner_id"
   add_foreign_key "guild_members", "guilds"
   add_foreign_key "guild_members", "users"
   add_foreign_key "invitations", "users"

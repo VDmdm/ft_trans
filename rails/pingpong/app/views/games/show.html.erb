@@ -9,10 +9,11 @@
         <canvas width="1064" height="514" id="game"
             style="background-color: <%= @game.bg_color %>; background-image: url(<%= url_for (@game.bg_image) if @game.bg_image.attached? %>); background-size: 100% 100%; outline: 4px solid white;"></canvas>
         <div class="game-block-action">
-             <% if @game.p1==current_user || @game.p2==current_user %>
+             <% if @game.p1 == current_user || @game.p2 == current_user %>
                 <%= link_to "leave" , game_leave_player_path(@game), method: :post, class: "game-block-action-link",
                     remote: true %>
-                <% if GameStateHash.instance.return_value("p2_status_#{@game.id}") == "not ready" %>
+                <% if GameStateHash.instance.return_value("p2_status_#{@game.id}") == "not ready" || 
+                    GameStateHash.instance.return_value("p2_status_#{@game.id}") == "lags" %>
                     <%= link_to "ready?" , game_switch_ready_path(@game), method: :post, class: "game-block-action-link",
                     remote: true, id: "ready_btn" %>
                 <% else %>

@@ -3,6 +3,8 @@ class CreateGames < ActiveRecord::Migration[6.1]
     create_table :games do |t|
       t.references  :p1, foreign_key: { to_table: 'users' }
       t.references  :p2, foreign_key: { to_table: 'users' }
+      t.references  :winner, foreign_key: { to_table: 'users' }
+      t.references  :loser, foreign_key: { to_table: 'users' }
       t.string      :name
       t.integer     :status, default: 0
       t.boolean     :rating, default: false

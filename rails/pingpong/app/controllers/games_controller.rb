@@ -74,14 +74,11 @@ class GamesController < ApplicationController
 			string = "p2"
 		end
 		status = GameStateHash.instance.return_value("#{string}_status_#{game.id}")
-		if status == "not ready"
+		if status == "not ready" || status == "lags"
 			GameStateHash.instance.add_kv("#{string}_status_#{game.id}", "ready")
 			p string
 		elsif status == "ready"
 			GameStateHash.instance.add_kv("#{string}_status_#{game.id}", "not ready")
-		end
-		if GameStateHash.instance.return_value("p1_status_#{game.id}") == "ready" && GameStateHash.instance.return_value("p2_status_#{game.id}") == "ready"
-			GameStateHash.instance.add_kv("status_#{game.id}", "active")
 		end
 	end
 
