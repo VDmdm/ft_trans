@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_04_183940) do
+ActiveRecord::Schema.define(version: 2021_02_14_121609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,6 +227,42 @@ ActiveRecord::Schema.define(version: 2021_02_04_183940) do
     t.index ["provider"], name: "index_users_on_provider"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid"], name: "index_users_on_uid"
+  end
+
+  create_table "war_times", force: :cascade do |t|
+    t.bigint "war_id"
+    t.bigint "game_id"
+    t.boolean "p1_accept", default: false
+    t.boolean "p2_accept", default: false
+    t.bigint "winner_id"
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_war_times_on_game_id"
+    t.index ["war_id"], name: "index_war_times_on_war_id"
+    t.index ["winner_id"], name: "index_war_times_on_winner_id"
+  end
+
+  create_table "wars", force: :cascade do |t|
+    t.bigint "initiator_id"
+    t.bigint "recipient_id"
+    t.bigint "winner_id"
+    t.datetime "started"
+    t.datetime "ended"
+    t.time "daily_start"
+    t.time "daily_end"
+    t.time "interval"
+    t.integer "status", default: 0
+    t.boolean "ball_down_mode", default: false
+    t.boolean "ball_speedup_mode", default: false
+    t.boolean "random_mode", default: false
+    t.float "ball_size", default: 1.0
+    t.float "speed_rate", default: 1.0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["initiator_id"], name: "index_wars_on_initiator_id"
+    t.index ["recipient_id"], name: "index_wars_on_recipient_id"
+    t.index ["winner_id"], name: "index_wars_on_winner_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

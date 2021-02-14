@@ -6,7 +6,9 @@ class Game < ApplicationRecord
     belongs_to :p2, class_name: "User", foreign_key: "p2_id", optional: true
     belongs_to :winner, class_name: "User", foreign_key: "winner_id", optional: true
     belongs_to :loser, class_name: "User", foreign_key: "loser_id", optional: true
-    
+
+    belongs_to :wartime, optional: true
+
     validates  :name, presence: true, length: { maximum: 15, minimum: 4 }
 
     validates  :rating, presence: true, allow_blank: true
