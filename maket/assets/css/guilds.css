@@ -89,18 +89,36 @@
 }
 
 .guild-table-title {
+    display: flex;
     border: 1px solid #fff;
-}
-
-.guild-table-title-rank {
-    width: 100px;
-    padding-left: 20px;
-}
-
-.guild-table-row-rank {
-    padding-left: 20px;
+    padding: 10px 32px 7px 28px;
 }
 
 .guild-table-row {
-    width: 10px;
+    padding-left: 28px;
+    padding-bottom: 16px;
+}
+
+.guild-table-row-item {
+    text-align: left;
+}
+
+.guild-table-title-rank, .guild-table-row-rank {
+    width: 162px;
+}
+
+.guild-table-title-score, .guild-table-row-score {
+    width: 252px;
+}
+
+.guild-table-title-name, .guild-table-row-name {
+    width: 376px;
+}
+
+.guild-table-title-owner, .guild-table-row-owner {
+    width: 310px;
+}
+
+.guild-table-row {
+    display: flex;
 }
