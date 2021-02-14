@@ -1,31 +1,33 @@
-<% @guilds.each do |guild| %>
-	<h3> <%= link_to guild.name, guild_path(guild) %> </h3>
-<%end%>
-
 <section class="guilds">
-	<h2 class="guilds-title">Guilds <%= link_to "+", new_guild_path %></h2>
-	<div class="guilds-invite">
+	<h2 class="guilds-title">Guilds <%= link_to "+", new_guild_path unless current_user.guild %></h2>
+	
+	<% if current_user.pending_invites.exists? %>
+		<%= current_user.pending_invites %>
 		<h3 class="guilds-invite-title">You have some invites</h3>
 		<ul class="guilds-invite-list">
-			<li class="guilds-invite-item">
-				<img src="assets/images/sword.png" alt="avatar" class="guilds-invite-item-avatar">
-				<div class="guilds-invite-item-wrap">
-					<span class="guilds-invite-item-name">Anal</span>
-					<span class="guilds-invite-item-anagram">[ZHOPA]</span>
-				</div>
-				<div class="guilds-invite-item-action">
-					<button class="guilds-invite-item-accept">
-						<%= image_tag "ok.png", class: "guilds-invite-item-accept-icon" %>
-					</button>
-					<button class="guilds-invite-item-cancel">
-						<%= image_tag "delete.png", class: "guilds-invite-item-cancel-icon" %>
-					</button>
-				</div>
-			</li>
+			<% current_user.pending_invites.each do |i| %>
+				<li class="guilds-invite-item">
+					<% if i.guild.avatar.attached? %>
+						<%= image_tag i.guild.avatar, class: "guilds-invite-item-avatar", alt: "avatar" %>
+					<% end %>
+					<div class="guilds-invite-item-wrap">
+						<span class="guilds-invite-item-name"><%= i.guild.name %></span>
+						<span class="guilds-invite-item-anagram">><%= i.guild.anagram %></span>
+					</div>
+					<div class="guilds-invite-item-action">
+						<%= link_to accept_invite_path(i), class: "guilds-invite-item-accept" do %>
+							<%= image_tag "ok.png", class: "guilds-invite-item-accept-icon" %>
+						<% end%>
+						<%= link_to decline_invite_path(i), class: "guilds-invite-item-cancel" do %>
+							<%= image_tag "delete.png", class: "guilds-invite-item-cancel-icon" %>
+						<% end%>
+					</div>
+				</li>
+			<% end %>
 		</ul>
 	</div>
-
-	<table class="guild-table" align="left">
+	<% end %>
+	<table class="guild-table">
 		<tr class="guild-table-title">
 			<th class="table-title guild-table-title-rank">rank</th>
 			<th class="table-title guild-table-title-score">score</th>
@@ -33,19 +35,14 @@
 			<th class="table-title guild-table-title-owner">owner</th>
 			<th class="table-title guild-table-title-wars">wars</th>
 		</tr>
-		<tr class="guild-table-row">
-			<td class="guild-table-row guild-table-row-rank">100</td>
-			<td class="guild-table-row guild-table-row-score">1000</td>
-			<td class="guild-table-row guild-table-row-name">Anal power!!!</td>
-			<td class="guild-table-row guild-table-row-owner">deddara</td>
-			<td class="guild-table-row guild-table-row-wars">24/12</td>
-		</tr>
-		<tr class="guild-table-row">
-			<td class="guild-table-row guild-table-row-rank">100</td>
-			<td class="guild-table-row guild-table-row-score">1000</td>
-			<td class="guild-table-row guild-table-row-name">Anal power!!!</td>
-			<td class="guild-table-row guild-table-row-owner">deddara</td>
-			<td class="guild-table-row guild-table-row-wars">24/12</td>
-		</tr>
+		<% @guilds.order(:points).each_with_index do |g, i| %>
+			<tr class="guild-table-row">
+				<td class="guild-table-row guild-table-row-rank"><%= i %></td>
+				<td class="guild-table-row guild-table-row-score"><%= g.points %></td>
+				<td class="guild-table-row guild-table-row-name"><%= link_to g.name, guild_path(g) %></td>
+				<td class="guild-table-row guild-table-row-owner"><%= g.owner.nickname %></td>
+				<td class="guild-table-row guild-table-row-wars">24/12</td>
+			</tr>
+		<% end %>
 	</table>
 </section>

@@ -32,6 +32,8 @@ class GuildsController < ApplicationController
 
 	def show
 		@guild = Guild.all.find(params[:id])
+		@join_request = current_user.pending_join_requests.find_by(guild: @guild.id)
+		@invite = current_user.pending_invites.find_by(guild: @guild.id)
 	end
 
 	def add_officer

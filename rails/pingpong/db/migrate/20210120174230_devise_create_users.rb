@@ -20,7 +20,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.datetime :last_sign_in_at
       t.string   :current_sign_in_ip
       t.string   :last_sign_in_ip
-      t.integer   :status, default: 0
+      t.integer  :status, default: 0
 
       ## Confirmable
       # t.string   :confirmation_token
@@ -33,10 +33,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-
-      t.integer    :score, default: 0
-
-
+      t.integer    :score, default: 1000
       t.timestamps null: false
     end
 

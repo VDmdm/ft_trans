@@ -10,6 +10,7 @@ var paddle_color;
 var grid;
 var game_id = null;
 var paddleHeight;
+var winner = null;
 
 var leftPaddle = {
 	x: 0,
@@ -89,6 +90,17 @@ window.drawFrame = function() {
 		context.font = "25px PixelarRegularW01-Regular";
 		context.fillStyle = paddle_color;
 		context.fillText(player_1_score + ' : ' + player_2_score, canvas.width / 2 - 18, 50);
+		console.log(typeof(winner))
+		console.log(winner)
+		context.font = "40px PixelarRegularW01-Regular";
+		if (typeof(winner) == "string" && winner == "p1") {
+			context.fillText("win", 50, 50);
+			context.fillText("lose", canvas.width - 120, 50);
+		}
+		else if (typeof(winner) == "string" && winner == "p2") {
+			context.fillText("lose", 40, 50);
+			context.fillText("win", canvas.width - 110, 50);
+		}
 
 		context.fillStyle = ball_color;
 		context.fillRect(ball.x, ball.y, ball.radius, ball.radius);
@@ -102,6 +114,7 @@ $(document).on("turbolinks:load", function() {
 			game_id = null;
 		}
 		if (document.getElementById('game')) {
+			var nick = $('#nickname').text()
 			start_game();
 			var subscribe = consumer.subscriptions.create({ channel: 'GameChannel', game: $('#room-name').attr("data-room-id")}, {
 			connected() {
@@ -125,29 +138,29 @@ $(document).on("turbolinks:load", function() {
 				rightPaddle.y = data.paddle_p2_y;
 				player_1_score = data.p1_score;
 				player_2_score = data.p2_score;
+				winner = data.winner;
 				if ($('.p1').text() != data.p1_nickname)
 					$('.p1').text(data.p1_nickname);
-				if (data.p2_nickname)
+				if (typeof(data.p2_nickname) == "string")
 					$('.p2').text(data.p2_nickname);
 				else
 					$('.p2').text("waiting...");
-				
 				drawFrame();
-				if (nickname == data.p1_nickname)
+				if (nick == data.p1_nickname)
 				{
-					if (data.p1_status == "ready")	
+					if (data.p1_status == "ready")
 						$('#ready_btn').text("not ready?");
-					else if (data.p1_status == "not ready")
+					else if (data.p1_status == "not ready" || data.p1_status == "lags")
 					{
 						$('#ready_btn').text("ready?");
 						$('.p1').css("color","white");
 					}
 				}
-				else if (nickname == data.p2_nickname)
+				else if (nick == data.p2_nickname)
 				{
 					if (data.p2_status == "ready")
 						$('#ready_btn').text("not ready?");
-					else if (data.p2_status == "not ready")
+					else if (data.p2_status == "not ready" || data.p2_status == "lags")
 						$('#ready_btn').text("ready?");
 				}
 				if (data.p1_status == "ready")
