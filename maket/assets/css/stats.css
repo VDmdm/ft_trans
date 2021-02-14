@@ -203,34 +203,26 @@
     border: 4px solid #fff;
 }
 
-.table-title {
-    max-width: 1px;
-    text-align: left;
-}
-
 .table-row-title {
+    display: flex;
     font-weight: normal;
     border-bottom: 1px solid #fff;
-}
-
-.table-title-rank, .table-row-rank {
     padding-left: 31px;
 }
 
-.table-title-nickname {
-    padding-left: 50px;
+.table-title-rank, .table-row-rank {
+    text-align: left;
+    width: 143px;
+    margin-left: 31px;
 }
 
-.table-title-score {
-    text-align: right;
-    padding-right: 114px;
+.table-title-nickname, .table-row-nickname {
+    text-align: left;
+    width: 809px;
 }
 
-.table-row-nickname {
-    padding-left: 50px;
-}
-
-.table-row-score {
-    text-align: right;
-    padding-right: 125px;
+.table-row {
+    display: flex;
+    padding-bottom: 10px;
+    padding-left: 31px;
 }
