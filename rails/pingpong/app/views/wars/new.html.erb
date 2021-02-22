@@ -1,6 +1,6 @@
 <h1 class="game-room-create-title">Declare a war</h1>
 <section class="game-room-form-and-game-preview">
-	<%= form_for @war, url: guild_wars_create_path(current_user.guild.id),  remote: true do |form| %>
+	<%= form_for @war, url: guild_wars_create_path(id: current_user.guild.id),  remote: true do |form| %>
         <div class="game-room-create-contour-up">
             <canvas id="game-preview" width="716px" height="346px"></canvas>
             <div class="game-room-create-form">
