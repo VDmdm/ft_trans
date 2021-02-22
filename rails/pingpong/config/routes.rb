@@ -59,6 +59,11 @@ Rails.application.routes.draw do
 
   get 'tournaments' , to: "tournaments#index"
 
+  get 'guilds/:id/wars', to: "wars#index", as: :guild_wars_index
+  get 'guilds/wars/:war_id', to: "wars#show", as: :guild_wars_show
+  get 'guilds/:id/war/new', to: "wars#new", as: :guild_wars_new
+  post 'guilds/:id/wars/', to: "wars#create", as: :guild_wars_create
+
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   devise_scope :user do

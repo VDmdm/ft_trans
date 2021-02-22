@@ -251,7 +251,8 @@ ActiveRecord::Schema.define(version: 2021_02_14_121609) do
     t.datetime "ended"
     t.time "daily_start"
     t.time "daily_end"
-    t.time "interval"
+    t.integer "time_to_wait"
+    t.integer "max_unanswered"
     t.integer "status", default: 0
     t.boolean "ball_down_mode", default: false
     t.boolean "ball_speedup_mode", default: false

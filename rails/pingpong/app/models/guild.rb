@@ -6,6 +6,9 @@ class Guild < ApplicationRecord
 	has_many :officers, :through => :guild_members_officers, :source => :user
 	has_one  :guild_members_owner, -> { where(owner: true) }, :class_name => :GuildMember
 	has_one  :owner, :through => :guild_members_owner, :source => :user
+	has_many :war_initiator, foreign_key: "initiator_id"
+	has_many :war_recipient, foreign_key: "recipient_id"
+	
 
 	has_many :guild_invites, :dependent => :delete_all
 	has_many :pending_invites_and_requests, -> { where(status: :pending) }, :class_name => :GuildInvite
@@ -53,5 +56,13 @@ class Guild < ApplicationRecord
 
 	def rating
 		Guild.order(points: :desc).index(self) + 1
+	end
+
+	def wars_all
+		War.where("initiator_id = ? OR recipient_id = ?", self.id, self.id)
+	end
+
+	def wars_active
+		War.where("(initiator_id = ? OR recipient_id = ?) AND NOT status=?", self.id, self.id, 3)
 	end
 end

@@ -58,7 +58,7 @@
                         <%= form.check_box :ball_down_mode, class: "checkbox-right", oninput: "change_balldownmode(this.value)" %>
                     </div>
                     <div class="game-room-ball-setting-left">
-                        <%= form.label :speed_rate, "Size" %>
+                        <%= form.label :speed_rate, "Speed" %>
                         <output id="input_value_speed">1</output>
                         <%= form.range_field :speed_rate, value: 1, min: "0.5", max: "2", step: "0.1", oninput: "change_ballspeed(this.value)" %>
                     </div>
