@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :rooms
   resources :direct_messages
   resources :direct_rooms
+  resources :otp_secrets
 
   get  'rooms/:id/users', to: 'rooms#user_list',  as: :rooms_users
   get  'rooms/:id/settings', to: 'rooms#room_settings',  as: :room_settings

@@ -1,43 +1,67 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<h2 class="profile-settings-title">Profile setting</h2>
+<section class="profile-settings-section personal-information">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: "personal-information-form", html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class="personal-information-form-filed">
+    <%= f.label :email, class: "personal-information-field-label" %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "personal-information-field-input", id: "email", type: "text" %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+  <div class="personal-information-form-filed">
+    <%= f.label :password, class: "personal-information-field-label"  %><br />
+    <%= f.password_field :password, autocomplete: "new-password", class: "personal-information-field-input", type: "text"  %>
     <% if @minimum_password_length %>
       <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
     <% end %>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  <div class="personal-information-form-filed">
+    <%= f.label :password_confirmation, class: "personal-information-field-label" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password",  class: "personal-information-field-input", type: "text" %>
   </div>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
+  <div class="personal-information-form-filed">
+    <%= f.label :current_password, class: "personal-information-field-label" %> <br />
+    <%= f.password_field :current_password, autocomplete: "current-password", class: "personal-information-field-input", type: "text" %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
+  <div class="personal-information-form-filed">
+    <%= f.submit "Update", class: "personal-information-form-button" %>
   </div>
 <% end %>
+<span class="line"></span>
 
-<h3>Cancel my account</h3>
+<div class="personal-information-form-filed">
+<%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "personal-information-form-button" %>
+</div>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+<div class="personal-information-form-filed">
+<%= button_to "Turn on two-step verification", new_otp_secret_path, class: "personal-information-form-button",  method: :get %>
+</div>
 
 <%= link_to "Back", :back %>
+
+</section>
+
+<section class="profile-settings-section block-users">
+    <h2 class="profile-settings-title">Blocked users</h2>
+    <section class="block-users-list">
+        <div class="block-users-user">
+            <img src="assets/images/ok.png" alt="avatar" class="block-users-user-avatar">
+            <div class="block-users-user-interaction">
+                <div class="block-users-user-info">
+                    <a href="#" class="block-users-user-info-nickname">Jalvaroddq</a>
+                    <a href="#" class="block-users-user-info-guilds">[ANAL #]</a>
+                </div>
+                <button href="#" class="block-users-user-unblock">unblock</button>
+            </div>
+        </div>
+    </section>
+</section>
+
+
