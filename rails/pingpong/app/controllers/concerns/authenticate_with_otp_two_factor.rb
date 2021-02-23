@@ -8,7 +8,9 @@ module AuthenticateWithOtpTwoFactor
 	  p "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 	  p params
 	  if user_params[:otp_attempt].present?
-		authenticate_user_with_otp_two_factor(user)
+		p params
+
+		# authenticate_user_with_otp_two_factor(user)
 	  elsif user&.valid_password?(user_params[:password])
 		prompt_for_otp_two_factor(user)
 	  end
@@ -66,6 +68,6 @@ module AuthenticateWithOtpTwoFactor
 	end
   
 	def otp_two_factor_enabled?
-	  find_user&.otp_secret
+	  find_user.otp_secret
 	end
 end

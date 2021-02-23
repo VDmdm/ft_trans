@@ -1,9 +1,10 @@
 class SessionsController < Devise::SessionsController
-	include AuthenticateWithOtpTwoFactor
-  
-	prepend_before_action :authenticate_with_otp_two_factor,
-						  if: -> { action_name == 'create' && otp_two_factor_enabled? }
-  
-	protect_from_forgery with: :exception, prepend: true, except: :destroy
+	def destroy
+		if current_user.otp_secret
+			current_user.update_attribute(:otp_required, true)
+		end
+		super
+		
+	end
   
   end

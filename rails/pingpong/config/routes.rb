@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   resources :direct_messages
   resources :direct_rooms
   get   'otp_secrets', to: 'otp_secrets#new'
+  get   'otp_secrets/login', to: 'otp_secrets#login'
+  post   'otp_secrets/auth_logger', to: 'otp_secrets#auth_logger', as: :otp_secrets_logger
+
   post   'otp_secrets', to: 'otp_secrets#create'
   post   'otp_secrets/destroy', to: 'otp_secrets#destroy'
 

@@ -3,8 +3,6 @@ class OtpSecretsController < ApplicationController
 	require 'rotp'
 	def new
 		@otp_secret = ROTP::Base32.random
-		p "#$&*$&#%^*@($!##@#%%&#$&#$&(#*$&#($&(#$&(#$&#($&#($&@$&#($&#($"
-		p @otp_secret
 		totp = ROTP::TOTP.new(
 		  @otp_secret, issuer: 'PingPong'
 		)
@@ -12,19 +10,13 @@ class OtpSecretsController < ApplicationController
 		  .new(totp.provisioning_uri(current_user.email))
 		  .as_png(resize_exactly_to: 200)
 		  .to_data_url
-	  end
+	end
 	
 	  def create
-		totap = ROTP::TOTP.new("2BV56V3VBDV5H4R62OLO7MCJJA3SDPFY")
-		p "Current OTP: #{totap.now}"
 		@otp_secret = params[:otp_secret]
 		totp = ROTP::TOTP.new(
 		  @otp_secret, issuer: 'PingPong'
 		)
-		print "fdsgdfijgdkflgjdfklgjdfkl3SDU(*W&%(#$&#W*R(TW$&*%($%&($TU$WEG"
-		print totp.now
-		print "   "
-		print params[:otp_secret]
 	
 		last_otp_at = totp.verify(
 		  params[:otp_attempt], drift_behind: 15
@@ -56,6 +48,36 @@ class OtpSecretsController < ApplicationController
 			edit_user_registration_path,
 			notice: 'Successfully turned off OTP protection for your account'
 		  )
+	  end
+
+	  def login
+	  end
+
+	  def auth_logger
+		otp_secret = current_user.otp_secret
+		totp = ROTP::TOTP.new(
+			otp_secret, issuer: 'PingPong'
+		  )
+		p "*$#%&(&$&#%*@($#*(#%&(@$&(#*$&*#(&$(*@$&(#$&(#&(%^@(^$%#%(#$(#*^$#^%^(@^%(#%(*#^%(@%^@$^#(*$^#(*%^#(%^#%^#(%"
+		p params
+		  otp_attempt = params[:otp_attempt]
+		p otp_attempt.to_s
+		p current_user
+		p otp_secret
+
+		  last_otp_at = totp.verify(
+			otp_attempt.to_s, after: current_user.last_otp_at, drift_behind: 15
+		  )
+	  
+		  if last_otp_at
+			current_user.update(
+				otp_required: false, last_otp_at: last_otp_at
+			)
+			redirect_to root_path, success: "Signed in"
+		else
+			redirect_back fallback_location: root_path, alert: "Incorrect token"
+		end
+			
 	  end
 
 end
