@@ -20,8 +20,8 @@ class Game < ApplicationRecord
     validates  :bg_color, format: { with: /\A#[a-f0-9]{6}\z/, message: "Wrong color format!" }
     validates  :random_mode, presence: true, allow_blank: true
     validates  :paddle_color, format: { with: /\A#[a-f0-9]{6}\z/, message: "Wrong color format!" }
-    validates  :ball_size, :inclusion => 0.5..2.0
-    validates  :speed_rate, :inclusion => 0.5..2.0
+    validates  :ball_size, presence: true, :inclusion => 0.5..2.0
+    validates  :speed_rate, presence: true, :inclusion => 0.5..2.0
 
     # basic game logic and methods
 

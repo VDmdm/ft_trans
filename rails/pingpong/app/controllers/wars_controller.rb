@@ -2,13 +2,19 @@ class WarsController < ApplicationController
     
     before_action :check_guilds_not_exist, only: [:create]
     before_action :check_recipient_not_exist, only: [:create]
+    before_action :check_guild_is_a_initiator, only: [:create]
     before_action :check_guild_already_active_war_not_exist, only: [:create]
     before_action :check_guild_already_sent_war_request, only: [:create]
     before_action :check_guild_already_have_received_war_request, only: [:create]
+    before_action :check_user_is_not_officer, only: [:create], unless: :check_user_is_not_owner
+    before_action :check_current_user_is_not_officer, only: [:new], unless: :check_current_user_is_not_owner
 
     def index
         @guild = Guild.find(params[:id])
-        @wars = @guild.wars_all.order(:created_at)
+        @wars_ended = @guild.wars_ended.order(ended: :desc)
+        @active_war = @guild.wars_active
+        @wars_request_sent = @guild.wars_request_sent
+        @wars_request_received = @guild.wars_request_received
     end
 
     def new
@@ -21,7 +27,6 @@ class WarsController < ApplicationController
         war = War.new(war_params)
         war.initiator = guild
         war.recipient = recipient
-        war.started = DateTime.now
         if war.save
             redirect_to guild_wars_show_path(war), success: "War request sended!"
         else
@@ -52,7 +57,7 @@ class WarsController < ApplicationController
                                     :time_to_wait, :max_unanswered,
                                     :ball_down_mode, :ball_speedup_mode,
                                     :random_mode, :ball_size,
-                                    :speed_rate)
+                                    :speed_rate, :started, :ended)
 	end
 
     def check_guilds_not_exist
@@ -80,6 +85,30 @@ class WarsController < ApplicationController
         guild = Guild.all.find_by(id: params[:id])
         initiator = Guild.find_by(name: params[:war][:recipient])
         redirect_to guild_path(guild), alert: "You already have incoming war request from #{ initiator.name }" if guild.wars_request_received.find_by(initiator: initiator)
+    end
+
+    def check_user_is_not_officer
+        guild = Guild.all.find_by(id: params[:id])
+        redirect_to guilds_path, alert: "You not have rights for this" unless guild.officers.include?(current_user)
+    end
+
+    def check_user_is_not_owner
+        guild = Guild.all.find_by(id: params[:id])
+        return guild.owner == current_user
+    end
+
+    def check_current_user_is_not_officer
+        redirect_to guilds_path, alert: "You not have rights for this" unless current_user.guild && current_user.guild_officer
+    end
+
+    def check_current_user_is_not_owner
+        return current_user.guild && current_user.guild_owner
+    end
+
+    def check_guild_is_a_initiator
+        guild = Guild.all.find_by(id: params[:id])
+        initiator = Guild.find_by(name: params[:war][:recipient])
+        redirect_to guild_path(guild), alert: "Can't declare war youre own guild" if guild == initiator
     end
 
 end

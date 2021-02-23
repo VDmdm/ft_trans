@@ -58,8 +58,8 @@ class Guild < ApplicationRecord
 		Guild.order(points: :desc).index(self) + 1
 	end
 
-	def wars_all
-		War.where("(initiator_id = ? OR recipient_id = ?) AND NOT status = 0", self.id, self.id)
+	def wars_ended
+		War.where("(initiator_id = ? OR recipient_id = ?) AND status = 3", self.id, self.id)
 	end
 
 	def wars_request_received
