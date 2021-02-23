@@ -53,9 +53,9 @@
 
 <section class="profile-settings-section block-users">
     <h2 class="profile-settings-title">Blocked users</h2>
-    <section class="block-users-list">
+    <ul class="block-users-list">
     <% current_user.blocked.each do |user| %>
-        <div class="block-users-user">
+        <li class="block-users-user">
             <%= link_to image_tag(user.avatar,  class: "block-users-user-avatar"), profile_path(user) %>
             <div class="block-users-user-interaction">
                 <div class="block-users-user-info">
@@ -70,11 +70,8 @@
                 <%= link_to "unblock", unblock_path(id:current_user.id, blocked_id: user.id),  method: :post, remote: true %>
 
             </div>
-        </div>
+        </li>
     <%end%>
-    </section>
+    </ul>
 </section>
 <%= link_to "Back", :back %>
-
-
-
