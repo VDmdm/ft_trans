@@ -41,7 +41,11 @@
 </div>
 
 <div class="personal-information-form-filed">
+<% if !current_user.otp_secret %>
 <%= button_to "Turn on two-step verification", otp_secrets_path, class: "personal-information-form-button",  method: :get %>
+<%else%>
+<%= button_to "Turn off two-step verification", otp_secrets_destroy_path, class: "personal-information-form-button",  method: :post, remote: true %>
+<%end%>
 </div>
 
 

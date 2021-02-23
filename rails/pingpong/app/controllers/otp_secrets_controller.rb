@@ -6,7 +6,7 @@ class OtpSecretsController < ApplicationController
 		p "#$&*$&#%^*@($!##@#%%&#$&#$&(#*$&#($&(#$&(#$&#($&#($&@$&#($&#($"
 		p @otp_secret
 		totp = ROTP::TOTP.new(
-		  @otp_secret, issuer: 'YourAppName'
+		  @otp_secret, issuer: 'PingPong'
 		)
 		@qr_code = RQRCode::QRCode
 		  .new(totp.provisioning_uri(current_user.email))
@@ -19,7 +19,7 @@ class OtpSecretsController < ApplicationController
 		p "Current OTP: #{totap.now}"
 		@otp_secret = params[:otp_secret]
 		totp = ROTP::TOTP.new(
-		  @otp_secret, issuer: 'YourAppName'
+		  @otp_secret, issuer: 'PingPong'
 		)
 		print "fdsgdfijgdkflgjdfklgjdfkl3SDU(*W&%(#$&#W*R(TW$&*%($%&($TU$WEG"
 		print totp.now
@@ -35,7 +35,7 @@ class OtpSecretsController < ApplicationController
 			otp_secret: @otp_secret, last_otp_at: last_otp_at
 		  )
 		  redirect_to(
-			after_otp_configuration_path,
+			edit_user_registration_path,
 			notice: 'Successfully configured OTP protection for your account'
 		  )
 		else
@@ -47,4 +47,15 @@ class OtpSecretsController < ApplicationController
 		  render :new
 		end
 	  end
+
+	  def destroy
+		current_user.update(
+			otp_secret: nil, last_otp_at: nil
+		  )
+		  redirect_to(
+			edit_user_registration_path,
+			notice: 'Successfully turned off OTP protection for your account'
+		  )
+	  end
+
 end

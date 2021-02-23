@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :direct_rooms
   get   'otp_secrets', to: 'otp_secrets#new'
   post   'otp_secrets', to: 'otp_secrets#create'
+  post   'otp_secrets/destroy', to: 'otp_secrets#destroy'
+
   get  'rooms/:id/users', to: 'rooms#user_list',  as: :rooms_users
   get  'rooms/:id/settings', to: 'rooms#room_settings',  as: :room_settings
   post 'rooms/password_enter', to: "rooms#password_enter", as: :rooms_password_enter
