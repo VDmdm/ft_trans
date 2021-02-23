@@ -41,27 +41,36 @@
 </div>
 
 <div class="personal-information-form-filed">
-<%= button_to "Turn on two-step verification", new_otp_secret_path, class: "personal-information-form-button",  method: :get %>
+<%= button_to "Turn on two-step verification", otp_secrets_path, class: "personal-information-form-button",  method: :get %>
 </div>
 
-<%= link_to "Back", :back %>
 
 </section>
 
 <section class="profile-settings-section block-users">
     <h2 class="profile-settings-title">Blocked users</h2>
     <section class="block-users-list">
+    <% current_user.blocked.each do |user| %>
         <div class="block-users-user">
-            <img src="assets/images/ok.png" alt="avatar" class="block-users-user-avatar">
+            <%= link_to image_tag(user.avatar,  class: "block-users-user-avatar"), profile_path(user) %>
             <div class="block-users-user-interaction">
                 <div class="block-users-user-info">
-                    <a href="#" class="block-users-user-info-nickname">Jalvaroddq</a>
-                    <a href="#" class="block-users-user-info-guilds">[ANAL #]</a>
+                   <%= link_to user.nickname, profile_path(user), class: "block-users-user-info-nickname"%>
+                   <% if user.guild %>
+                    <%= link_to guild_path(user.guild), class: "block-users-user-info-guilds" do %>
+                                    [<%=user.guild.anagram%>]
+                      <%end%>
+                    <%end%>
+
                 </div>
-                <button href="#" class="block-users-user-unblock">unblock</button>
+                <%= link_to "unblock", unblock_path(id:current_user.id, blocked_id: user.id),  method: :post, remote: true %>
+
             </div>
         </div>
+    <%end%>
     </section>
 </section>
+<%= link_to "Back", :back %>
+
 
 

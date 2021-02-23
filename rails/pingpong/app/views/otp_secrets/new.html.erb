@@ -1,5 +1,13 @@
-<%= form_tag otp_secrets_path, method: :post do %>
-	<%= hidden_field_tag :otp_secret, @otp_secret %>
-	<%= image_tag @qr_code %>
-	<%= text_field_tag :otp_attempt, label: "Verify (enter a one-time password)" %>
-  <% end %>
+<h2 class="profile-settings-title">Two-step auth confirmation</h2>
+
+<div class="two-step-auth">
+<div class="two-step-auth-content">
+	<%= form_tag otp_secrets_path, method: :post do %>
+		<%= hidden_field_tag :otp_secret, @otp_secret %>
+		<%= image_tag @qr_code, style: "margin-left:auto;margin-right:auto;display: block;margin-bottom:50px" %>
+		<%= text_field_tag :otp_attempt, nil, placeholder: "Verify (enter a one-time pass)", class: "two-step-auth-input" %>
+		<%= submit_tag "verify", class: "two-step-auth-submit-btn" %>
+		<% end %>
+<div>
+
+</div>

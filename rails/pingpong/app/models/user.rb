@@ -77,6 +77,11 @@ class User < ApplicationRecord
 		User.where(id: blck)
 	end
 
+	def blocked
+		blck = BlockedUser.where(user_id: id).pluck(:blocked_id)
+		User.where(id: blck)
+	end
+
 	def is_blocked?(user)
 		!BlockedUser.where(user_id: id,  blocked_id: user.id).empty?
 	end

@@ -1,6 +1,6 @@
 class ChatRoomMembersController < ApplicationController
 
-	before_action :check_room_exist
+	before_action :check_room_exist, except: [:block, :unblock]
 	before_action :check_if_member, only: [:leave, :ban, :unban, :mute, :unmute, :make_admin, :remove_admin, :kick]
 	before_action :check_if_yourself, only: [:ban, :unban, :mute, :unmute, :make_admin, :remove_admin, :kick]
 	before_action :check_rights, only: [:ban, :unban, :mute, :unmute, :kick]
@@ -62,18 +62,18 @@ class ChatRoomMembersController < ApplicationController
 	def block
 		block = BlockedUser.new(user_id: current_user.id, blocked_id: params[:blocked_id])
 		if block.save
-			redirect_to room_path(params[:id]), success: "User have been blocked"
+			redirect_back fallback_location: root_path, success: "User have been blocked"
 		else
-			redirect_to room_path(params[:id]), alert: "Failed to block user"
+			redirect_back fallback_location: root_path, alert: "Failed to block user"
 		end
 	end
 
 	def unblock
 		block = BlockedUser.all.find_by(user_id: current_user.id, blocked_id: params[:blocked_id])
 		if block.destroy
-			redirect_to room_path(params[:id]), success: "User have been unblocked"
+			redirect_back fallback_location: root_path, success: "User have been unblocked"
 		else
-			redirect_to room_path(params[:id]), alert: "Failed to unblock user"
+			redirect_back fallback_location: root_path, alert: "Failed to unblock user"
 		end
 	end
 
