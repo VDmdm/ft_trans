@@ -2,7 +2,7 @@
 
 <div class="two-step-auth">
 <div class="two-step-auth-content">
-	<%= form_tag otp_secrets_path, method: :post do %>
+	<%= form_tag otp_secrets_path, method: :post, remote: true do %>
 		<%= hidden_field_tag :otp_secret, @otp_secret %>
 		<%= image_tag @qr_code, style: "margin-left:auto;margin-right:auto;display: block;margin-bottom:50px" %>
 		<%= text_field_tag :otp_attempt, nil, placeholder: "Verify (enter a one-time pass)", class: "two-step-auth-input" %>

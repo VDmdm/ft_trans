@@ -31,7 +31,7 @@
   </div>
 
   <div class="personal-information-form-filed">
-    <%= f.submit "Update", class: "personal-information-form-button" %>
+    <%= f.submit "Update", class: "personal-information-form-button", style: "margin-left:auto" %>
   </div>
 <% end %>
 <span class="line"></span>
@@ -42,7 +42,7 @@
 
 <div class="personal-information-form-filed">
 <% if !current_user.otp_secret %>
-<%= button_to "Turn on two-step verification", otp_secrets_path, class: "personal-information-form-button",  method: :get %>
+<%= link_to "Turn on two-step verification", otp_secrets_path, class: "personal-information-form-button" %>
 <%else%>
 <%= button_to "Turn off two-step verification", otp_secrets_destroy_path, class: "personal-information-form-button",  method: :post, remote: true %>
 <%end%>
