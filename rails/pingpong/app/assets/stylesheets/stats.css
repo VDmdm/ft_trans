@@ -230,6 +230,7 @@
 .table-row-nickname {
     padding-bottom: 10px;
     padding-left: 50px;
+    text-align: left;
 }
 
 .table-row-score {
