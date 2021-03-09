@@ -39,15 +39,30 @@ class WarsController < ApplicationController
     end
 
     def leave
+
+
     end
 
     def accept_war_request
+        guild = Guild.find_by(id: params[:id])
+        war = War.find_by(id: params[:war_id])
+        war.update_attribute(status, :wait_start)
+        WarStartJob.set(wait_until: war.started).perform_later(war)
+        redirect_to guild_wars_show_path(war), success: "War request accepted!"
     end
 
     def cancel_war_request
+        guild = Guild.find_by(id: params[:id])
+        war = War.find_by(id: params[:war_id])
+        war.delete
+        redirect_to guild_wars_index_path(guild), success: "War request canceled!"
     end
 
     def decline_war_request
+        guild = Guild.find_by(id: params[:id])
+        war = War.find_by(id: params[:war_id])
+        war.update_attribute(status, :declined)
+        redirect_to guild_wars_index_path(guild), success: "War request declined!"
     end
 
     private

@@ -246,6 +246,9 @@ ActiveRecord::Schema.define(version: 2021_02_14_121609) do
   create_table "wars", force: :cascade do |t|
     t.bigint "initiator_id"
     t.bigint "recipient_id"
+    t.bigint "initiator_score", default: 0
+    t.bigint "recipient_score", default: 0
+    t.bigint "prize", default: 0
     t.bigint "winner_id"
     t.datetime "started"
     t.datetime "ended"

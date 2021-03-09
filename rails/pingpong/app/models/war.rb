@@ -1,5 +1,5 @@
 class War < ApplicationRecord
-    enum status: [ :send_request, :wait_start, :in_war, :finish ]
+    enum status: [ :send_request, :declined, :wait_start, :in_war, :finish, :finish_draw ]
 
     belongs_to :initiator, class_name: :Guild, foreign_key: "initiator_id"
     belongs_to :recipient, class_name: :Guild, foreign_key: "recipient_id"
