@@ -12,9 +12,17 @@
     <h2>recipient: <%= wrr.recipient.name %></h2>
     <h2>started: <%= wrr.started %></h2>
     <h2>ended: <%= wrr.ended %></h2>
+    <%= link_to "accept", guild_wars_accept_war_request_path(war_id: wrr.id), method: :post, remote: true %>
 <% end %>
 <h2>All</h2>
 <% @wars_ended.each do |wre| %>
+    <h2>initiator: <%= wre.initiator.name %></h2>
+    <h2>recipient: <%= wre.recipient.name %></h2>
+    <h2>started: <%= wre.started %></h2>
+    <h2>ended: <%= wre.ended %></h2>
+<% end %>
+<h2>Active</h2>
+<% @wars_active.each do |wre| %>
     <h2>initiator: <%= wre.initiator.name %></h2>
     <h2>recipient: <%= wre.recipient.name %></h2>
     <h2>started: <%= wre.started %></h2>

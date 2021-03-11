@@ -14,6 +14,13 @@ class War < ApplicationRecord
     validates  :ball_size, presence: true, :inclusion => 0.5..2.0
     validates  :speed_rate, presence: true, :inclusion => 0.5..2.0
     validates  :random_mode, presence: true, allow_blank: true
+    validates  :started, presence: true
+    validates  :ended, presence: true
+    validates  :prize, presence: true, :inclusion => 1..100000
+
+    validates  :daily_start, presence: true
+    validates  :daily_end, presence: true
+    validates  :time_to_wait, presence: true
     validates  :started, :ended, presence: true
     validate   :end_date_after_start_date, if: :validate_date
     validates  :time_to_wait, presence: true, :inclusion => 15..60
@@ -30,6 +37,7 @@ class War < ApplicationRecord
     end
 
     def validate_date
+        return false unless ended && started && daily_end && daily_start
         begin
             date = ended.to_date
         rescue ArgumentError

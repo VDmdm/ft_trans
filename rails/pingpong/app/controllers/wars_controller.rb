@@ -12,7 +12,7 @@ class WarsController < ApplicationController
     def index
         @guild = Guild.find(params[:id])
         @wars_ended = @guild.wars_ended.order(ended: :desc)
-        @active_war = @guild.wars_active
+        @wars_active = @guild.wars_active
         @wars_request_sent = @guild.wars_request_sent
         @wars_request_received = @guild.wars_request_received
     end
@@ -44,10 +44,17 @@ class WarsController < ApplicationController
     end
 
     def accept_war_request
+        p "FJSFJDS*#*$#@*$&#@$&@$&#$&@$&$&#"
+        p params
         guild = Guild.find_by(id: params[:id])
         war = War.find_by(id: params[:war_id])
-        war.update_attribute(status, :wait_start)
-        WarStartJob.set(wait_until: war.started).perform_later(war)
+        war.update_attribute(:status, :wait_start)
+        war.recipient.update_attribute(:points, war.recipient.points - (war.prize / 2))
+        war.initiator.update_attribute(:points, war.initiator.points - (war.prize / 2))
+        p "232eweweqewqe33"
+        p war.started
+        p DateTime.now
+        WarStartJob.set(wait_until: war.started).perform_later(war.id)
         redirect_to guild_wars_show_path(war), success: "War request accepted!"
     end
 
@@ -61,7 +68,7 @@ class WarsController < ApplicationController
     def decline_war_request
         guild = Guild.find_by(id: params[:id])
         war = War.find_by(id: params[:war_id])
-        war.update_attribute(status, :declined)
+        war.update_attribute(:status, :declined)
         redirect_to guild_wars_index_path(guild), success: "War request declined!"
     end
 
@@ -71,7 +78,7 @@ class WarsController < ApplicationController
 	 	params.require(:war).permit(:daily_start, :daily_end,
                                     :time_to_wait, :max_unanswered,
                                     :ball_down_mode, :ball_speedup_mode,
-                                    :random_mode, :ball_size,
+                                    :random_mode, :ball_size, :prize,
                                     :speed_rate, :started, :ended)
 	end
 

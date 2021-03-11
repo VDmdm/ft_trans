@@ -16,6 +16,7 @@ services:
     ports:
       - "3000:3000"
     environment:
+        TZ: Europe/Moscow
         FT_ID: 86da4d34dc9a120ce5715b91fb923a56b8226e1ed1fc5297e4404875693f2890
         FT_SECRET: a8a89c12f24bfa80276e6ece6b697a18ff519916d48437ebd62956c4ea7a226e
     depends_on:

@@ -9,12 +9,16 @@
 					<%= form.text_field :recipient, class: "game-room-name-input" %>
                 </div>
                 <div class="game-room-create-form-el war_form_el">
+                   	<%= form.label :prize, 'prize' %>
+					<%= form.number_field :prize, value: 100, min: "1", max: current_user.guild.points / 2 %>
+                </div>
+                <div class="game-room-create-form-el war_form_el">
 					<%= form.label :started, 'war start' %>
-					<%= form.datetime_field :started, value: 1.hours.from_now.strftime("%FT%R"), min: 1.hours.from_now.strftime("%FT%R"), oninput: "change_wartime_and_date(this.value)" %>
+					<%= form.datetime_field :started, value: (DateTime.now + 2.minute).strftime("%FT%R"), min: (DateTime.now + 2.minute).strftime("%FT%R"), oninput: "change_wartime_and_date(this.value)" %>
                 </div>
                 <div class="game-room-create-form-el war_form_el">
 					<%= form.label :ended, 'war end' %>
-					<%= form.datetime_field :ended, value: 1.days.from_now.strftime("%FT%R"), min: 1.days.from_now.strftime("%FT%R") %>
+					<%= form.datetime_field :ended, value: (DateTime.now + 1.minute).strftime("%FT%R"), min: (DateTime.now + 1.minute).strftime("%FT%R") %>
                 </div>
                 <div class="game-room-create-form-el war_form_el">
                    	<%= form.label :daily_start, 'wartimes start' %>

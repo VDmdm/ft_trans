@@ -152,7 +152,7 @@ ActiveRecord::Schema.define(version: 2021_02_14_121609) do
     t.string "name"
     t.string "anagram"
     t.string "description"
-    t.integer "points", default: 0
+    t.integer "points", default: 1000
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -246,9 +246,6 @@ ActiveRecord::Schema.define(version: 2021_02_14_121609) do
   create_table "wars", force: :cascade do |t|
     t.bigint "initiator_id"
     t.bigint "recipient_id"
-    t.bigint "initiator_score", default: 0
-    t.bigint "recipient_score", default: 0
-    t.bigint "prize", default: 0
     t.bigint "winner_id"
     t.datetime "started"
     t.datetime "ended"
@@ -256,6 +253,9 @@ ActiveRecord::Schema.define(version: 2021_02_14_121609) do
     t.time "daily_end"
     t.integer "time_to_wait"
     t.integer "max_unanswered"
+    t.integer "initiator_score", default: 0
+    t.integer "recipient_score", default: 0
+    t.integer "prize"
     t.integer "status", default: 0
     t.boolean "ball_down_mode", default: false
     t.boolean "ball_speedup_mode", default: false
