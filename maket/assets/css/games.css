@@ -20,15 +20,11 @@
 
 .game-status-block {
     display: inline-flex;
-    width: 846px;
+    width: 893px;
     border: 1px solid #fff;
     padding: 29px 56px 28px 59px;
     align-items: center;
     justify-content: space-between;
-}
-
-.game-status-info {
-    /*margin-right: 110px;*/
 }
 
 .game-status-info-avatar-link {
@@ -72,7 +68,7 @@
     margin: 5px 20px;
 }
 
-.game-status-accept {
+.game-status-accept, .game-status-spectate, .game-status-invite {
     font-family: PixelarRegularW01-Regular, serif;
     font-size: 35px;
     color: #FFFFFF;
@@ -82,8 +78,10 @@
 
 .games-line {
     width: 526px;
-    border: 1px solid #fff;
+    border-bottom: 1px solid #fff;
     margin-bottom: 62px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .games-types {
@@ -111,6 +109,39 @@
     border-bottom: 1px solid #fff;
 }
 
+.games-free-type-item {
+    margin-bottom: 20px;
+}
+
 .games-free-type-list {
     padding: 0;
+}
+
+.tabs-content {
+    display: none; /* по умолчанию прячем все блоки */
+}
+.tabs-content.active {
+    display: block; /* по умолчанию показываем нужный блок */
+}
+
+.game-status-block-score-left, .game-status-block-score-right {
+    color: #fff;
+}
+
+.game-status-block-score-left {
+    padding-right: 17px;
+}
+
+.game-status-block-score-right {
+    padding-left: 17px;
+}
+
+.launched-game {
+    align-items: center;
+    display: flex;
+}
+
+.game-status-invite {
+    font-size: 48px;
+    padding: 10px 70px;
 }
