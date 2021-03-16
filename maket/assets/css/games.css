@@ -118,10 +118,10 @@
 }
 
 .tabs-content {
-    display: none; /* по умолчанию прячем все блоки */
+    display: none;
 }
 .tabs-content.active {
-    display: block; /* по умолчанию показываем нужный блок */
+    display: block;
 }
 
 .game-status-block-score-left, .game-status-block-score-right {
