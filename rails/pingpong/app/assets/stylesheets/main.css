@@ -1,11 +1,13 @@
 /* include pixelar_font */
+
 @font-face {
     font-family: "PixelarRegularW01-Regular";
-	src:    url("PixelarRegularW01Regular.woff2") format("woff2"),
-		    url("PixelarRegularW01Regular.woff") format("woff");
-    }
+    src: url("PixelarRegularW01Regular.woff2") format("woff2"), url("PixelarRegularW01Regular.woff") format("woff");
+}
+
 
 /* default settings */
+
 body {
     background-color: black;
     width: 1240px;
@@ -22,7 +24,16 @@ main {
     padding-right: auto;
 }
 
-h1, h2, h3, h4, a, p, label, input, table, button {
+h1,
+h2,
+h3,
+h4,
+a,
+p,
+label,
+input,
+table,
+button {
     font-family: "PixelarRegularW01-Regular", sans-serif;
     color: white;
     letter-spacing: 5px;
@@ -35,7 +46,8 @@ table {
     /* border-collapse: collapse; */
 }
 
-td, th {
+td,
+th {
     text-align: center;
 }
 
@@ -81,57 +93,65 @@ button {
 
 button:hover {
     border: none;
-    outline:none;
+    outline: none;
 }
 
 button:focus {
-    outline:none;
+    outline: none;
 }
 
 label {
-	font-size: 35px;
+    font-size: 35px;
 }
 
 input[type="text"] {
-	outline: none;
-	border: 2px solid white;
-	font-size: 35px;
-	margin-top: -3px;
-	width: 300px;
-    
+    outline: none;
+    border: 2px solid white;
+    font-size: 35px;
+    margin-top: -3px;
+    width: 300px;
 }
 
 input[type="checkbox"] {
-	outline: none;
-	width: 30px;
-	height: 30px;
-	border: 2px solid white;
-	vertical-align: middle;
+    outline: none;
+    width: 30px;
+    height: 30px;
+    border: 2px solid white;
+    vertical-align: middle;
 }
 
 input[type="file"] {
-	width: 30px;
+    width: 30px;
 }
 
 input[type="color"] {
-	width: 80px;
-	outline: none;
-	padding: 0px;
-	border: 2px solid white;
-	height: 40px;
+    width: 80px;
+    outline: none;
+    padding: 0px;
+    border: 2px solid white;
+    height: 40px;
 }
 
 input[type="range"] {
-	margin-left: 10px;
-	margin-top: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+input[type="datetime-local"] {
+    width: 300px;
+    background-color: #3e8e41;
+}
+
+input[type="time"] {
+    width: 100px;
+    background-color: #3e8e41;
 }
 
 output {
-	font-size: 35px;
-	color: white;
-	font-family: "PixelarRegularW01-Regular", sans-serif;
+    font-size: 35px;
+    color: white;
+    font-family: "PixelarRegularW01-Regular", sans-serif;
 }
-
 
 footer {
     font-family: "PixelarRegularW01-Regular", sans-serif;
@@ -140,12 +160,14 @@ footer {
     margin-top: 100px;
 }
 
+
 /* header */
 
 .navbar {
     display: flex;
     align-items: center;
 }
+
 .navbar-elements {
     display: flex;
     justify-content: space-between;
@@ -172,20 +194,20 @@ footer {
     border: none;
     cursor: pointer;
     background-color: black;
-  }
+}
 
 .dropbtn img {
     width: 50px;
     height: 50px;
     border: 2px solid white;
 }
-  
+
 .dropdown {
     position: relative;
     display: inline-block;
     margin-left: 50px;
 }
-  
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -201,27 +223,37 @@ footer {
     justify-content: space-around;
 }
 
-.dropdown-content a{
+.dropdown-content a {
     display: block;
     padding-left: 0px;
     letter-spacing: 0px;
     padding: 0px;
     margin: 0px;
 }
-  
-.dropdown:hover .dropdown-content {display: flex;}
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
 
 /* scrollbar */
+
 ::-webkit-scrollbar {
-    width: 10px; /* ширина для вертикального скролла */
-    height: 8px; /* высота для горизонтального скролла */
+    width: 10px;
+    /* ширина для вертикального скролла */
+    height: 8px;
+    /* высота для горизонтального скролла */
     background-color: black;
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: #616F39;
 }
+
 
 /* table */
 

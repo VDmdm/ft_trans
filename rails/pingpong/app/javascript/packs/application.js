@@ -391,3 +391,15 @@ $(document).on("turbolinks:load", function() {
             $('.send-message-button').prop('disabled', true);
     })
 });
+
+window.change_wartime_and_date = function(value) {
+    console.log(value);
+    var date = new Date(value);
+    var endDate = new Date(value);
+    endDate.setDate(date.getDate() + 1);
+    console.log(endDate)
+    endDate = new Date(endDate - (endDate.getTimezoneOffset() * 60000))
+    console.log(endDate)
+    $('#war_ended').prop('min', endDate.toISOString().replace(/:00.000Z/, ""));
+    $('#war_ended').val(endDate.toISOString().replace(/:00.000Z/, ""));
+}
