@@ -25,6 +25,7 @@
 		<%end%>
 		<div class="dropdown-content">
 			<%= link_to (current_user.nickname), profile_path(current_user), id: "nickname" %>
+			<%= link_to "chat", rooms_path %>
 			<%= link_to "friends", friends_path %>
 			<%= link_to "settings",  edit_user_registration_path %>
 			<%= link_to "logout", destroy_user_session_path, :method => :delete %>

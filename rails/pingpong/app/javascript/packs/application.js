@@ -403,3 +403,30 @@ window.change_wartime_and_date = function(value) {
     $('#war_ended').prop('min', endDate.toISOString().replace(/:00.000Z/, ""));
     $('#war_ended').val(endDate.toISOString().replace(/:00.000Z/, ""));
 }
+
+window.games_list_switch = function(games) {
+    if (games == "free") {
+        document.getElementById('free-games').style.display = 'block';
+        document.getElementById('rating-games').style.display = 'none';
+        document.getElementById('all-games').style.display = 'none';
+        document.getElementById('free-link').className = " btn-active";
+        document.getElementById('rating-link').className = "";
+        document.getElementById('all-link').className = "";
+    } else if (games == "rating") {
+        document.getElementById('free-games').style.display = 'none';
+        document.getElementById('rating-games').style.display = 'block';
+        document.getElementById('all-games').style.display = 'none';
+        document.getElementById('free-link').className = "";
+        document.getElementById('rating-link').className = " btn-active";
+        document.getElementById('all-link').className = "";
+    }else if (games == "all") {
+    console.log(games)
+
+        document.getElementById('free-games').style.display = 'none';
+        document.getElementById('rating-games').style.display = 'none';
+        document.getElementById('all-games').style.display = 'block';
+        document.getElementById('free-link').className = "";
+        document.getElementById('rating-link').className = "";
+        document.getElementById('all-link').className = " btn-active";
+    }
+}
