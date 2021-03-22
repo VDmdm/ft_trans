@@ -152,7 +152,7 @@ ActiveRecord::Schema.define(version: 2021_02_14_121609) do
     t.string "name"
     t.string "anagram"
     t.string "description"
-    t.integer "points", default: 1000
+    t.integer "points", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
