@@ -71,6 +71,8 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     amistad (0.10.2)
+    attr_encrypted (3.1.0)
+      encryptor (~> 3.0.0)
     bcrypt (3.1.16)
     bindex (0.8.1)
     bootsnap (1.7.2)
@@ -86,6 +88,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     childprocess (3.0.0)
+    chunky_png (1.4.0)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
     devise (4.7.3)
@@ -94,6 +97,13 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise-two-factor (3.0.0)
+      activesupport
+      attr_encrypted (>= 1.3, < 4, != 2)
+      devise (~> 4.0)
+      railties
+      rotp (~> 2.0)
+    encryptor (3.0.0)
     erubi (1.10.0)
     faraday (1.3.0)
       faraday-net_http (~> 1.0)
@@ -194,6 +204,11 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rotp (2.1.2)
+    rqrcode (1.2.0)
+      chunky_png (~> 1.0)
+      rqrcode_core (~> 0.2)
+    rqrcode_core (0.2.0)
     ruby2_keywords (0.0.4)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
@@ -263,6 +278,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   devise
+  devise-two-factor
   jbuilder (~> 2.7)
   listen (~> 3.3)
   normalize-rails
@@ -272,6 +288,8 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.1)
   redis (~> 4.0)
+  rotp
+  rqrcode
   sass-rails (>= 6)
   selenium-webdriver
   simple_form

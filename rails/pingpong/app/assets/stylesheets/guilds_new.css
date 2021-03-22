@@ -2,7 +2,7 @@
     font-family: PixelarRegularW01-Regular;
     font-style: normal;
     font-weight: normal;
- }
+}
 
 .create-guild-title {
     display: inline;
@@ -44,16 +44,19 @@
     vertical-align: top;
 }
 
-.create-guild-form-field input {
+.create-guild-form-field input, textarea {
     border: 1px solid #FFFFFF;
     width: 320px;
     height: 26px;
     padding: 7px;
 }
 
-.create-guild-form-field-description input {
+.create-guild-form-field-description textarea {
+    font-family: PixelarRegularW01-Regular;
     height: 118px;
     width: 648px;
+    background: transparent;
+    color: #fff;
 }
 
 .create-guild-form-button {

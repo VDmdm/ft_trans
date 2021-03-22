@@ -50,7 +50,7 @@ class User < ApplicationRecord
 	devise :database_authenticatable, :registerable,
 	:recoverable, :rememberable, :trackable, :validatable,
 	:omniauthable, omniauth_providers: [:marvin]
-  
+
 	def friends
 		friends_user_sent_inv = Invitation.where(user_id: id, confirmed: true).pluck(:friend_id)
 		friends_user_got_inv = Invitation.where(friend_id: id, confirmed: true).pluck(:user_id)
@@ -76,6 +76,11 @@ class User < ApplicationRecord
 
 	def blocked_by
 		blck = BlockedUser.where(blocked_id: id).pluck(:user_id)
+		User.where(id: blck)
+	end
+
+	def blocked
+		blck = BlockedUser.where(user_id: id).pluck(:blocked_id)
 		User.where(id: blck)
 	end
 

@@ -12,6 +12,7 @@ class DirectRoomsController < ApplicationController
 	before_action :check_if_already_blocked, only: [:block, :unblock]
 
 	def show
+		@rooms = Room.all
 		@room = DirectRoom.find(params[:id])
 		@room_message = DirectMessage.new direct_room: @room
 		@room_messages = @room.direct_messages.includes(:user)
@@ -28,18 +29,18 @@ class DirectRoomsController < ApplicationController
 	def block
 		block = BlockedUser.new(user_id: current_user.id, blocked_id: params[:blocked_id])
 		if block.save
-			redirect_to direct_room_path(params[:id]), success: "User have been blocked"
+			redirect_back fallback_location: root_path, success: "User have been blocked"
 		else
-			redirect_to direct_room_path(params[:id]), alert: "Failed to block user"
+			redirect_back fallback_location: root_path, alert: "Failed to block user"
 		end
 	end
 
 	def unblock
 		block = BlockedUser.all.find_by(user_id: current_user.id, blocked_id: params[:blocked_id])
 		if block.destroy
-			redirect_to direct_room_path(params[:id]), success: "User have been unblocked"
+			redirect_back fallback_location: root_path, success: "User have been unblocked"
 		else
-			redirect_to direct_room_path(params[:id]), alert: "Failed to unblock user"
+			redirect_back fallback_location: root_path, alert: "Failed to unblock user"
 		end
 	end
 

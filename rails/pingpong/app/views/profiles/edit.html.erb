@@ -21,16 +21,17 @@
 <section class="profile-settings-section block-users">
     <h2 class="profile-settings-title">Block users</h2>
     <section class="block-users-list">
+    <% current_user.blocked.each do |blocked| %>
         <div class="block-users-user">
-            <img src="assets/images/ok.png" alt="avatar" class="block-users-user-avatar">
+        <%= link_to image_tag(blocked.avatar,  class: "block-users-user-avatar"), profile_path(blocked) %>
             <div class="block-users-user-interaction">
                 <div class="block-users-user-info">
                     <a href="#" class="block-users-user-info-nickname">Jalvaroddq</a>
-                    <a href="#" class="block-users-user-info-guilds">[ANAL #]</a>
                 </div>
                 <button href="#" class="block-users-user-unblock">unblock</button>
             </div>
         </div>
+    <%end%>
     </section>
         <a class="arrow" href="#prev">< prev</a>
         <a class="arrow" href="#next">next ></a>

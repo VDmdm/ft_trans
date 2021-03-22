@@ -38,7 +38,7 @@
 				</div>
 				<div class="profile-info-action">
 						<% if @user.id == current_user.id %>
-							<%= link_to image_tag("gear_", class: "profile-settings-sign"), root_path%>
+							<%= link_to image_tag("gear_", class: "profile-settings-sign"), edit_user_registration_path%>
 						
 						<% elsif !current_user.friends_with?(@user) %>
 							<%= link_to "add", friends_add_path(user_id: @user.id), class: "profile-info-action-add" %>

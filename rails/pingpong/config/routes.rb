@@ -3,6 +3,12 @@ Rails.application.routes.draw do
   resources :rooms
   resources :direct_messages
   resources :direct_rooms
+  get   'otp_secrets', to: 'otp_secrets#new'
+  get   'otp_secrets/login', to: 'otp_secrets#login'
+  post   'otp_secrets/auth_logger', to: 'otp_secrets#auth_logger', as: :otp_secrets_logger
+
+  post   'otp_secrets', to: 'otp_secrets#create'
+  post   'otp_secrets/destroy', to: 'otp_secrets#destroy'
 
   get  'rooms/:id/users', to: 'rooms#user_list',  as: :rooms_users
   get  'rooms/:id/settings', to: 'rooms#room_settings',  as: :room_settings
@@ -17,8 +23,8 @@ Rails.application.routes.draw do
   post 'rooms/:id/unmute', to: "chat_room_members#unmute", as: :unmute_chat_member
   post 'rooms/:id/add_adm', to: "chat_room_members#make_admin", as: :add_adm_member
   post 'rooms/:id/remove_adm', to: "chat_room_members#remove_admin", as: :remove_adm_member
-  post 'rooms/:id/block', to: "chat_room_members#block", as: :block
-  post 'rooms/:id/unblock', to: "chat_room_members#unblock", as: :unblock
+  post 'block', to: "chat_room_members#block", as: :block
+  post 'unblock', to: "chat_room_members#unblock", as: :unblock
 
   post 'direct/:id/block', to: "direct_rooms#block", as: :direct_block
   post 'direct/:id/unblock', to: "direct_rooms#unblock", as: :direct_unblock
