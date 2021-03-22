@@ -12,6 +12,7 @@ class DirectRoomsController < ApplicationController
 	before_action :check_if_already_blocked, only: [:block, :unblock]
 
 	def show
+		@rooms = Room.all
 		@room = DirectRoom.find(params[:id])
 		@room_message = DirectMessage.new direct_room: @room
 		@room_messages = @room.direct_messages.includes(:user)
