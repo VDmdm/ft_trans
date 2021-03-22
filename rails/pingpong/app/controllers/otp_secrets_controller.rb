@@ -6,7 +6,7 @@ class OtpSecretsController < ApplicationController
 	before_action	:if_have_auth_destroy, only: [:destroy]
 
 	def new
-		@otp_secret = ROTP::Base32.random
+		@otp_secret = ROTP::Base32.random	
 		totp = ROTP::TOTP.new(
 		  @otp_secret, issuer: 'PingPong'
 		)

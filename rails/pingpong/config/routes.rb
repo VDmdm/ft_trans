@@ -74,7 +74,7 @@ Rails.application.routes.draw do
   post 'guilds/wars/:id/decline_war_request', to: "wars#decline_war_request", as: :guild_wars_decline_war_request
   post 'guilds/wars/:id/leave', to: "wars#leave", as: :guild_wars_leave
 
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: { sessions: 'sessions', omniauth_callbacks: "users/omniauth_callbacks" }
 
   devise_scope :user do
     delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session_path
