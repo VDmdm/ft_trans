@@ -1,0 +1,9 @@
+
+.user-search-users{
+	display: flex;
+}
+
+.user-search-link{
+	margin-top: 10px;
+	margin-left: 20px;
+}

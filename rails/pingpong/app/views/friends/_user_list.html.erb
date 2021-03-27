@@ -1,18 +1,23 @@
-<ul>
-    <% @users.each do |user| %>
-        <li style="color: white">
-            <%= user.email %>
-            <% if current_user.friends_with?(user) %>
-                <p>is your friend</p>
-			<% elsif Invitation.pending?(current_user.id, user.id) %>
-				<h3>friend request is pending</h3>
-				<%= link_to "decline", friends_destroy_path(inv_id: Invitation.find_by(user_id: current_user.id, friend_id: user.id).id) %>
-            <% elsif Invitation.reacted?(current_user.id, user.id) %>
-				<%= link_to "accept friend invite",  friends_update_path(inv_id: Invitation.all.find_by(user_id: user.id).id) %>	
-            <% else %>
-                <%= link_to "add friend", friends_add_path(user_id: user.id) %>
-            <% end %>
-         </li>
-    <% end %>
-    <%= will_paginate @users %>
-</ul>
+<section class "user-search">
+	<ul>
+		<% @users.each do |user| %>
+			<li>
+			<div class="user-search-users">
+				<h3 style="font-size: 30px"><%= user.nickname %></h3>
+				<% if current_user.friends_with?(user) %>
+					<h3>is your friend</h3>
+				<% elsif current_user == user %>
+				<% elsif Invitation.pending?(current_user.id, user.id) %>
+					<h3 style="font-size: 30px"> - friend request is pending</h3>
+					<%= link_to "decline", friends_destroy_path(inv_id: Invitation.find_by(user_id: current_user.id, friend_id: user.id).id), class: "user-search-link" %>
+				<% elsif Invitation.reacted?(current_user.id, user.id) %>
+					<%= link_to "accept friend invite",  friends_update_path(inv_id: Invitation.all.find_by(user_id: user.id).id), class: "user-search-link" %>	
+				<% else %>
+					<%= link_to "add friend", friends_add_path(user_id: user.id), class: "user-search-link" %>
+				<% end %>
+			</div>
+			</li>
+		<% end %>
+		<%= will_paginate @users %>
+	</ul>
+<section>

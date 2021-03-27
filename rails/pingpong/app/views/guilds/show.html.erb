@@ -1,7 +1,7 @@
 <section class="guild">
     <div class="guild-name-wrap">
         <span class="guild-name"><%= @guild.name %></span>
-        <span class="guild-anagram"><%= @guild.anagram %></span>
+        <span class="guild-anagram">[<%= @guild.anagram %>]</span>
     </div>
     <div class="guild-info">
         <% if @guild.avatar.attached? %>
@@ -34,14 +34,23 @@
                 <span class="guild-stat-info">25 / 12</span>
             </div>
             <div class="guild-stat">
-                <img src="assets/images/sword.png" alt="cup" class="guild-stats-icon">
+				<%= image_tag "win_rate.png", class: "guild-stats-icon" %>
                 <span class="guild-stat-info">26%</span>
             </div>
         </div>
     </div>
 
     <div class="guild-lists-wrap">
-        <div class="guild-users-list">
+		<div class="guild-users-list">
+			<div class="guild-users-list-header">
+				<%= image_tag "man.png", style: "width:50px;height:50px" %>
+				<h3 class="guild-users-list-header-title">
+					<%= @guild.guild_members.size %>
+					<% if current_user.guild_officer or current_user.guild_owner %>
+					<%= link_to "+", friends_search_path %>
+					<%end%>
+				</h3>
+			</div>
         </div>
         <div class="guild-war-history-list">
             <h3 class="guild-war-history-list-title">War history</h3>

@@ -58,9 +58,14 @@
     text-align: left;
 }
 
+
 .guild-stats-icon {
     height: 31px;
     width: 31px;
+}
+
+.guild-stats{
+	margin-left: auto;
 }
 
 .guild-stat-info {
@@ -81,7 +86,16 @@
     display: flex;
 }
 
-.guild-users-list, .guild-war-history-list {
+.guild-users-list {
+    min-height: 408px;
+    min-width: 555px;
+    border: 4px solid #FFFFFF;
+    box-sizing: border-box;
+	padding: 10px;
+	padding-left: 16px;
+}
+
+.guild-war-history-list {
     min-height: 408px;
     min-width: 555px;
     border: 4px solid #FFFFFF;
@@ -155,4 +169,16 @@
     font-size: 30px;
     line-height: 28px;
     letter-spacing: 3px;
+}
+
+.guild-users-list-header{
+	margin-top: -10px;
+	width:100px;
+	display: flex;
+	border-bottom: 1px solid #FFFFFF;
+}
+
+.guild-users-list-header-title{
+	font-size: 30px;
+	margin-top: 5px;
 }

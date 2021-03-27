@@ -2,7 +2,7 @@
 	<h2 class="guilds-title">Guilds <%= link_to "+", new_guild_path unless current_user.guild %></h2>
 	
 	<% if current_user.pending_invites.exists? %>
-		<%= current_user.pending_invites %>
+	<div class="guilds-invite">
 		<h3 class="guilds-invite-title">You have some invites</h3>
 		<ul class="guilds-invite-list">
 			<% current_user.pending_invites.each do |i| %>
@@ -25,9 +25,9 @@
 				</li>
 			<% end %>
 		</ul>
-	</div>
 	<% end %>
-	<table class="guild-table">
+</div>
+	<table class="guild-table" align="left">
 		<tr class="guild-table-title">
 			<th class="table-title guild-table-title-rank">rank</th>
 			<th class="table-title guild-table-title-score">score</th>
@@ -37,11 +37,11 @@
 		</tr>
 		<% @guilds.order(:points).each_with_index do |g, i| %>
 			<tr class="guild-table-row">
-				<td class="guild-table-row guild-table-row-rank"><%= i %></td>
-				<td class="guild-table-row guild-table-row-score"><%= g.points %></td>
-				<td class="guild-table-row guild-table-row-name"><%= link_to g.name, guild_path(g) %></td>
-				<td class="guild-table-row guild-table-row-owner"><%= g.owner.nickname %></td>
-				<td class="guild-table-row guild-table-row-wars">24/12</td>
+				<td class="guild-table-row-item guild-table-row-rank"><%= i %></td>
+				<td class="guild-table-row-item guild-table-row-score"><%= g.points %></td>
+				<td class="guild-table-row-item guild-table-row-name"><%= link_to g.name, guild_path(g) %></td>
+				<td class="guild-table-row-item guild-table-row-owner"><%= g.owner.nickname %></td>
+				<td class="guild-table-row-item guild-table-row-wars">24/12</td>
 			</tr>
 		<% end %>
 	</table>
