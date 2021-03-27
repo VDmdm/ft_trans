@@ -15,6 +15,7 @@ RUN gem update bundler
 #setup
 COPY pingpong /pingpong
 WORKDIR /pingpong
+RUN bundle update
 RUN bundle install
 RUN yarn install --check-files
 RUN chmod +x start.sh
