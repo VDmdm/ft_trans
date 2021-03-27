@@ -1,1 +1,5 @@
 <h2><%= @war.recipient.name %></h2>
+<% @war.recipient.members.each do |u| %>
+	<p><%= u.nickname %></p>
+	<%= link_to "Battle!", wartime_game_create_path(p2_id: u.id), method: :post, remote: true %>
+<% end %>

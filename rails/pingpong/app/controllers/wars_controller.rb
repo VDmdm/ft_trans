@@ -12,7 +12,7 @@ class WarsController < ApplicationController
     def index
         @guild = Guild.find(params[:id])
         @wars_ended = @guild.wars_ended.order(ended: :desc)
-        @wars_active = @guild.wars_active
+        @war_active = @guild.war_active
         @wars_request_sent = @guild.wars_request_sent
         @wars_request_received = @guild.wars_request_received
     end
@@ -94,7 +94,7 @@ class WarsController < ApplicationController
 
     def check_guild_already_active_war_not_exist
         guild = Guild.all.find_by(id: params[:id])
-        redirect_to guild_path(guild), alert: "You already have a war" unless guild.wars_active.blank?
+        redirect_to guild_path(guild), alert: "You already have a war" if guild.war_active
     end
 
     def check_guild_already_sent_war_request

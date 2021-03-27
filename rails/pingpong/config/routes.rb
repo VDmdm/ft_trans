@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   post 'games/:id/join_player', to: "games#join_player", as: :game_join_player
   post 'games/:id/switch_ready', to: "games#switch_ready", as: :game_switch_ready
   post 'games/:id/leave_player', to: "games#leave_player", as: :game_leave_player
+  post 'games/wartime_game_create', to: "games#wartime_game_create", as: :wartime_game_create
 
   resources :profiles
 
