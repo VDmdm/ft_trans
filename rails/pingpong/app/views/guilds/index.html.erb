@@ -15,14 +15,14 @@
 										<span class="guilds-invite-item-name">
 											<%= i.guild.name %>
 										</span>
-										<span class="guilds-invite-item-anagram">><%= i.guild.anagram %></span>
+										<span class="guilds-invite-item-anagram">[<%= i.guild.anagram %>]</span>
 									</div>
 									<div class="guilds-invite-item-action">
-										<%= link_to accept_invite_path(i), class: "guilds-invite-item-accept" do %>
+										<%= link_to accept_invite_path(i.guild, user_id: current_user.id), class: "guilds-invite-item-accept", method: :post, remote: true do %>
 											<%= image_tag "ok.png" , class: "guilds-invite-item-accept-icon" %>
 												<% end%>
-													<%= link_to decline_invite_path(i),
-														class: "guilds-invite-item-cancel" do %>
+													<%= link_to decline_invite_path(i.guild),
+														class: "guilds-invite-item-cancel", method: :post, remote: true do %>
 														<%= image_tag "delete.png" ,
 															class: "guilds-invite-item-cancel-icon" %>
 															<% end%>

@@ -53,7 +53,7 @@ class GuildInvitesController < ApplicationController
 		invite = guild.pending_invites.find_by(user: current_user)
 		if invite.update_attribute(:status, :decline)
 			Notification.create(user: current_user, recipient: invite.invited_by, action: "decline_invite", notifiable_type: "guilds",
-								service_info: "#{ current_user.guild.name }")
+								service_info: "#{ guild.name }")
 			redirect_back fallback_location: guild_path(guild), success: "Invite was declined"
 		else
 			redirect_back fallback_location: guild_path(guild), alert: "Can't cancel invite"

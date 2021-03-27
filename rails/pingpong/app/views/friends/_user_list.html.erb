@@ -5,7 +5,7 @@
 			<div class="user-search-users">
 				<h3 style="font-size: 30px"><%= user.nickname %></h3>
 				<% if current_user.friends_with?(user) %>
-					<h3>is your friend</h3>
+					<h3 class="user-search-link">is your friend</h3>
 				<% elsif current_user == user %>
 				<% elsif Invitation.pending?(current_user.id, user.id) %>
 					<h3 style="font-size: 30px"> - friend request is pending</h3>
@@ -14,6 +14,13 @@
 					<%= link_to "accept friend invite",  friends_update_path(inv_id: Invitation.all.find_by(user_id: user.id).id), class: "user-search-link" %>	
 				<% else %>
 					<%= link_to "add friend", friends_add_path(user_id: user.id), class: "user-search-link" %>
+				<% end %>
+				<% if current_user.guild && (current_user.guild_officer || current_user.guild_owner) %>
+					<% if !user.guild && !current_user.guild.pending_invites?(user) %>
+						<%= link_to "invite in guild", send_invite_path(current_user.guild.id ,user_id: user.id), class: "user-search-link" , method: :post, remote: true %>
+					<% elsif current_user.guild.pending_invites?(user) %>
+						<%= link_to "cancel request", cancel_invite_path(current_user.guild.id ,user_id: user.id), class: "user-search-link" , method: :post, remote: true %>
+					<% end %>
 				<% end %>
 			</div>
 			</li>

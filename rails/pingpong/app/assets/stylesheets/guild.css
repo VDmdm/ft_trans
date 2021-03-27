@@ -33,7 +33,8 @@
 }
 
 .guild-description {
-    max-width: 726px;
+	max-width: 726px;
+	height: 96px;
     font-size: 30px;
     line-height: 28px;
     letter-spacing: 3px;
@@ -183,4 +184,15 @@
 .guild-users-list-header-title{
 	font-size: 30px;
 	margin-top: 5px;
+}
+
+.guild_users_list_nav{
+	width:520px;
+	margin-top: 25px;
+	margin-bottom: 20px;
+}
+
+.guild_users_list button{
+	font-size: 25px;
+	margin-left: 50px;
 }

@@ -7,18 +7,24 @@
         <% if @guild.avatar.attached? %>
 			<%= image_tag @guild.avatar, class: "guild-avatar", alt: "avatar" %>
 		<% end %>
-        <div class="guild-description-wrap">
-            <p class="guild-description"><%= @guild.description %></p>
-            <% if !current_user.guild %>
-                <% if @invite %>
-                    <%= button_to "ACCEPT INVITE", accept_invite_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
-                    <%= button_to "DECLINE INVITE", decline_invite_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
-                <% elsif @join_request %>
-                    <%= button_to "CANCEL JOIN REQUEST", cancel_join_request_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
-                <% else %>
-                    <%= button_to "SEND JOIN REQUEST", send_join_request_path(@guild), class: "guild-description-join", remote: true %>
-                <% end %>
-            <% end %>
+		<div class="guild-description-wrap">
+			<div>
+				<p class="guild-description"><%= @guild.description %></p>
+			</div>
+			<div style="margin-top: 5px; margin-left:auto">
+			<% if !current_user.guild %>
+				<% if @invite %>
+					<%= button_to "ACCEPT INVITE", accept_invite_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
+					<%= button_to "DECLINE INVITE", decline_invite_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
+				<% elsif @join_request %>
+					<%= button_to "CANCEL JOIN REQUEST", cancel_join_request_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
+				<% else %>
+					<%= button_to "SEND JOIN REQUEST", send_join_request_path(@guild), class: "guild-description-join", remote: true %>
+				<% end %>
+			<%else%>
+				<%= button_to "LEAVE", leave_guild_path(@guild, user_id: current_user), class: "guild-description-join", method: :post, remote: true %>
+			<% end %>
+			</div>
         </div>
         <div class="guild-stats">
             <div class="guild-stat">
@@ -36,8 +42,8 @@
             <div class="guild-stat">
 				<%= image_tag "win_rate.png", class: "guild-stats-icon" %>
                 <span class="guild-stat-info">26%</span>
-            </div>
-        </div>
+			</div>
+		</div>
     </div>
 
     <div class="guild-lists-wrap">
@@ -51,6 +57,15 @@
 					<%end%>
 				</h3>
 			</div>
+		<% if current_user.guild_owner || current_user.guild_officer %>
+			<div class="guild_users_list_nav">
+                <div class="guild_users_list">
+                    <button id="switch-btn-guild-users" class="btn-active" onclick="room_guild_users_switch('users')">users</button>
+					<button id="switch-btn-guild-users-pending" class="" onclick="room_guild_users_switch('pending')">pending</button>
+                    <button id="switch-btn-guild-users-incoming" class="" onclick="room_guild_users_switch('incoming')">incoming</button>
+                </div>
+			</div>
+		<%end%>
 			<% @guild.members.each do |member| %>
 				<% if member.online? %>
 					<section class="friend-list-element" style="width:500px">
