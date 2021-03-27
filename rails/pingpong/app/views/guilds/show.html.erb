@@ -51,6 +51,53 @@
 					<%end%>
 				</h3>
 			</div>
+			<% @guild.members.each do |member| %>
+				<% if member.online? %>
+					<section class="friend-list-element" style="width:500px">
+				<% else %>
+					<section class="friend-list-element friend-list-element-offline" style="width:500px">
+				<% end %>
+						<div class="friend-list-element-profile-img">
+							 <%= link_to image_tag(member.avatar, ),
+                        profile_path(member) %>
+						</div>
+						<div class="friend-list-element-btn-nickname-guild">
+							
+								<div class="friend-list-element-nickname-guild" style="min-width:430px">
+									<h4> <%= link_to member.nickname, profile_path(member) %> </h4>
+									<h4 class="friend-list-element-guild">[<%= member.guild.anagram %>]</h4>
+									<% if member.guild_officer %>
+										<h4 style="margin-left:auto">officer</h4>
+									<%elsif member.guild_owner %>
+										<h4 style="margin-left:auto">owner</h4>
+									<%end%>
+
+								</div>
+
+						<div style="display:flex">
+							<div class="friend-list-element-btn" style="min-width:295px">
+								<%= link_to image_tag("mail.png", alt: "mail"), direct_rooms_find_path(user_id: member.id), method: :post, remote: true %>
+								<% if member.online? && member != current_user %>
+									<%= link_to image_tag("sword.png", alt: "mail"), root_path%>
+								<% end %>
+							</div>
+						<div style="text-align:right">
+						<% if current_user.guild_owner %>
+							<% if !member.guild_officer  %>
+								<%= link_to "make officer", add_officer_path(user_id: member.id), style: "margin-left: auto; display:block", method: :post, remote: true %>
+							<% elsif %>
+								<%= link_to "remove officer", remove_officer_path(user_id: member.id), style: "margin-left: auto; display:block", method: :post, remote: true %>	
+							<%end%>
+							<% if (current_user.guild_owner && !member.guild_owner)|| (current_user.guild_officer && !member.guild_owner && !member.guild_officer )%>
+								<%= link_to "kick", kick_member_path(user_id: member.id), style: "margin-left: auto; display:block", method: :post, remote: true %>
+							<%end%>
+						<%end%>
+					</div>
+					</div>
+						
+					</div>
+				</section>
+			<% end %>
         </div>
         <div class="guild-war-history-list">
             <h3 class="guild-war-history-list-title">War history</h3>
