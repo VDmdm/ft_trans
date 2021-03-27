@@ -98,8 +98,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_201254) do
     t.bigint "loser_id"
     t.string "name"
     t.integer "status", default: 0
-    t.boolean "rating", default: false
-    t.boolean "private", default: false
+    t.integer "game_type", default: 0
     t.string "passcode", default: ""
     t.string "ball_color", default: "#ffffff"
     t.string "bg_color", default: "#000000"
@@ -111,7 +110,6 @@ ActiveRecord::Schema.define(version: 2021_02_22_201254) do
     t.float "speed_rate", default: 1.0
     t.integer "p1_score", default: 0
     t.integer "p2_score", default: 0
-    t.boolean "war_time", default: false
     t.boolean "resetting", default: false
     t.boolean "broadcasted", default: false
     t.datetime "started"
@@ -152,7 +150,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_201254) do
     t.string "name"
     t.string "anagram"
     t.string "description"
-    t.integer "points", default: 0
+    t.integer "points", default: 1000
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

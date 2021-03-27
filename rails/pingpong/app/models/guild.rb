@@ -73,4 +73,9 @@ class Guild < ApplicationRecord
 	def wars_active
 		War.where("(initiator_id = ? OR recipient_id = ?) AND NOT status = 0 AND NOT status = 4", self.id, self.id)
 	end
+
+	def in_war?(opponent)
+		war = self.wars_active
+		!war.empty? && (war[0].initiator == opponent || war[0].recipient == opponent)
+	end
 end

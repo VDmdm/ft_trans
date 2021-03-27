@@ -1,21 +1,18 @@
 class Game < ApplicationRecord
 	has_one_attached :bg_image
 
-	enum status: [ :pending, :ended ]
+    enum status: [ :pending, :ended ]
+    enum game_type: [ :open, :rating, :close, :wartime, :tournament ]
     belongs_to :p1, class_name: "User", foreign_key: "p1_id"
     belongs_to :p2, class_name: "User", foreign_key: "p2_id", optional: true
     belongs_to :winner, class_name: "User", foreign_key: "winner_id", optional: true
     belongs_to :loser, class_name: "User", foreign_key: "loser_id", optional: true
 
-    belongs_to :wartime, optional: true
-
     validates  :name, presence: true, length: { maximum: 15, minimum: 4 }
-
-    validates  :rating, presence: true, allow_blank: true
-    validates  :private, presence: true, allow_blank: true
-    validates  :passcode, presence: true, length: { maximum: 4, minimum: 4 }, if: :private?
+    validate_enum_attribute :game_type, message: "Wrong game type!"
+    validates  :game_type, presence: true, inclusion: { in: %w[open rating close], message: "Wrong game type!"}, unless: :p2
+    validates  :passcode, presence: true, length: { maximum: 4, minimum: 4 }, if: -> { self.game_type == 'close' }
     validates  :bg_image, attached: true, content_type: [:png, :jpg, :jpeg], size: { less_than: 10.megabytes , message: 'filesize to big' }, allow_blank: true
-
     validates  :ball_color, format: { with: /\A#[a-f0-9]{6}\z/, message: "Wrong color format!" }
     validates  :bg_color, format: { with: /\A#[a-f0-9]{6}\z/, message: "Wrong color format!" }
     validates  :random_mode, presence: true, allow_blank: true
@@ -247,34 +244,10 @@ class Game < ApplicationRecord
             self.status = :ended
             if @score[:p1] == 21 || GameStateHash.instance.return_value("p2_status_#{self.id}") == 'leave'
                 GameStateHash.instance.add_kv("winner_#{self.id}", "p1")
-                self.winner = self.p1
-                self.loser = self.p2
-                if self.rating
-                    self.p1.update_attribute(:score, self.p1.score - 25)
-                    self.p2.update_attribute(:score, self.p2.score + 25)
-                end
-                if self.p1.guild
-                    if self.rating
-                        self.p1.guild.update_attribute(:points, self.p1.guild.points + 100)
-                    elsif self.p1.guild != self.p2.guild
-                        self.p1.guild.update_attribute(:points, self.p1.guild.points + 25)
-                    end
-                end
+                calculate_points(self.p1, self.p2)
             else
                 GameStateHash.instance.add_kv("winner_#{self.id}", "p2")
-                self.winner = self.p2
-                self.loser = self.p1
-                if self.rating
-                    self.p2.update_attribute(:score, self.p2.score + 25)
-                    self.p1.update_attribute(:score, self.p1.score - 25)
-                end
-                if self.p1.guild
-                    if self.rating
-                        self.p2.guild.update_attribute(:points, self.p2.guild.points + 100)
-                    elsif self.p1.guild != self.p2.guild
-                        self.p2.guild.update_attribute(:points, self.p2.guild.points + 25)
-                    end
-                end
+                calculate_points(self.p2, self.p1)
             end
             self.p1_score = @score[:p1]
             self.p2_score = @score[:p2]
@@ -283,6 +256,24 @@ class Game < ApplicationRecord
             render()
         end
         return GameStateHash.instance.return_value("status_#{self.id}") == 'ended'
+    end
+
+    def calculate_points(winner, loser)
+        self.winner = winner
+        self.loser = loser
+        if self.rating?
+            winner.update_attribute(:score, self.p1.score + 25)
+            loser.p2.update_attribute(:score, self.p2.score - 25)
+        end
+        if winner.guild
+            if self.rating?
+                winner.guild.update_attribute(:points, winner.guild.points + 100)
+            elsif winner.guild != loser.guild
+                winner.guild.update_attribute(:points, winner.guild.points + 25)
+                if winner.guild.wars_active
+                end
+            end
+        end
     end
     
 end

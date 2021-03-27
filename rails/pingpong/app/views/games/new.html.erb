@@ -9,10 +9,8 @@
                     <%= form.text_field :name, class: "game-room-name-input" %>
                 </div>
                 <div class="game-room-create-form-el">
-                    <%= form.label :private %>
-                    <%= form.check_box :private, class: "game-room-private-checkbox" %>
-                    <%= form.label :rating, class: "game-room-rating-label" %>
-                    <%= form.check_box :rating, class: "game-room-rating-checkbox" %>
+                    <%= form.label :game_type %>
+                    <%= form.select :game_type, [ 'open', 'rating', 'close' ] %>
                 </div>
                 <div class="game-room-create-form-el">
                     <%= form.label :passcode %>

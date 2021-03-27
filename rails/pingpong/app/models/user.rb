@@ -42,8 +42,8 @@ class User < ApplicationRecord
 	has_many :pending_invitations, -> { where confirmed: false }, class_name: "Invitation", foreign_key: "friend_id"
 
 	has_many :games
-  	has_one :pending_games_p1, -> { where(status: :pending, war_time: false) }, :class_name => :Game, foreign_key: "p1_id"
-  	has_one :pending_games_p2, -> { where(status: :pending, war_time: false) }, :class_name => :Game, foreign_key: "p2_id"
+  	has_one :pending_games_p1, -> { where(status: :pending) }, :class_name => :Game, foreign_key: "p1_id"
+  	has_one :pending_games_p2, -> { where(status: :pending) }, :class_name => :Game, foreign_key: "p2_id"
   	has_many :win_games, :class_name => :Game, foreign_key: "winner_id"
   	has_many :lose_games, :class_name => :Game, foreign_key: "loser_id"
 
@@ -119,8 +119,16 @@ class User < ApplicationRecord
 		self.status == "online" || self.status == "in_game"
 	end
 
-	def pending_games?
-		self.pending_games_p1 || self.pending_games_p2
+	def all_games
+		Game.where("(p1_id = ? OR p2_id = ?)", self.id, self.id)
+	end
+
+	def pending_games
+		Game.where("(p1_id = ? OR p2_id = ?) AND game_type BETWEEN 0 AND 2 AND status != 1", self.id, self.id)
+	end
+
+	def ended_games
+		Game.where("(p1_id = ? OR p2_id = ?) AND status = 1", self.id, self.id)
 	end
 
 	private 
