@@ -4,7 +4,7 @@ class CreateGuilds < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :anagram
       t.string :description
-      t.integer :points, default: 0
+      t.integer :points, default: 1000
 
       t.timestamps
     end
