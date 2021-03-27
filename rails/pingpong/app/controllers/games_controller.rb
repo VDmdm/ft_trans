@@ -27,8 +27,37 @@ class GamesController < ApplicationController
 		end
 	end
 
+	def wartime_game_create
+		p1 = current_user
+		p2 = User.find_by(id: params[:p2_id])
+		war = current_user.guild.war_active
+		game = Game.new name: "war_time: #{p1.guild.name} - #{p2.guild.name}",
+						p1: p1,
+						p2: p2,
+						game_type: 'wartime',
+						ball_down_mode: war.ball_down_mode,
+						ball_speedup_mode: war.ball_speedup_mode,
+						random_mode: war.random_mode,
+						ball_size: war.ball_size,
+						speed_rate: war.speed_rate
+		if game.save
+			GameStateHash.instance.add_kv("p1_status_#{game.id}", "not ready")
+			GameStateHash.instance.add_kv("p1_nickname_#{game.id}", p1.nickname)
+			GameStateHash.instance.add_kv("p2_status_#{game.id}", "not ready")
+			GameStateHash.instance.add_kv("p2_nickname_#{game.id}", p2.nickname)
+			GameStateHash.instance.add_kv("status_#{game.id}", "waiting")
+			GameStateHash.instance.add_kv("p2_activate_game_#{game.id}", "no")
+			redirect_to game_path(game), success: "Game was created!"
+		else
+			redirect_to games_path, alert: game.errors.full_messages.join("; ")
+		end
+	end
+
 	def show
 		@game = Game.find(params[:id])
+		if @game.p2 == current_user
+			GameStateHash.instance.add_kv("p2_activate_game_#{@game.id}", "yes")
+		end
 	end
 
 	def join_player

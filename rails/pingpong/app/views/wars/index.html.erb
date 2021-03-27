@@ -22,9 +22,9 @@
     <h2>ended: <%= wre.ended %></h2>
 <% end %>
 <h2>Active</h2>
-<% @wars_active.each do |wre| %>
-    <h2>initiator: <%= wre.initiator.name %></h2>
-    <h2>recipient: <%= wre.recipient.name %></h2>
-    <h2>started: <%= wre.started %></h2>
-    <h2>ended: <%= wre.ended %></h2>
+<% if @war_active %>
+    <h2>initiator: <%= @war_active.initiator.name %></h2>
+    <h2>recipient: <%= @war_active.recipient.name %></h2>
+    <h2>started: <%= @war_active.started %></h2>
+    <h2>ended: <%= @war_active.ended %></h2>
 <% end %>

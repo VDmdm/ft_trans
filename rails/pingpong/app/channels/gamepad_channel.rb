@@ -4,6 +4,7 @@ class GamepadChannel < ApplicationCable::Channel
 
 	def subscribed
 		# stream_from "some_channel"
+		sleep(0.3)
 		game = Game.find_by(id: params[:gamepad])
 		if current_user == game.p1
 			status = "p1"
