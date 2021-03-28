@@ -29,6 +29,7 @@ class WarsController < ApplicationController
         war.initiator = guild
         war.recipient = recipient
         if war.save
+            WarStartJob.set(wait_until: war.started).perform_later(war.id)
             redirect_to guild_wars_show_path(war), success: "War request sended!"
         else
             redirect_to guild_wars_new_path(guild), alert: "Can't declare war: #{ war.errors.full_messages.join(", ") }"
@@ -39,18 +40,12 @@ class WarsController < ApplicationController
         @war = War.find(params[:id])
     end
 
-    def leave
-
-
-    end
-
     def accept_war_request
         guild = Guild.find_by(id: params[:id])
         war = War.find_by(id: params[:war_id])
         war.update_attribute(:status, :wait_start)
-        war.recipient.update_attribute(:points, war.recipient.points - (war.prize))
-        war.initiator.update_attribute(:points, war.initiator.points - (war.prize))
-        WarStartJob.set(wait_until: war.started).perform_later(war.id)
+        war.recipient.update_attribute(:points, war.recipient.points - war.prize)
+        war.initiator.update_attribute(:points, war.initiator.points - war.prize)
         redirect_to guild_wars_show_path(war), success: "War request accepted!"
     end
 

@@ -231,20 +231,6 @@ ActiveRecord::Schema.define(version: 2021_02_22_201254) do
     t.index ["uid"], name: "index_users_on_uid"
   end
 
-  create_table "war_times", force: :cascade do |t|
-    t.bigint "war_id"
-    t.bigint "game_id"
-    t.boolean "p1_accept", default: false
-    t.boolean "p2_accept", default: false
-    t.bigint "winner_id"
-    t.integer "status", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_war_times_on_game_id"
-    t.index ["war_id"], name: "index_war_times_on_war_id"
-    t.index ["winner_id"], name: "index_war_times_on_winner_id"
-  end
-
   create_table "wars", force: :cascade do |t|
     t.bigint "initiator_id"
     t.bigint "recipient_id"

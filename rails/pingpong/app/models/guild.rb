@@ -1,6 +1,6 @@
 class Guild < ApplicationRecord
 	
-	has_many :guild_members, :dependent => :delete_all
+	has_many :guild_members
 	has_many :members, :through => :guild_members, :source => :user
 	has_many :guild_members_officers, -> { where(officer: true) }, :class_name => :GuildMember
 	has_many :officers, :through => :guild_members_officers, :source => :user
@@ -10,7 +10,7 @@ class Guild < ApplicationRecord
 	has_many :war_recipient, foreign_key: "recipient_id"
 	
 
-	has_many :guild_invites, :dependent => :delete_all
+	has_many :guild_invites
 	has_many :pending_invites_and_requests, -> { where(status: :pending) }, :class_name => :GuildInvite
 	# Pending sending invites
 	has_many :pending_invites, -> { where(status: :pending, dir: :invite) }, :class_name => :GuildInvite
@@ -30,8 +30,8 @@ class Guild < ApplicationRecord
 		size: { less_than: 10.megabytes , message: 'filesize to big' }
 
 	validates :name, presence: true, uniqueness: true, length: { minimum: 2, maximum: 15 }
-	validates :anagram, presence: true, uniqueness: true, length: { is: 5 }
-	validates :description, length: { maximum: 100 }
+	validates :anagram, length: { maximum: 5, minimum: 5 }, uniqueness: true, format: { with: /\A[A-Z]+\z/, message: "only allows uppercase letters" }
+	validates :description, length: { minimum: 15, maximum: 50 }
 
 	def pending_join_requests?(user)
 		if self.pending_join_request_user.find_by(id: user.id)
@@ -71,7 +71,7 @@ class Guild < ApplicationRecord
 	end
 
 	def war_active
-		war = War.where("(initiator_id = ? OR recipient_id = ?) AND NOT status = 0 AND NOT status = 4", self.id, self.id)[0]
+		war = War.where("(initiator_id = ? OR recipient_id = ?) AND status = 3", self.id, self.id)[0]
 		if war
 			return war
 		else

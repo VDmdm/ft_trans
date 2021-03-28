@@ -3,7 +3,7 @@ class WarStartJob < ApplicationJob
 
   def perform(id)
     war = War.find_by(id: id)
-    return if war.status == :finish
+    return if !war || war.status != :wait_start
     war.update_attribute(:status, :in_war)
     WarEndJob.set(wait_until: war.ended).perform_later(war)
   end

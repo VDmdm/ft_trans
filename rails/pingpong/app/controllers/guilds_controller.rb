@@ -88,6 +88,9 @@ class GuildsController < ApplicationController
 	private
 
 	def guild_params
+		if params[:guild][:anagram]
+			params[:guild][:anagram] = params[:guild][:anagram].upcase
+		end
 		params.require(:guild).permit(:name, :description, :anagram, :avatar)
 	end
 
@@ -137,7 +140,7 @@ class GuildsController < ApplicationController
 	end
 
 	def check_user_alone
-		redirect_to guilds_path, alert: "Guild owner can't leave guild only if member count = 0" if current_user.guild.members.count != 1
+		redirect_to guilds_path, alert: "Guild owner can't leave guild" if current_user.guild_owner
 	end
 
 	def check_user_is_owner
