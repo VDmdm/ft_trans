@@ -115,6 +115,10 @@
     border-bottom: 1px solid #FFFFFF;
 }
 
+.war-history-total-result{
+	margin-left: auto;
+}
+
 .war-history-list {
     padding: 0;
     margin: 16px 0 0;
@@ -123,6 +127,14 @@
 .war-history-item {
     display: flex;
     margin-bottom: 27px;
+	transition: 0.5s;
+
+}
+
+
+.war-history-item:hover {
+    background-color: gray;
+	transition: 0.5s;
 }
 
 .war-history-item-wrap {
