@@ -11,6 +11,7 @@ class GamesController < ApplicationController
 	before_action :check_players_in_same_guild, only: [:wartime_game_create]
 	before_action :check_war_is_active, only: [:wartime_game_create]
 	before_action :check_wartime_is_active, only: [:wartime_game_create]
+	before_action :check_wartime_game_not_exist, only: [:wartime_game_create]
 
 	def index
 		@games = Game.all
@@ -186,5 +187,12 @@ class GamesController < ApplicationController
 	def check_wartime_is_active
 		war = current_user.guild.war_active
 		redirect_to games_path, alert: "Wartime is not active now" unless war.wartime_active?
+	end
+
+	def check_wartime_game_not_exist
+		p1 = current_user
+		p2 = User.find_by(id: params[:p2_id])
+		game = Game.where('game_type = 3 AND status = pending')
+		redirect_to games_path, alert: "Wartime game allready started between guilds" unless war.
 	end
 end
