@@ -69,9 +69,9 @@ class Guild < ApplicationRecord
 	def wars_request_sent
 		War.where("initiator_id = ? AND status = 0", self.id)
 	end
-
+	
 	def war_active
-		war = War.where("(initiator_id = ? OR recipient_id = ?) AND NOT status = 0 AND NOT status = 4", self.id, self.id)[0]
+		war = War.where("(initiator_id = ? OR recipient_id = ?) AND (status = 3 OR status = 2)", self.id, self.id)[0]
 		if war
 			return war
 		else

@@ -1,0 +1,77 @@
+.wars-title {
+    display: inline-block;
+    font-size: 48px;
+    color: #FFFFFF;
+    border-bottom: 1px solid #fff;
+}
+
+.you-are-in-war-title {
+    font-size: 45px;
+    text-transform: uppercase;
+    font-weight: normal;
+    color: #B2D430;
+    margin-bottom: 38px;
+}
+
+.you-are-in-war {
+    margin-right: auto;
+    margin-left: auto;
+    width: 589px;
+    text-align: center;
+}
+
+.wars-show-info-wrap {
+    margin-bottom: 21px;
+}
+
+.you-are-in-war-end-time {
+    color: #616F39;
+    font-weight: normal;
+    font-size: 24px;
+    letter-spacing: 3px;
+}
+
+.wars-sending-incoming-list {
+    display: flex;
+    width: 336px;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.wars-sending-incoming-item {
+    display: inline-block;
+}
+
+.tabs-content {
+    display: none;
+}
+.tabs-content.active {
+    display: block;
+}
+
+.wars-history-section-title {
+    font-size: 50px;
+    letter-spacing: 6px;
+    padding-bottom: 18px;
+}
+
+.wars-history-table {
+    font-family: PixelarRegularW01-Regular, serif;
+    color: #fff;
+    width: 100%;
+    border: 1px solid #fff;
+
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 28px;
+    letter-spacing: 3.5px;
+}
+
+.wars-history-table-title-item {
+    padding-bottom: 38px;
+}
+
+.wars-history-table-title-row-item {
+    border-right: 1px solid #fff;
+    padding-bottom: 45px;
+}

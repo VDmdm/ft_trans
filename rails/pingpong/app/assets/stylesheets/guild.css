@@ -115,6 +115,10 @@
     border-bottom: 1px solid #FFFFFF;
 }
 
+.war-history-total-result{
+	margin-left: auto;
+}
+
 .war-history-list {
     padding: 0;
     margin: 16px 0 0;
