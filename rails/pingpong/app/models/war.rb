@@ -5,10 +5,9 @@ class War < ApplicationRecord
     belongs_to :recipient, class_name: :Guild, foreign_key: "recipient_id"
     belongs_to :winner, class_name: :Guild, foreign_key: "winner_id", required: false
 
-    has_many   :war_times
-    has_one    :waiting_wt, -> { where(status: :wait_players) }, :class_name => :WarTimes
-    has_one    :active_wt, -> { where(status: :game_active) }, :class_name => :WarTimes
-    has_many   :ended_wt, -> { where(status: :game_ended) }, :class_name => :WarTimes
+    has_many   :wartimes
+    hss_one    :active_wartimes, -> { where(active: true) }, :class_name => :Wartime
+    has_many   :wartime_games, :through => :wartimes, :source => :game
 
     #validates  :daily_start, 
     validates  :ball_size, presence: true, :inclusion => 0.5..2.0

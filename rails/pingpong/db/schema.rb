@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_22_201254) do
+ActiveRecord::Schema.define(version: 2021_03_28_160521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -255,6 +255,22 @@ ActiveRecord::Schema.define(version: 2021_02_22_201254) do
     t.index ["initiator_id"], name: "index_wars_on_initiator_id"
     t.index ["recipient_id"], name: "index_wars_on_recipient_id"
     t.index ["winner_id"], name: "index_wars_on_winner_id"
+  end
+
+  create_table "wartimes", force: :cascade do |t|
+    t.bigint "war_id"
+    t.bigint "game_id"
+    t.bigint "guild_1_id"
+    t.bigint "guild_2_id"
+    t.bigint "winner_id"
+    t.boolean "active", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_wartimes_on_game_id"
+    t.index ["guild_1_id"], name: "index_wartimes_on_guild_1_id"
+    t.index ["guild_2_id"], name: "index_wartimes_on_guild_2_id"
+    t.index ["war_id"], name: "index_wartimes_on_war_id"
+    t.index ["winner_id"], name: "index_wartimes_on_winner_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
