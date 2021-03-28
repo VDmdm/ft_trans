@@ -40,6 +40,7 @@
 }
 
 .guilds-invite-item-wrap {
+	width:100%;
     font-family: PixelarRegularW01-Regular, serif;
     font-size: 30px;
     line-height: 28px;
@@ -52,6 +53,14 @@
     align-items: center;
     margin-bottom: 25px;
     max-width: 405px;
+    margin-right: 25px;
+}
+
+.guilds-invite-item-wars {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    width: 500px;
     margin-right: 25px;
 }
 

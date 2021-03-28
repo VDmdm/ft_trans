@@ -36,6 +36,22 @@ window.friend_invites_list_switch = function(sending) {
     }
 }
 
+window.wars_request_switch = function(status) {
+    if (status == "sending") {
+        document.getElementById('wars-incoming').style.display = 'none';
+        document.getElementById('wars-sending').style.display = 'block';
+        document.getElementById('switch-btn-guild-users-incoming').className = "";
+        document.getElementById('switch-btn-guild-users-sending').className = "btn-active";
+    } else if (status == "incoming"){
+        document.getElementById('wars-incoming').style.display = 'block';
+        document.getElementById('wars-sending').style.display = 'none';
+        document.getElementById('switch-btn-guild-users-incoming').className = "btn-active";
+        document.getElementById('switch-btn-guild-users-sending').className = "";
+    }
+}
+
+
+
 window.room_guild_users_switch = function(status) {
     if (status == "users") {
         document.getElementById('guild-sending-users').style.display = 'none';
