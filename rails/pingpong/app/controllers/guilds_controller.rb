@@ -36,6 +36,7 @@ class GuildsController < ApplicationController
 		@invite = current_user.pending_invites.find_by(guild: @guild.id)
 		@guild_sending_invites = @guild.pending_invites_user
 		@guild_incoming_invites = @guild.pending_join_request_user
+		@wars_ended = @guild.wars_ended.order(ended: :desc)
 	end
 
 	def add_officer

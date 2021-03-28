@@ -3,7 +3,7 @@ class War < ApplicationRecord
 
     belongs_to :initiator, class_name: :Guild, foreign_key: "initiator_id"
     belongs_to :recipient, class_name: :Guild, foreign_key: "recipient_id"
-    has_one    :winner_id, class_name: :Guild, foreign_key: "winner_id", required: false
+    belongs_to :winner_id, class_name: :Guild, foreign_key: "winner_id", required: false
 
     has_many   :war_times
     has_one    :waiting_wt, -> { where(status: :wait_players) }, :class_name => :WarTimes

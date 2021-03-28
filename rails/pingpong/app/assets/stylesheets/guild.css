@@ -127,6 +127,14 @@
 .war-history-item {
     display: flex;
     margin-bottom: 27px;
+	transition: 0.5s;
+
+}
+
+
+.war-history-item:hover {
+    background-color: gray;
+	transition: 0.5s;
 }
 
 .war-history-item-wrap {
