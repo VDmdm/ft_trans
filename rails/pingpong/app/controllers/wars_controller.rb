@@ -1,14 +1,15 @@
 class WarsController < ApplicationController
     
-    before_action :check_guilds_not_exist, only: [:create]
+    before_action :check_guilds_not_exist, only: [:create, :accept_war_request, :cancel_war_request, :decline_war_request]
     before_action :check_recipient_not_exist, only: [:create]
     before_action :check_guild_is_a_initiator, only: [:create]
-    before_action :check_guild_already_active_war_not_exist, only: [:create]
+    before_action :check_guild_already_active_war_not_exist, only: [:create, :accept_war_request, :cancel_war_request, :decline_war_request]
     before_action :check_guild_already_sent_war_request, only: [:create]
     before_action :check_guild_already_have_received_war_request, only: [:create]
-    before_action :check_user_is_not_officer, only: [:create], unless: :check_user_is_not_owner
+    before_action :check_user_is_not_officer, only: [:create, :accept_war_request, :cancel_war_request, :decline_war_request], unless: :check_user_is_not_owner
     before_action :check_current_user_is_not_officer, only: [:new], unless: :check_current_user_is_not_owner
     before_action :check_wars_not_exist, only: [:show]
+    before_action :check_war_request_not_exist, only: [:accept_war_request, :cancel_war_request, :decline_war_request]
 
     def index
         @guild = Guild.find(params[:id])
@@ -127,6 +128,12 @@ class WarsController < ApplicationController
     def check_wars_not_exist
 		war = War.find_by(id: params[:id])
 		redirect_to guilds_path, alert: "War not found" unless war
-	end
+    end
+    
+    def check_war_request_not_exist
+        guild = Guild.all.find_by(id: params[:id])
+        war = War.find_by(id: params[:war_id])
+        redirect_to guild_path(guild), alert: "War request not found" if !war || war.status != "send_request"
+    end
 
 end

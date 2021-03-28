@@ -10,8 +10,6 @@ class FriendsController < ApplicationController
 	end
   
 	def search
-		p "^#$@$&#@&$&#@$&#@&$@#&$&#@$&#@&$#&@$&#@$&#&@$"
-		p params
 		@users = User.search(params[:search]).order(:nickname).paginate(:per_page => 20, :page => params[:page])
 		respond_to do |f|
 			f.html

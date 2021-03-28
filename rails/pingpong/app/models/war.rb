@@ -26,6 +26,19 @@ class War < ApplicationRecord
     validates  :time_to_wait, presence: true, :inclusion => 15..60
     validates  :max_unanswered, presence: true, :inclusion => 1..15
 
+    def wartime_active?
+        time_e = self.daily_start
+        time_e = self.daily_end
+		t = Time.now
+		if time_e > time_l
+			result1 = (Range.new(Time.local(t.year, t.month,t.day, time_e.hour, time_e.min, time_e.sec), Time.local(t.year,t.month,t.day + 1, 00, 00, 00)) === t)
+			result2 = (Range.new(Time.local(t.year,t.month,t.day, 00, 00, 00), Time.local(t.year,t.month,t.day, time_l.hour, time_l.min, time_l.sec)) === t)
+			return result1 || result2
+		else
+			return Range.new(Time.local(t.year,t.month,t.day, time_e.hour, time_e.min, time_e.sec), Time.local(t.year,t.month,t.day, time_l.hour, time_l.min, time_l.sec)) === t
+		end
+	end
+
     private
 
     def end_date_after_start_date

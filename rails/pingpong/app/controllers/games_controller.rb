@@ -5,6 +5,12 @@ class GamesController < ApplicationController
 	before_action :check_game_is_ended, only: [:show, :join_player, :leave_games]
 	before_action :check_game_allready_have_p2, only: [:join_player]
 	before_action :check_passcode_wrong, only: [:join_player]
+	before_action :check_current_user_not_in_guild, only: [:wartime_game_create]
+	before_action :check_p2_not_exist, only: [:wartime_game_create]
+	before_action :check_p2_guild_not_exist, only: [:wartime_game_create]
+	before_action :check_players_in_same_guild, only: [:wartime_game_create]
+	before_action :check_war_is_active, only: [:wartime_game_create]
+	before_action :check_wartime_is_active, only: [:wartime_game_create]
 
 	def index
 		@games = Game.all
@@ -149,5 +155,36 @@ class GamesController < ApplicationController
 		game = Game.find_by(id: params[:id])
 		redirect_to game_path(game), alert: "Wrong passcode" if game.close? &&
 												game.passcode != params[:passcode]
+	end
+
+	def check_current_user_not_in_guild
+		redirect_to games_path, alert: "You not in guild" unless current_user.guild
+	end
+
+	def check_p2_not_exist
+		p2 = User.find_by(id: params[:p2_id])
+		redirect_to games_path, alert: "User not exist" unless p2
+	end
+
+	def check_p2_guild_not_exist
+		p2 = User.find_by(id: params[:p2_id])
+		redirect_to games_path, alert: "Wrong user" unless p2.guild
+	end
+
+	def check_players_in_same_guild
+		p1 = current_user
+		p2 = User.find_by(id: params[:p2_id])
+		redirect_to games_path, alert: "Players can't be in same guild" if p1.guild == p2.guild
+	end
+
+	def check_war_is_active
+		p1 = current_user
+		p2 = User.find_by(id: params[:p2_id])
+		redirect_to games_path, alert: "Players guilds not in active war" unless p1.guild.in_war?(p2.guild)
+	end
+
+	def check_wartime_is_active
+		war = current_user.guild.war_active
+		redirect_to games_path, alert: "Wartime is not active now" unless war.wartime_active?
 	end
 end
