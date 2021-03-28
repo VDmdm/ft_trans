@@ -2,6 +2,7 @@
 		<h2 class="games-title">Games
 		<%= link_to "+", new_game_path %>
 		</h2>
+		<%if current_user.guild && current_user.guild.war_active && current_user.guild.war_active.wartime_active?%>
         <section class="game-status">
             <h2 class="game-status-title game-status-title-accept">War time started!</h2>
             <ul class="game-status-invite-list">
@@ -35,6 +36,7 @@
                 </li>
             </ul>
         </section>
+		<%end%>
 
         <section class="game-status">
             <a href="#" class="game-status-invite">Invite</a>

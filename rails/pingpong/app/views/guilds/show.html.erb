@@ -163,7 +163,7 @@
             <h3 class="guild-war-history-list-title"><%= link_to "Wars", guild_wars_index_path(@guild) %></h3>
             <ul class="war-history-list">
 			<% @wars_ended.each do |wre| %>
-			<a href="">
+				<%= link_to guild_wars_show_path(wre) do %>
                 <li class="war-history-item">
                     <div class="war-history-item-wrap">
 					<% if @guild != wre.initiator %>
@@ -175,24 +175,44 @@
 					<%end%>
                     </div>
                     <div class="war-history-total-result">
+						
 							<% if @guild != wre.initiator %>
-								<% if @guild != wre.winner_id %>
-									<span class="total-result-score total-result-score-lose"><%= wre.initiator_score %>
+								<% if @guild != wre.winner %>
+									<h3 class="total-result-score"><span class="total-result-score-lose"><%= wre.initiator_score %></span>
 								<%else%>
-									<span class="total-result-score total-result-score-win"><%= wre.recipient_score %>
+									<h3 class="total-result-score"><%= wre.initiator_score %>
 								<%end%>
 							<%else%>
-								<% if @guild != wre.winner_id %>
-									<span class="total-result-score total-result-score-lose"><%= wre.recepient_score %>
+								<% if @guild != wre.winner %>
+									<h3 class="total-result-score"><span class="total-result-score-lose"><%= wre.recipient_score %></span>
 								<%else%>
-									<span class="total-result-score"><%= wre.recipient_score %>
+									<h3 class="total-result-score"><%= wre.recipient_score %>
 								<%end%>
 							<%end%>
-						<time class="total-result-time">12/12/2012</time>
-						56:40 WIN</span>
+
+							<% if @guild == wre.initiator %>
+								<% if @guild == wre.winner %>
+									<span class="total-result-score-win">: <%= wre.initiator_score %></span></h3>
+								<%else%>
+									: <%= wre.initiator_score %></h3>
+								<%end%>
+							<%else%>
+								<% if @guild == wre.winner %>
+									<span class="total-result-score-win">:   <%= wre.recipient_score %></span></h3>
+								<%else%>
+									: <%= wre.recipient_score %></h3>
+								<%end%>
+							<%end%>
+
+							<% if @guild == wre.winner %>
+								<span class="total-result-score total-result-score-win">WIN</span>
+							<%else%>
+								<span class="total-result-score total-result-score-lose">LOST</span>
+							<%end%>
+							<h3 style="font-size:20px"><%=wre.ended.strftime("%m/%d/%Y %H:%M")%></h3>
                     </div>
                 </li>
-				</a>
+				<%end%>
 			<%end%>
             </ul>
         </div>

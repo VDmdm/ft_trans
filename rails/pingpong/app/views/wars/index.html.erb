@@ -180,20 +180,20 @@
 			<td class="wars-history-table-title-row-item"><%=wre.recipient.name%></td>
 		<%end%>
 		<td class="wars-history-table-title-row-item"> <%=wre.started.strftime("%m/%d/%Y %H:%M")%>-<%=wre.ended.strftime("%m/%d/%Y %H:%M")%></td>
-		<% if @guild != wre.winner_id %>
+		<% if @guild != wre.winner %>
 			<td class="wars-history-table-title-row-item" style="color: #B2463E">LOST</td>
 		<%else%>
 			<td class="wars-history-table-title-row-item" style="color: #B2D430">WIN</td>	
 		<%end%>
 
 		<% if @guild != wre.initiator %>
-			<%if @guild != wre.winner_id %>
+			<%if @guild != wre.winner %>
 				<td class="wars-history-table-title-row-item"><span style="color: #B2463E"><%= wre.initiator_score %></span>
 			<%else%>
 				<td class="wars-history-table-title-row-item"><%= wre.initiator_score %>
 			<%end%>
 		<%else%>
-			<%if @guild != wre.winner_id %>
+			<%if @guild != wre.winner %>
 				<td class="wars-history-table-title-row-item"><span style="color: #B2463E"><%=wre.recipient_score%></span>
 			<%else%>
 				<td class="wars-history-table-title-row-item"><%=wre.recipient_score%>
@@ -201,13 +201,13 @@
 		<%end%>
 
 		<% if @guild == wre.initiator %>
-			<%if @guild == wre.winner_id %>
+			<%if @guild == wre.winner %>
 			: <span style="color: #B2D430"><%= wre.initiator_score %></span></td>
 			<%else%>
 			: <%= wre.initiator_score %></td>
 			<%end%>
 		<%else%>
-			<%if @guild == wre.winner_id %>
+			<%if @guild == wre.winner %>
 			: <span style="color: #B2D430"><%= wre.recipient_score %></span></td>
 			<%else%>
 			: <%=wre.recipient_score%></td>

@@ -28,7 +28,7 @@ class War < ApplicationRecord
 
     def wartime_active?
         time_e = self.daily_start
-        time_e = self.daily_end
+        time_l = self.daily_end
 		t = Time.now
 		if time_e > time_l
 			result1 = (Range.new(Time.local(t.year, t.month,t.day, time_e.hour, time_e.min, time_e.sec), Time.local(t.year,t.month,t.day + 1, 00, 00, 00)) === t)
