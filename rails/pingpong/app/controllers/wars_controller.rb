@@ -8,6 +8,7 @@ class WarsController < ApplicationController
     before_action :check_guild_already_have_received_war_request, only: [:create]
     before_action :check_user_is_not_officer, only: [:create], unless: :check_user_is_not_owner
     before_action :check_current_user_is_not_officer, only: [:new], unless: :check_current_user_is_not_owner
+    before_action :check_wars_not_exist, only: [:show]
 
     def index
         @guild = Guild.find(params[:id])
@@ -44,16 +45,11 @@ class WarsController < ApplicationController
     end
 
     def accept_war_request
-        p "FJSFJDS*#*$#@*$&#@$&@$&#$&@$&$&#"
-        p params
         guild = Guild.find_by(id: params[:id])
         war = War.find_by(id: params[:war_id])
         war.update_attribute(:status, :wait_start)
-        war.recipient.update_attribute(:points, war.recipient.points - (war.prize / 2))
-        war.initiator.update_attribute(:points, war.initiator.points - (war.prize / 2))
-        p "232eweweqewqe33"
-        p war.started
-        p DateTime.now
+        war.recipient.update_attribute(:points, war.recipient.points - (war.prize))
+        war.initiator.update_attribute(:points, war.initiator.points - (war.prize))
         WarStartJob.set(wait_until: war.started).perform_later(war.id)
         redirect_to guild_wars_show_path(war), success: "War request accepted!"
     end
@@ -132,5 +128,10 @@ class WarsController < ApplicationController
         initiator = Guild.find_by(name: params[:war][:recipient])
         redirect_to guild_path(guild), alert: "Can't declare war youre own guild" if guild == initiator
     end
+
+    def check_wars_not_exist
+		war = War.find_by(id: params[:id])
+		redirect_to guilds_path, alert: "War not found" unless war
+	end
 
 end

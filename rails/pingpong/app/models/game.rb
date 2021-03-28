@@ -103,7 +103,7 @@ class Game < ApplicationRecord
             dx: @speed,
             dy: -@speed
         }
-        if self.game_type = "wartime"
+        if self.game_type == "wartime" && self.p1.guild.war_active
             @wt_end_time = self.p1.guild.war_active.time_to_wait
         end
 
@@ -242,10 +242,10 @@ class Game < ApplicationRecord
         end
         if @score[:p1] == 21 || @score[:p2] == 21 || GameStateHash.instance.return_value("p1_status_#{self.id}") == 'leave' || 
                                                      GameStateHash.instance.return_value("p2_status_#{self.id}") == 'leave' || 
-                                                     (self.game_type == 'wartime' && GameStateHash.return_value("p2_activate_game_#{self.id}") == "no" && 
+                                                     (self.game_type == 'wartime' && (GameStateHash.instance.return_value("p2_activate_game_#{self.id}") == "no") && 
                                                      (self.created_at + @wt_end_time.minutes < DateTime.now))
             if @score[:p1] == 21 || GameStateHash.instance.return_value("p2_status_#{self.id}") == 'leave' ||
-                (self.game_type == 'wartime' && GameStateHash.return_value("p2_activate_game_#{self.id}") == "no" && (self.created_at + @wt_end_time.minutes < DateTime.now))
+                (self.game_type == 'wartime' && (GameStateHash.instance.return_value("p2_activate_game_#{self.id}") == "no") && (self.created_at + @wt_end_time.minutes < DateTime.now))
                 GameStateHash.instance.add_kv("winner_#{self.id}", "p1")
                 calculate_points(self.p1, self.p2)
             else
