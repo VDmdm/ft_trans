@@ -61,11 +61,55 @@
 			<div class="guild_users_list_nav">
                 <div class="guild_users_list">
                     <button id="switch-btn-guild-users" class="btn-active" onclick="room_guild_users_switch('users')">users</button>
-					<button id="switch-btn-guild-users-pending" class="" onclick="room_guild_users_switch('pending')">pending</button>
+					<button id="switch-btn-guild-users-sending" class="" onclick="room_guild_users_switch('sending')">sending</button>
                     <button id="switch-btn-guild-users-incoming" class="" onclick="room_guild_users_switch('incoming')">incoming</button>
                 </div>
 			</div>
+			<div id="guild-sending-users" style="display:none">
+				<% @guild_sending_invites.each do |member|%>
+					<% if member.online? %>
+					<section class="friend-list-element" style="width:500px">
+				<% else %>
+					<section class="friend-list-element friend-list-element-offline" style="width:500px">
+				<% end %>
+						<div class="friend-list-element-profile-img">
+							 <%= link_to image_tag(member.avatar, ),
+                        profile_path(member) %>
+						</div>
+						<div class="friend-list-element-btn-nickname-guild">
+							
+								<div class="friend-list-element-nickname-guild" style="min-width:430px">
+									<h4> <%= link_to member.nickname, profile_path(member) %> </h4>
+									<%= link_to image_tag("delete.png", style: "width:35px;height:35px") , cancel_invite_path(@guild.id , user_id: member.id), style: "margin-left:auto", method: :post, remote: true %>
+								</div>
+					</div>
+				</section>
+				<%end%>
+			</div>
+			<div id="guild-incoming-users" style="display:none">
+				<% @guild_incoming_invites.each do |member|%>
+					<% if member.online? %>
+					<section class="friend-list-element" style="width:500px">
+				<% else %>
+					<section class="friend-list-element friend-list-element-offline" style="width:500px">
+				<% end %>
+						<div class="friend-list-element-profile-img">
+							 <%= link_to image_tag(member.avatar, ),
+                        profile_path(member) %>
+						</div>
+						<div class="friend-list-element-btn-nickname-guild">
+							
+								<div class="friend-list-element-nickname-guild" style="min-width:430px">
+									<h4> <%= link_to member.nickname, profile_path(member) %> </h4>
+									<%= link_to image_tag("ok.png", style: "width:35px;height:35px") ,accept_join_request_path(@guild.id , user_id: member.id), style: "margin-left:auto", method: :post, remote: true %>
+									<%= link_to image_tag("delete.png", style: "width:35px;height:35px"), decline_join_request_path(@guild.id , user_id: member.id), style: "margin-left:auto", method: :post, remote: true %>
+								</div>
+					</div>
+				</section>
+				<%end%>
+			</div>
 		<%end%>
+		<div id="guild-all-users" style="display:block">
 			<% @guild.members.each do |member| %>
 				<% if member.online? %>
 					<section class="friend-list-element" style="width:500px">
@@ -113,6 +157,7 @@
 					</div>
 				</section>
 			<% end %>
+			</div>
         </div>
         <div class="guild-war-history-list">
             <h3 class="guild-war-history-list-title">War history</h3>

@@ -38,22 +38,25 @@ window.friend_invites_list_switch = function(sending) {
 
 window.room_guild_users_switch = function(status) {
     if (status == "users") {
-        // document.getElementById('block-incoming').style.display = 'none';
-        // document.getElementById('block-sending').style.display = 'block';
+        document.getElementById('guild-sending-users').style.display = 'none';
+		document.getElementById('guild-incoming-users').style.display = 'none';
+        document.getElementById('guild-all-users').style.display = 'block';
         document.getElementById('switch-btn-guild-users').className = "btn-active";
-		document.getElementById('switch-btn-guild-users-pending').className = " ";
+		document.getElementById('switch-btn-guild-users-sending').className = " ";
 		document.getElementById('switch-btn-guild-users-incoming').className = " ";
-    } else if (status == "pending"){
-        // document.getElementById('block-incoming').style.display = 'block';
-        // document.getElementById('block-sending').style.display = 'none';
+    } else if (status == "sending"){
+        document.getElementById('guild-sending-users').style.display = 'block';
+		document.getElementById('guild-incoming-users').style.display = 'none';
+        document.getElementById('guild-all-users').style.display = 'none';
         document.getElementById('switch-btn-guild-users').className = " ";
-		document.getElementById('switch-btn-guild-users-pending').className = "btn-active";
+		document.getElementById('switch-btn-guild-users-sending').className = "btn-active";
 		document.getElementById('switch-btn-guild-users-incoming').className = " ";
     } else if (status == "incoming"){
-		// document.getElementById('block-incoming').style.display = 'block';
-        // document.getElementById('block-sending').style.display = 'none';
+        document.getElementById('guild-sending-users').style.display = 'none';
+		document.getElementById('guild-incoming-users').style.display = 'block';
+        document.getElementById('guild-all-users').style.display = 'none';
         document.getElementById('switch-btn-guild-users').className = " ";
-		document.getElementById('switch-btn-guild-users-pending').className = " ";
+		document.getElementById('switch-btn-guild-users-sending').className = " ";
 		document.getElementById('switch-btn-guild-users-incoming').className = "btn-active";
 	}
 }
