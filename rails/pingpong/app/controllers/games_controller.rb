@@ -196,3 +196,4 @@ class GamesController < ApplicationController
 		redirect_to games_path, alert: "Wartime game allready started between guilds" unless war.
 	end
 end
+end

@@ -1,5 +1,115 @@
-<h2><%= @war.recipient.name %></h2>
-<% @war.recipient.members.each do |u| %>
-	<p><%= u.nickname %></p>
-	<%= link_to "Battle!", wartime_game_create_path(p2_id: u.id), method: :post, remote: true %>
-<% end %>
+<section class="wars-show">
+<h2 class="wars-show-title">Wars</h2>
+
+<div class="wars-show-block">
+	<div class="wars-show-info">
+		<div class="wars-show-info-name">
+			<%= link_to @war.initiator.name, guild_path(@war.initiator), class: "wars-show-info-name-link" %>
+			<%= link_to guild_path(@war.initiator), class: "wars-show-info-anagram-link" do %>
+				[<%=@war.initiator.anagram%>]
+			<%end%>
+		</div>
+		<div class="wars-show-info-wrap">
+			<%= image_tag @war.initiator.avatar, alt: "avatar", class: "wars-show-info-avatar"%>
+			<div class="wars-show-info-stats">
+				<div class="wars-show-info-stat">
+					<%= image_tag "sword.png", alt: "sword", class: "wars-show-info-stat-icon" %>
+					<span class="wars-show-info-stat-kd">20 / 34</span>
+				</div>
+
+				<div class="wars-show-info-stat">
+					<%= image_tag "man.png", alt: "sword", class: "wars-show-info-stat-icon" %>
+					<span class="wars-show-info-stat-kd"><%= @war.initiator.members.size %></span>
+				</div>
+
+				<div class="wars-show-info-stat">
+					<%= image_tag "win_rate.png", alt: "sword", class: "wars-show-info-stat-icon" %>
+					<span class="wars-show-info-stat-kd">23%</span>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="wars-show-score-block">
+		<%= image_tag "ball.png", alt: "cup", class: "wars-show-score-icon" %>
+		<span class="wars-show-score"><%= @war.initiator_score %></span>
+	</div>
+</div>
+<div class="wars-show-block">
+	<div class="wars-show-info">
+		<div class="wars-show-info-name">
+			<%= link_to @war.recipient.name, guild_path(@war.recipient), class: "wars-show-info-name-link" %>
+			<%= link_to guild_path(@war.recipient), class: "wars-show-info-anagram-link" do %>
+				[<%=@war.recipient.anagram%>]
+			<%end%>
+		</div>
+		<div class="wars-show-info-wrap">
+			<%= image_tag @war.recipient.avatar, alt: "avatar", class: "wars-show-info-avatar"%>
+			<div class="wars-show-info-stats">
+				<div class="wars-show-info-stat">
+					<%= image_tag "sword.png", alt: "sword", class: "wars-show-info-stat-icon" %>
+					<span class="wars-show-info-stat-kd">20 / 34</span>
+				</div>
+
+				<div class="wars-show-info-stat">
+					<%= image_tag "man.png", alt: "sword", class: "wars-show-info-stat-icon" %>
+					<span class="wars-show-info-stat-kd"><%= @war.recipient.members.size %></span>
+				</div>
+
+				<div class="wars-show-info-stat">
+					<%= image_tag "win_rate.png", alt: "sword", class: "wars-show-info-stat-icon" %>
+					<span class="wars-show-info-stat-kd">23%</span>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="wars-show-score-block">
+		<%= image_tag "ball.png", alt: "cup", class: "wars-show-score-icon" %>
+		<span class="wars-show-score"><%= @war.recipient_score %></span>
+	</div>
+</div>
+
+<div class="wars-show-mods">
+		<span class="wars-show-mods-title">Mods</span>
+		<ul class="wars-show-mods-list">
+			<li class="wars-show-mods-item">
+				<%= image_tag "ball_size.png", class: "wars-show-mods-item-icon" %>
+				<h3><%= @war.ball_size%></h3>
+			</li>
+			<li class="wars-show-mods-item">
+				<%= image_tag "ball_speed.png", class: "wars-show-mods-item-icon" %>
+				<h3><%= @war.speed_rate%></h3>
+			</li>
+			<% if @war.ball_down_mode %>
+				<li class="wars-show-mods-item">
+					<%= image_tag "ball_size_down.png", class: "wars-show-mods-item-icon" %>
+				</li>
+			<%end%>
+			<% if @war.ball_speedup_mode %>
+				<li class="wars-show-mods-item">
+					<%= image_tag "ball_speed_up.png", class: "wars-show-mods-item-icon" %>
+				</li>
+			<%end%>
+		</ul>
+	</div>
+
+<table class="wars-show-table" align="left">
+	<tr class="wars-show-table-title">
+		<th class="wars-show-table-title-title games-table-title-players">players</th>
+		<th class="wars-show-table-title-title games-table-title-score">score</th>
+		<th class="wars-show-table-title-title games-table-title-date">date</th>
+	</tr>
+	<tr class="wars-show-table-row">
+		<td class="wars-show-table-row wars-show-table-row-players">jalvaro vs loh</td>
+		<td class="wars-show-table-row wars-show-table-row-score">24/12</td>
+		<td class="wars-show-table-row wars-show-table-row-date">24/09/13 14:34:34</td>
+	</tr>
+	<tr class="wars-show-table-row">
+		<td class="wars-show-table-row wars-show-table-row-players">jalvaro vs loh</td>
+		<td class="wars-show-table-row wars-show-table-row-score">24/12</td>
+		<td class="wars-show-table-row wars-show-table-row-date">24/09/13 14:34:34</td>
+	</tr>
+</table>
+
+</section>

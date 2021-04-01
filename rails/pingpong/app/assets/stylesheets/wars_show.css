@@ -6,11 +6,15 @@
 }
 
 .wars-show-block {
+	width: 50%;
     display: flex;
     margin-top: 23px;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 83px;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+
 }
 
 .wars-show-info-name-link, .wars-show-info-anagram-link {
@@ -78,8 +82,11 @@
 }
 
 .wars-show-mods-list {
+	margin-left: auto;
+	margin-right: auto;
+
     display: flex;
-    max-width: 229px;
+    max-width: 300px;
     flex-wrap: wrap;
     padding: 0;
 }
@@ -89,8 +96,8 @@
 }
 
 .wars-show-mods-item-icon {
-    height: 29px;
-    width: 29px;
+    height: 50px;
+    width: 50px;
 }
 
 .wars-show-score-icon {

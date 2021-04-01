@@ -6,7 +6,7 @@ class War < ApplicationRecord
     belongs_to :winner, class_name: :Guild, foreign_key: "winner_id", required: false
 
     has_many   :wartimes
-    hss_one    :active_wartimes, -> { where(active: true) }, :class_name => :Wartime
+    has_one    :active_wartimes, -> { where(active: true) }, :class_name => :Wartime
     has_many   :wartime_games, :through => :wartimes, :source => :game
 
     #validates  :daily_start, 
