@@ -38,6 +38,7 @@ var player_2_score;
 var ball_color;
 var paddle_color;
 var background_color;
+var preview = false;
 
 var grid;
 var paddleHeight;
@@ -326,7 +327,8 @@ window.start_game_preview = function() {
         ball_size = value;
     }
 
-    window.onload = function() {
+    if (!preview) {
+        preview = true;
         main_loop_prewiew();
     }
 }

@@ -189,11 +189,10 @@ class GamesController < ApplicationController
 		redirect_to games_path, alert: "Wartime is not active now" unless war.wartime_active?
 	end
 
-	def check_wartime_game_not_exist
-		p1 = current_user
-		p2 = User.find_by(id: params[:p2_id])
-		game = Game.where('game_type = 3 AND status = pending')
-		redirect_to games_path, alert: "Wartime game allready started between guilds" unless war.
-	end
-end
+	# def check_wartime_game_not_exist
+	# 	p1 = current_user
+	# 	p2 = User.find_by(id: params[:p2_id])
+	# 	game = Game.where('game_type = 3 AND status = pending')
+	# 	redirect_to games_path, alert: "Wartime game allready started between guilds" unless war.
+	# end
 end
