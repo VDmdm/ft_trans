@@ -158,7 +158,110 @@ footer {
     color: white;
     font-size: 28.3px;
     margin-top: 100px;
+    text-align: center;
 }
+
+.info-window-title {
+    display: inline-block;
+    font-size: 48px;
+    line-height: 45px;
+    border-bottom: 1px solid #fff;
+}
+
+.info-window {
+    text-align: center;
+    display: none;
+    position: fixed;
+    border: 3px solid #fff;
+    height: 718px;
+    width: 1038px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+    padding-left: 94px;
+    padding-right: 94px;
+}
+
+.info-window-close {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 48px;
+    line-height: 45px;
+    background: transparent;
+}
+
+.footer-help {
+    cursor: pointer;
+
+}
+
+.info-window-nav-list {
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-window-nav-item-link {
+    display: inline;
+    font-size: 48px;
+    line-height: 45px;
+    padding: 0;
+}
+
+.info-window-nav-item-info {
+    font-family: PixelarRegularW01-Regular, serif;
+    font-size: 48px;
+    line-height: 45px;
+    margin-top: 53px;
+    display: none;
+    color: #fff;
+}
+
+.info-window-nav-item-info {
+    padding-left: 42px;
+}
+
+#info-window-nav-item-site {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.item-site-block {
+    min-width: 465px;
+    text-align: left;
+    margin-bottom: 31px;
+}
+
+.item-site-block-icon {
+    height: 29px;
+    width: 29px;
+}
+
+.item-game-block {
+    text-align: left;
+}
+
+.item-game-rules {
+    margin-bottom: 20px;
+}
+
+.item-game-rules-title {
+    display: inline-block;
+    font-size: 48px;
+    line-height: 45px;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 11px;
+}
+
+.item-game-rules-description {
+    font-size: 36px;
+    line-height: 33px;
+}
+
 
 
 /* header */
