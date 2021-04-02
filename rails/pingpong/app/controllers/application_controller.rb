@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 
 	before_action :signed_in, unless: -> { home_controller? || devise_controller? }
-	before_action :check_auth, unless: -> { otp_secret_controller? || devise_controller? }	
+	before_action :check_auth, unless: -> { otp_secret_controller? || otp_logout_check? }	
 	before_action :configure_permitted_parameters, if: :devise_controller?
 
 	add_flash_types :success
@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
 
 	def signed_in
 		redirect_to root_path unless user_signed_in? && :devise_controller?
+	end
+
+	def otp_logout_check?
+		params[:controller] == "sessions" && params[:action] == "destroy"
 	end
 
 	def home_controller?

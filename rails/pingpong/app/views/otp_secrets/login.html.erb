@@ -8,5 +8,6 @@
 		<%= submit_tag "verify", class: "two-step-auth-submit-btn" %>
 		<% end %>
 <div>
+<%= link_to "logout", destroy_user_session_path, :method => :delete %>
 
 </div>

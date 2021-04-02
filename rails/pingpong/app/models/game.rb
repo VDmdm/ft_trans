@@ -285,9 +285,12 @@ class Game < ApplicationRecord
                     else
                         winner.guild.war_active.update_attribute(:recipient_score, winner.guild.war_active.recipient_score + 1)
                     end
+                    wartime = Wartime.find_by(game: self.id)
+                    wartime.winner = winner.guild
+                    wartime.active = false
+                    wartime.save
                 end
             end
         end
     end
-    
 end

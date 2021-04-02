@@ -54,6 +54,11 @@ class GamesController < ApplicationController
 			GameStateHash.instance.add_kv("p2_nickname_#{game.id}", p2.nickname)
 			GameStateHash.instance.add_kv("status_#{game.id}", "waiting")
 			GameStateHash.instance.add_kv("p2_activate_game_#{game.id}", "no")
+			wartime = Wartime.new 		war: war,
+										game: game,
+										guild_1: war.initiator,
+										guild_2: war.recipient
+			wartime.save
 			redirect_to game_path(game), success: "Game was created!"
 		else
 			p "================= #{ game.game_type } ===================="
@@ -189,10 +194,8 @@ class GamesController < ApplicationController
 		redirect_to games_path, alert: "Wartime is not active now" unless war.wartime_active?
 	end
 
-	# def check_wartime_game_not_exist
-	# 	p1 = current_user
-	# 	p2 = User.find_by(id: params[:p2_id])
-	# 	game = Game.where('game_type = 3 AND status = pending')
-	# 	redirect_to games_path, alert: "Wartime game allready started between guilds" unless war.
-	# end
+	def check_wartime_game_not_exist
+		war = current_user.guild.war_active
+		redirect_to games_path, alert: "Wartime game allready started between guilds" if war.active_wartime
+	end
 end

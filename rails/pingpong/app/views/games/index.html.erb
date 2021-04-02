@@ -3,7 +3,9 @@
 		<%= link_to "+", new_game_path %>
 		</h2>
 		<%if current_user.guild && current_user.guild.war_active && current_user.guild.war_active.wartime_active?%>
+
         <section class="game-status">
+        <%= link_to "battle", wartime_game_create_path(p2_id: User.last.id), method: :post, remote: true %>
             <h2 class="game-status-title game-status-title-accept">War time started!</h2>
             <ul class="game-status-invite-list">
                 <li class="game-status-invite-item">
