@@ -12,6 +12,12 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
+  <div class="create-guild-form-field">
+  	<%= f.label :avatar, 'Image', class: "personal-information-field-label" %>
+ 	<%= f.file_field :avatar %>
+  	<%= f.label :avatar, 'open', class:"personal-information-field-input"%>
+  </div>
+
   <div class="personal-information-form-filed">
     <%= f.label :password, class: "personal-information-field-label"  %><br />
     <%= f.password_field :password, autocomplete: "new-password", class: "personal-information-field-input", type: "text"  %>
@@ -19,6 +25,7 @@
       <br />
     <% end %>
   </div>
+  
 
   <div class="personal-information-form-filed">
     <%= f.label :password_confirmation, class: "personal-information-field-label" %><br />
