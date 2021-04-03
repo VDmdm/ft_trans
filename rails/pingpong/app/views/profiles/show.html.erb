@@ -41,9 +41,11 @@
 						<%= link_to image_tag("mail", class: "profile-settings-action"), edit_user_registration_path%>		
 						<% if @user.id == current_user.id %>
 							<%= link_to image_tag("gear_", class: "profile-settings-sign"), edit_user_registration_path%>
-						
+
 						<% elsif !current_user.friends_with?(@user) %>
-							<%= link_to "+", friends_add_path(user_id: @user.id), class: "profile-info-action-add" %>
+<!--							<%= link_to image_tag("plus", class: "profile-settings-action profile-info-action-remove"), edit_user_registration_path%> -->
+							<%= link_to image_tag("plus", class: "profile-settings-action"), edit_user_registration_path%>
+<!--							<%= link_to "+", friends_add_path(user_id: @user.id), class: "profile-info-action-add" %> -->
 						<%end%>
 				</div>
 			</div>
