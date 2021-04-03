@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :rooms
   resources :direct_messages
   resources :direct_rooms
+
   get   'otp_secrets', to: 'otp_secrets#new'
   get   'otp_secrets/login', to: 'otp_secrets#login'
   post   'otp_secrets/auth_logger', to: 'otp_secrets#auth_logger', as: :otp_secrets_logger
@@ -75,9 +76,10 @@ Rails.application.routes.draw do
   post 'guilds/wars/:id/decline_war_request', to: "wars#decline_war_request", as: :guild_wars_decline_war_request
   post 'guilds/wars/:id/leave', to: "wars#leave", as: :guild_wars_leave
 
-  devise_for :users, controllers: { sessions: 'sessions', omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: { sessions: 'sessions', omniauth_callbacks: "users/omniauth_callbacks", registrations: "registrations" }
 
   devise_scope :user do
+	get '/users', to: 'devise/registrations#edit'
     delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session_path
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

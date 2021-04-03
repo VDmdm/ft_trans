@@ -2,7 +2,6 @@ class User < ApplicationRecord
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 	require 'open-uri'
-
 	enum status: [ :offline, :online, :in_game ]
 
 	after_create :check_user_avatar
