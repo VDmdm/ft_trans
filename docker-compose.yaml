@@ -21,21 +21,8 @@ services:
         FT_SECRET: a8a89c12f24bfa80276e6ece6b697a18ff519916d48437ebd62956c4ea7a226e
     depends_on:
       - postgresql
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    restart: always
-    ports:
-      - "80:80"
-    environment:
-        PGADMIN_DEFAULT_EMAIL: admin@admin.ru
-        PGADMIN_DEFAULT_PASSWORD: admin
-        POSTGRES_USER: root
-        POSTGRES_PASSWORD: root
-        REDIS_DB: 0
-        REDIS_URL: redis://redis
-        REDIS_PORT: 6379
   redis:
-    image: redis:6.0.10-alpine
+    image: redis:6.0.12-alpine
     ports:
       - "6379:6379"
 

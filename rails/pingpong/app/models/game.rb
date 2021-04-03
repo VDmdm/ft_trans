@@ -134,6 +134,19 @@ class Game < ApplicationRecord
     def game_active?
         if  GameStateHash.instance.return_value("p1_status_#{self.id}") == 'lags' ||
             GameStateHash.instance.return_value("p2_status_#{self.id}") == 'lags'
+            if GameStateHash.instance.return_value("p1_status_#{self.id}") == 'lags' &&
+                (GameStateHash.instance.return_value("p1_lagtime_#{self.id}") + 2.minute < DateTime.now)
+                GameStateHash.instance.add_kv("p2_status_#{self.id}", "ready")
+                GameStateHash.instance.add_kv("p1_status_#{self.id}", "leave")
+                GameStateHash.instance.add_kv("status_#{self.id}", "active")
+                return true
+            elsif GameStateHash.instance.return_value("p2_status_#{self.id}") == 'lags' &&
+                (GameStateHash.instance.return_value("p2_lagtime_#{self.id}") + 2.minute < DateTime.now)
+                GameStateHash.instance.add_kv("p1_status_#{self.id}", "ready")
+                GameStateHash.instance.add_kv("p2_status_#{self.id}", "leave")
+                GameStateHash.instance.add_kv("status_#{self.id}", "active")
+                return true
+            end
             GameStateHash.instance.add_kv("status_#{self.id}", "paused")
             return false
         elsif   (GameStateHash.instance.return_value("status_#{self.id}") == 'active' &&
@@ -142,7 +155,6 @@ class Game < ApplicationRecord
             GameStateHash.instance.add_kv("status_#{self.id}", "paused")
             return false
         elsif GameStateHash.instance.return_value("status_#{self.id}") == 'active'
-            @p2_active = true
             return true
         else
             return false
@@ -279,7 +291,7 @@ class Game < ApplicationRecord
                 winner.guild.update_attribute(:points, winner.guild.points + 100)
             elsif winner.guild != loser.guild
                 winner.guild.update_attribute(:points, winner.guild.points + 25)
-                if self.game_type.wartime? && winner.guild.in_war?(loser.guild)
+                if self.wartime? && winner.guild.in_war?(loser.guild)
                     if winner.guild.war_active.initiator == winner.guild
                         winner.guild.war_active.update_attribute(:initiator_score, winner.guild.war_active.initiator_score + 1)
                         if GameStateHash.instance.return_value("p2_activate_game_#{self.id}") == "no"
