@@ -215,7 +215,9 @@ footer {
 }
 
 .info-window-nav-item-info {
-    font-family: PixelarRegularW01-Regular, serif;
+	overflow: auto;
+	height: 500px;
+	font-family: PixelarRegularW01-Regular, serif;
     font-size: 48px;
     line-height: 45px;
     margin-top: 53px;
