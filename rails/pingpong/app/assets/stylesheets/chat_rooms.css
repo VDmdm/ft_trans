@@ -219,6 +219,10 @@
     margin-left: 35px;
 }
 
+.send-message .new_room_message {
+    display: flex;
+}
+
 .msg-input{
     border: 1px solid white !important;
     width: 750px !important;
@@ -232,15 +236,12 @@
     padding: 1px 20px 7px 20px;
     background-color: #000;
     border: 1px solid #FFFFFF;
-    margin-left: 10px;
-    margin-bottom: 10px;
+    margin-left: 15px;
 }
 
 .send-message-button:hover {
-
     border: 1px solid #FFFFFF;
 }
-
 
 .new-room-input{
 	width: 200px;

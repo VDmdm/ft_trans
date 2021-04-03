@@ -14,33 +14,33 @@
 			<%end%>
             </p>
 		<% if @guild != @war_active.initiator %>
-            <div class="wars-show-info-name">
-				<%= link_to @war_active.initiator.name, guild_path(@war_active.initiator), class: "wars-show-info-name-link" %>
-				<%= link_to guild_path(@war_active.initiator), class: "wars-show-info-anagram-link" do %>
+            <div class="wars-show-guild-info-name">
+				<%= link_to @war_active.initiator.name, guild_path(@war_active.initiator), class: "wars-show-guild-info-name-link" %>
+				<%= link_to guild_path(@war_active.initiator), class: "wars-show-guild-info-anagram-link" do %>
 					[<%= @war_active.initiator.anagram %>]
 				<%end%>
             </div>
-			<div class="wars-show-info-wrap">
-				<%= image_tag @war_active.initiator.avatar, class: "wars-show-info-avatar" %>
-                <div class="wars-show-info-stats">
-					<div class="wars-show-info-stat">
-						<%= image_tag "sword.png", class: "wars-show-info-stat-icon", style: "margin-top:5px" %>
-                        <h3 class="wars-show-info-stat-kd">20/34</h3>
+			<div class="wars-show-guild-info-wrap">
+				<%= image_tag @war_active.initiator.avatar, class: "wars-show-guild-info-avatar" %>
+                <div class="wars-show-guild-info-stats">
+					<div class="wars-show-guild-info-stat">
+						<%= image_tag "sword.png", class: "wars-show-guild-info-stat-icon", style: "margin-top:5px" %>
+                        <h3 class="wars-show-guild-info-stat-kd">20/34</h3>
                     </div>
 
-					<div class="wars-show-info-stat">
+					<div class="wars-show-guild-info-stat">
 						<%= image_tag "man.png", style: "width:45px;height:45px" %>
-                        <span class="wars-show-info-stat-kd" > <%= @war_active.initiator.members.size%></span>
+                        <span class="wars-show-guild-info-stat-kd" > <%= @war_active.initiator.members.size%></span>
                     </div>
 
-					<div class="wars-show-info-stat">
-						<%= image_tag "win_rate.png", class: "wars-show-info-stat-icon" %>
-                        <span class="wars-show-info-stat-kd">23%</span>
+					<div class="wars-show-guild-info-stat">
+						<%= image_tag "win_rate.png", class: "wars-show-guild-info-stat-icon" %>
+                        <span class="wars-show-guild-info-stat-kd">23%</span>
                     </div>
 
                 </div>
 				<div class="top-guild-score-wrap" style="display:flex;margin-top:auto;margin-bottom:auto">
-					<%= image_tag "ball.png", class: "wars-show-info-stat-icon" %>
+					<%= image_tag "ball.png", class: "wars-show-guild-info-stat-icon" %>
                     <h3 class="top-guild-score"><%= @war_active.initiator.points %></h3>
                 </div>
             </div>
@@ -53,33 +53,33 @@
             </p>
         </div>
 		<%else%>
-				<div class="wars-show-info-name">
-				<%= link_to @war_active.recipient.name, guild_path(@war_active.recipient), class: "wars-show-info-name-link" %>
-				<%= link_to guild_path(@war_active.recipient), class: "wars-show-info-anagram-link" do %>
+				<div class="wars-show-guild-info-name">
+				<%= link_to @war_active.recipient.name, guild_path(@war_active.recipient), class: "wars-show-guild-info-name-link" %>
+				<%= link_to guild_path(@war_active.recipient), class: "wars-show-guild-info-anagram-link" do %>
 					[<%= @war_active.recipient.anagram %>]
 				<%end%>
 			</div>
-			<div class="wars-show-info-wrap">
-				<%= image_tag @war_active.recipient.avatar, class: "wars-show-info-avatar" %>
-				<div class="wars-show-info-stats">
-					<div class="wars-show-info-stat">
-						<%= image_tag "sword.png", class: "wars-show-info-stat-icon", style: "margin-top:5px" %>
-						<h3 class="wars-show-info-stat-kd">20/34</h3>
+			<div class="wars-show-guild-info-wrap">
+				<%= image_tag @war_active.recipient.avatar, class: "wars-show-guild-info-avatar" %>
+				<div class="wars-show-guild-info-stats">
+					<div class="wars-show-guild-info-stat">
+						<%= image_tag "sword.png", class: "wars-show-guild-info-stat-icon", style: "margin-top:5px" %>
+						<h3 class="wars-show-guild-info-stat-kd">20/34</h3>
 					</div>
 
-					<div class="wars-show-info-stat">
+					<div class="wars-show-guild-info-stat">
 						<%= image_tag "man.png", style: "width:45px;height:45px" %>
-						<span class="wars-show-info-stat-kd" > <%= @war_active.recipient.members.size%></span>
+						<span class="wars-show-guild-info-stat-kd" > <%= @war_active.recipient.members.size%></span>
 					</div>
 
-					<div class="wars-show-info-stat">
-						<%= image_tag "win_rate.png", class: "wars-show-info-stat-icon" %>
-						<span class="wars-show-info-stat-kd">23%</span>
+					<div class="wars-show-guild-info-stat">
+						<%= image_tag "win_rate.png", class: "wars-show-guild-info-stat-icon" %>
+						<span class="wars-show-guild-info-stat-kd">23%</span>
 					</div>
 
 				</div>
 				<div class="top-guild-score-wrap" style="display:flex;margin-top:auto;margin-bottom:auto">
-					<%= image_tag "ball.png", class: "wars-show-info-stat-icon" %>
+					<%= image_tag "ball.png", class: "wars-show-guild-info-stat-icon" %>
 					<h3 class="top-guild-score"><%= @war_active.recipient.points %></h3>
 				</div>
 			</div>
