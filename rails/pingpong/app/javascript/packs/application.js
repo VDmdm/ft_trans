@@ -371,6 +371,15 @@ $(document).on("turbolinks:load", function() {
 });
 
 $(document).on("turbolinks:load", function() {
+    $('.popup').fadeOut(5000, function() {
+      });
+    $('.popup-button-cancel').click(function(){
+        $('.popup').fadeOut(function() {
+        });
+    });
+});
+
+$(document).on("turbolinks:load", function() {
     $('.send-message-button').prop('disabled', true);
     $('#direct_message_message').keyup(function() {
         if (this.val != "")
