@@ -32,11 +32,11 @@ var bla2 = function (e) {
 }
 
 $(document).on("turbolinks:load", function() {
-   if (this.sub && (!document.getElementById('game') || (game_id && game_id != $('#room-name').attr("data-room-id")))) {
-     consumer.subscriptions.remove(this.sub);
-     this.sub = null;
-     game_id = null;
-  }
+  //  if (this.sub && (!document.getElementById('game') || (game_id && game_id != $('#room-name').attr("data-room-id")))) {
+  //    consumer.subscriptions.remove(this.sub);
+  //    this.sub = null;
+  //    game_id = null;
+  // }
   if (document.getElementById('game')) {
     var sub = consumer.subscriptions.create({ channel: 'GamepadChannel', gamepad: $('#room-name').attr("data-room-id")}, {
       connected() {

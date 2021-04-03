@@ -58,6 +58,7 @@
 			<tr>
 				<th>opponent</th>
 				<th>date</th>
+				<th>type</th>
 				<th>result</th>
 				<th>score</th>
 			</tr>
@@ -68,7 +69,8 @@
 					<% else %>
 						<td><%= game.p2.nickname %></td>
 					<% end %>
-					<td><%= game.ended %></td>
+					<td><%= game.ended.strftime("%m/%d/%Y %H:%M") %></td>
+					<td><%= game.game_type %></td>
 					<% if game.winner == @user %>
 						<td class="win-color">WIN</td>
 					<% else %>
