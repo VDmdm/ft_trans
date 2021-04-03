@@ -5,68 +5,93 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.wars-show-block {
-	width: 50%;
-    display: flex;
-    margin-top: 23px;
-    justify-content: space-around;
-    align-items: center;
-	margin-bottom: 20px;
-	margin-left: auto;
-	margin-right: auto;
-
+.wars-show-guilds-title {
+    font-size: 45px;
+    text-transform: uppercase;
+    font-weight: normal;
+    color: #B2D430;
+    margin-bottom: 38px;
+    text-align: center;
 }
 
-.wars-show-info-name-link, .wars-show-info-anagram-link {
+.wars-show-guilds-block {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wars-show-time, .wars-show-wartime {
+    color: #616F39;
+    font-weight: normal;
+    font-size: 30px;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.wars-show-block {
+    display: flex;
+    margin-top: 23px;
+    justify-content: space-between;
+    align-items: center;
+	margin-bottom: 20px;
+}
+
+.wars-show-guild-info-name-link, .wars-show-guild-info-anagram-link {
     display: inline-block;
     font-family: PixelarRegularW01-Regular, serif;
     font-size: 35px;
     line-height: 33px;
 }
 
-.wars-show-info-name-link {
+.wars-show-guild-info-name-link {
     color: #fff;
     margin-right: 5px;
 }
 
-.wars-show-info-anagram-link {
+.wars-show-guild-info-anagram-link {
     color: #616F39;
 }
 
-.wars-show-info-wrap {
+.wars-show-guild-info-wrap {
     display: flex;
     margin-top: 20px;
 }
 
-.wars-show-info-avatar {
+.wars-show-guild-info-avatar {
     width: 95px;
     height: 95px;
     border: 1px solid #fff;
 }
 
-.wars-show-info-stats {
+.wars-show-guild-info-stats {
     display: flex;
     flex-wrap: wrap;
     max-width: 295px;
     margin-right: 80px;
 }
 
-.wars-show-info-stat {
+.wars-show-guild-info-stat {
 	display: flex;
     margin-left: 15px;
 }
 
-.wars-show-info-stat-icon {
+.wars-show-guild-info-stat-icon {
     width: 33px;
 	height: 33px;
 	margin-right: 10px;
 }
 
-.wars-show-info-stat-kd {
+.wars-show-guild-info-stat-kd {
     font-family: PixelarRegularW01-Regular, serif;
     color: #fff;
     font-size: 26px;
     letter-spacing: 1px;
+}
+
+.wars-show-info {
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
 }
 
 .wars-show-mods {
@@ -85,8 +110,7 @@
 	margin-left: auto;
 	margin-right: auto;
 
-    display: flex;
-    max-width: 300px;
+    display: inline-flex;
     flex-wrap: wrap;
     padding: 0;
 }
@@ -100,7 +124,11 @@
     width: 50px;
 }
 
-.wars-show-score-icon {
+.wars-show-cancel-block {
+    display: flex;
+}
+
+.wars-show-score-icon, .wars-show-cancel-icon {
     height: 28px;
     width: 29px;
 }
@@ -111,6 +139,7 @@
     line-height: 37px;
     color: #FFFFFF;
     padding-left: 17px;
+    float: right;
 }
 
 .wars-show-table {

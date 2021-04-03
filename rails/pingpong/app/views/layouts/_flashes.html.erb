@@ -1,3 +1,10 @@
 <% flash.each do |key, message| %>
-  <p class="<%= key %>"><%= message %></p>
+  <% if key == 'alert' %>
+    <div class="popup popup-alert">
+  <% else %>
+    <div class="popup popup-success">
+  <% end %>
+    <p class="<%= key %> popup-text"><%= message %></p>
+    <%= image_tag "plus.png", alt: "cancel", class: "popup-button-cancel" %>
+  </div>
 <% end %>
