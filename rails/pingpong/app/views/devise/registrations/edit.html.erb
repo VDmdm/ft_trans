@@ -7,6 +7,17 @@
     <%= f.label :email, class: "personal-information-field-label" %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "personal-information-field-input", id: "email", type: "text" %>
   </div>
+ 	<div  class="personal-information-form-filed">
+ 		<%= f.label :nickname %><br />
+		<%= f.text_field :nickname, class: "personal-information-field-input" %>
+	</div>
+
+
+	<div class="personal-information-form-filed">
+	<%= f.label :avatar, 'Image', class: "personal-information-field-label" %>
+	<%= f.file_field :avatar %>
+	<%= f.label :avatar, 'open',  class: "personal-information-form-button", style: "margin-left:auto" %>
+	</div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
