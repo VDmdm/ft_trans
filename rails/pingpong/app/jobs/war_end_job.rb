@@ -5,7 +5,7 @@ class WarEndJob < ApplicationJob
     war = War.find_by(id: id)
     return if !war || war.status == :finish
     war.status = :finish
-    if war.initiator_score > war.recipient_score
+    if (war.initiator_score > war.recipient_score)
       war.winner = war.initiator
       war.initiator.update_attribute(:points, war.initiator.points + (war.prize * 2))
       war.status = :finish

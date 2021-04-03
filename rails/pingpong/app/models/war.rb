@@ -1,6 +1,8 @@
 class War < ApplicationRecord
     enum status: [ :send_request, :declined, :wait_start, :in_war, :finish, :finish_draw ]
 
+    after_save :unanswered_check
+
     belongs_to :initiator, class_name: :Guild, foreign_key: "initiator_id"
     belongs_to :recipient, class_name: :Guild, foreign_key: "recipient_id"
     belongs_to :winner, class_name: :Guild, foreign_key: "winner_id", required: false
@@ -39,6 +41,20 @@ class War < ApplicationRecord
 	end
 
     private
+
+    def unanswered_check
+        if self.status == 'in_war' && (self.max_unanswered <= self.recipient_unanswered)
+            self.winner = self.initiator
+            self.initiator.update_attribute(:points, self.initiator.points + (self.prize * 2))
+            self.status = :finish
+            self.save
+        elsif self.status == 'in_war' && (self.max_unanswered <= self.initiator_unanswered)
+            self.winner = self.recipient
+            self.recipient.update_attribute(:points, self.recipient.points + (self.prize * 2))
+            self.status = :finish
+            self.save
+        end
+    end
 
     def end_date_after_start_date
         return if ended.blank? || started.blank?

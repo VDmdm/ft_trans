@@ -206,7 +206,7 @@ class Game < ApplicationRecord
         if (@paddle_L[:y] < @min_paddle_y)
             @paddle_L[:y] = @min_paddle_y
         end
-        @paddle_R[:y] +=  GameStateHash.instance.return_value("paddle_p2_#{self.id}")
+        @paddle_R[:y] += GameStateHash.instance.return_value("paddle_p2_#{self.id}")
         if (@paddle_R[:y] > @max_paddle_y)
             @paddle_R[:y] = @max_paddle_y
         end
@@ -282,8 +282,14 @@ class Game < ApplicationRecord
                 if self.game_type == 'wartime' && winner.guild.in_war?(loser.guild)
                     if winner.guild.war_active.initiator == winner.guild
                         winner.guild.war_active.update_attribute(:initiator_score, winner.guild.war_active.initiator_score + 1)
+                        if GameStateHash.instance.return_value("p2_activate_game_#{self.id}") == "no"
+                            winner.guild.war_active.update_attribute(:recipient_unanswered, winner.guild.war_active.recipient_unanswered + 1)
+                        end
                     else
                         winner.guild.war_active.update_attribute(:recipient_score, winner.guild.war_active.recipient_score + 1)
+                        if GameStateHash.instance.return_value("p2_activate_game_#{self.id}") == "no"
+                            winner.guild.war_active.update_attribute(:initiator_unanswered, winner.guild.war_active.initiator_unanswered + 1)
+                        end
                     end
                     wartime = Wartime.find_by(game: self.id)
                     wartime.winner = winner.guild

@@ -4,14 +4,7 @@ module AuthenticateWithOtpTwoFactor
 
 	def authenticate_with_otp_two_factor
 	  user = self.resource = find_user
-		
-	  p "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-	  p params
-	  if user_params[:otp_attempt].present?
-		p params
-
-		# authenticate_user_with_otp_two_factor(user)
-	  elsif user&.valid_password?(user_params[:password])
+	  if user&.valid_password?(user_params[:password])
 		prompt_for_otp_two_factor(user)
 	  end
 	end

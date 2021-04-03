@@ -241,6 +241,8 @@ ActiveRecord::Schema.define(version: 2021_03_28_160521) do
     t.time "daily_end"
     t.integer "time_to_wait"
     t.integer "max_unanswered"
+    t.integer "initiator_unanswered", default: 0
+    t.integer "recipient_unanswered", default: 0
     t.integer "initiator_score", default: 0
     t.integer "recipient_score", default: 0
     t.integer "prize"

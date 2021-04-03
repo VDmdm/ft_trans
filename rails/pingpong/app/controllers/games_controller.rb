@@ -61,7 +61,6 @@ class GamesController < ApplicationController
 			wartime.save
 			redirect_to game_path(game), success: "Game was created!"
 		else
-			p "================= #{ game.game_type } ===================="
 			redirect_to games_path, alert: game.errors.full_messages.join("; ")
 		end
 	end
@@ -71,7 +70,6 @@ class GamesController < ApplicationController
 		if @game.p2 == current_user
 			GameStateHash.instance.add_kv("p2_activate_game_#{@game.id}", "yes")
 		end
-		p "================== #{GameStateHash.instance.return_value("p2_activate_game_#{@game.id}")} ======================="
 	end
 
 	def join_player
