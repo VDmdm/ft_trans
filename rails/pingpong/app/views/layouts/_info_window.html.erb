@@ -1,137 +1,141 @@
 <div class="info-window">
-                <h3 class="info-window-title">
-                    info table
-                </h3>
-				<%= link_to "X", '#', class: "info-window-close", :"data-turbolinks" => false %>
-                <nav class="info-window-nav">
-                    <ul class="info-window-nav-list">
-                        <li class="info-window-nav-item">
-							<%= link_to "game", '#help_game', class: "info-window-nav-item-link", :"data-turbolinks" => false %>
-                        </li>
-                        <li class="info-window-nav-item">
-							<%= link_to "guilds", '#help_guilds', class: "info-window-nav-item-link", :"data-turbolinks" => false %>
-						</li>
-                        <li class="info-window-nav-item">
-							<%= link_to "tournament", '#help_tournament', class: "info-window-nav-item-link", :"data-turbolinks" => false %>
-						</li>
-						
-                    </ul>
-                </nav>
-                <div class="info-window-nav-item-info" id="info-window-nav-item-game">
-                    <div class="item-game-block item-game-rules">
-                        <p class="item-game-rules-title">Game rules</p>
-                        <p class="item-game-rules-description">
-                            Rules are short and very simple. For classic match you will have primitive pong game.
-                            For win you have to get 21 score!
-                        </p>
-                    </div>
-                    <div class="item-game-block item-game-rules">
-                        <p class="item-game-rules-title">How to create game?</p>
-                        <p class="item-game-rules-description">
-                            Find games link on header, then go to new game. You can set password, background image,
-                            choose as many bonuses as you want to and e.t.c. Also you are free to create ranked match or classic.
-                        </p>
-                    </div>
-                    <div class="item-game-block item-game-rules">
-                        <p class="item-game-rules-title">How to join game?</p>
-                        <p class="item-game-rules-description">
-							Find games link on header. Here you can see game rooms, which you can join.
-                        </p>
-					</div>
-					<div class="item-game-block item-game-rules">
-						<p class="item-game-rules-title">How to join game?</p>
-						<p class="item-game-rules-description">
-							Find games link on header. Here you can see game rooms, which you can join.
-						</p>
-					</div>
-					<div class="item-game-block item-game-rules">
-						<p class="item-game-rules-title">Signs</p>
-					</div>
-					<div id="info-window-nav-item-site">
-						<div class="item-site-block">
-							<%= image_tag "ball.png", alt: "ball", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- score</span>
-						</div>
-						<div class="item-site-block">
-							<%= image_tag "cup.png", alt: "cup", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- rank</span>
-						</div>
-						<div class="item-site-block">
-							<%= image_tag "sword.png", alt: "sword", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- duel</span>
-						</div>
-						<div class="item-site-block">
-							<%= image_tag "ball_size.png", alt: "ball_size", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- ball size</span>
-						</div>
-						<div class="item-site-block">
-							<%= image_tag "ball_size_down.png", alt: "ball_size_down", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- ball size down</span>
-						</div>
-						<div class="item-site-block">
-							<%= image_tag "ball_speed.png", alt: "ball_speed", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- ball speed</span>
-						</div>
-						<div class="item-site-block">
-							<%= image_tag "ball_speed_up.png", alt: "ball_speed_up", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- ball speed up</span>
-						</div>
-					</div>
+	<h3 class="info-window-title">
+		info table
+	</h3>
+	<%= link_to "X" , '#' , class: "info-window-close" , :"data-turbolinks"=> false %>
+		<nav class="info-window-nav">
+			<ul class="info-window-nav-list">
+				<li class="info-window-nav-item">
+					<%= link_to "game" , '#help_game' , class: "info-window-nav-item-link" , :"data-turbolinks"=> false
+						%>
+				</li>
+				<li class="info-window-nav-item">
+					<%= link_to "guilds" , '#help_guilds' , class: "info-window-nav-item-link" , :"data-turbolinks"=>
+						false %>
+				</li>
+				<li class="info-window-nav-item">
+					<%= link_to "tournament" , '#help_tournament' , class: "info-window-nav-item-link" ,
+						:"data-turbolinks"=> false %>
+				</li>
+
+			</ul>
+		</nav>
+		<div class="info-window-nav-item-info" id="info-window-nav-item-game">
+			<div class="item-game-block item-game-rules">
+				<p class="item-game-rules-title">Game rules</p>
+				<p class="item-game-rules-description">
+					Rules are short and very simple. For classic match you will have primitive pong game.
+					For win you have to get 21 score!
+				</p>
+			</div>
+			<div class="item-game-block item-game-rules">
+				<p class="item-game-rules-title">How to create game?</p>
+				<p class="item-game-rules-description">
+					Find games link on header, then go to new game. You can set password, background image,
+					choose as many bonuses as you want to and e.t.c. Also you are free to create ranked match or
+					classic.
+				</p>
+			</div>
+			<div class="item-game-block item-game-rules">
+				<p class="item-game-rules-title">How to join game?</p>
+				<p class="item-game-rules-description">
+					Find games link on header. Here you can see game rooms, which you can join.
+				</p>
+			</div>
+			<div class="item-game-block item-game-rules">
+				<p class="item-game-rules-title">How to join game?</p>
+				<p class="item-game-rules-description">
+					Find games link on header. Here you can see game rooms, which you can join.
+				</p>
+			</div>
+			<div class="item-game-block item-game-rules">
+				<p class="item-game-rules-title">Signs</p>
+			</div>
+			<div id="info-window-nav-item-site">
+				<div class="item-site-block">
+					<%= image_tag "ball.png" , alt: "ball" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- score</span>
 				</div>
-                <div class="info-window-nav-item-info" id="info-window-nav-item-guilds">
-                    <div class="item-game-block item-game-rules">
-                        <p class="item-game-rules-title">Guilds</p>
-                        <p class="item-game-rules-description">
-                            You can join or create your own guild. Guilds can have wars between each other and have
-                            their own rank system.
-                        </p>
-                    </div>
-                    <div class="item-game-block item-game-rules">
-                        <p class="item-game-rules-title">For guild owners</p>
-                        <p class="item-game-rules-description">
-                            You can set image to guild, choose officers and announce a war to other guilds.
-                        </p>
-                    </div>
-                    <div class="item-game-block item-game-rules">
-                        <p class="item-game-rules-title">War time</p>
-                        <p class="item-game-rules-description">
-                            When the "War time" is active a member can ask to fight randomly anyone from the other guild,
-                            if no one of the other guild answer the call after a certain amount of time, the match
-                            is automatically won
-                        </p>
-					</div>
-					<div class="item-game-block item-game-rules">
-						<p class="item-game-rules-title">Signs</p>
-					</div>
-					<div id="info-window-nav-item-site">
-						<div class="item-site-block">
-							<%= image_tag "win_rate.png", alt: "win_rate", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- win rate</span>
-						</div>
-						<div class="item-site-block">
-							<%= image_tag "man.png", alt: "man", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- members</span>
-						</div>
-						<div class="item-site-block">
-							<%= image_tag "ball.png", alt: "ball", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- score</span>
-						</div>
-						<div class="item-site-block">
-							<%= image_tag "cup.png", alt: "cup", class: "item-site-block-icon" %>
-							<span class="item-site-block-description">- rank</span>
-						</div>
-					</div>
-                </div>
-                <div class="info-window-nav-item-info" id="info-window-nav-item-tournament">
-                    <div class="item-game-block item-game-rules">
-                        <p class="item-game-rules-title">Tournament</p>
-                        <p class="item-game-rules-description">
-                            There are a permanent ladder tournament with a match making system with a ladder
-                            system.
-                            Users can play on the ladder, with a rating system, or play casually, without it affecting
-                            their rating. Rules can be different. You are allowed to register to the tournament in a timeframe
-                            before said tournament. After win you will get some prizes.
-                        </p>
-                    </div>
-                </div>
-            </div>
+				<div class="item-site-block">
+					<%= image_tag "cup.png" , alt: "cup" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- rank</span>
+				</div>
+				<div class="item-site-block">
+					<%= image_tag "sword.png" , alt: "sword" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- duel</span>
+				</div>
+				<div class="item-site-block">
+					<%= image_tag "ball_size.png" , alt: "ball_size" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- ball size</span>
+				</div>
+				<div class="item-site-block">
+					<%= image_tag "ball_size_down.png" , alt: "ball_size_down" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- ball size down</span>
+				</div>
+				<div class="item-site-block">
+					<%= image_tag "ball_speed.png" , alt: "ball_speed" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- ball speed</span>
+				</div>
+				<div class="item-site-block">
+					<%= image_tag "ball_speed_up.png" , alt: "ball_speed_up" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- ball speed up</span>
+				</div>
+			</div>
+		</div>
+		<div class="info-window-nav-item-info" id="info-window-nav-item-guilds">
+			<div class="item-game-block item-game-rules">
+				<p class="item-game-rules-title">Guilds</p>
+				<p class="item-game-rules-description">
+					You can join or create your own guild. Guilds can have wars between each other and have
+					their own rank system.
+				</p>
+			</div>
+			<div class="item-game-block item-game-rules">
+				<p class="item-game-rules-title">For guild owners</p>
+				<p class="item-game-rules-description">
+					You can set image to guild, choose officers and announce a war to other guilds.
+				</p>
+			</div>
+			<div class="item-game-block item-game-rules">
+				<p class="item-game-rules-title">War time</p>
+				<p class="item-game-rules-description">
+					When the "War time" is active a member can ask to fight randomly anyone from the other guild,
+					if no one of the other guild answer the call after a certain amount of time, the match
+					is automatically won
+				</p>
+			</div>
+			<div class="item-game-block item-game-rules">
+				<p class="item-game-rules-title">Signs</p>
+			</div>
+			<div id="info-window-nav-item-site">
+				<div class="item-site-block">
+					<%= image_tag "win_rate.png" , alt: "win_rate" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- win rate</span>
+				</div>
+				<div class="item-site-block">
+					<%= image_tag "man.png" , alt: "man" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- members</span>
+				</div>
+				<div class="item-site-block">
+					<%= image_tag "ball.png" , alt: "ball" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- score</span>
+				</div>
+				<div class="item-site-block">
+					<%= image_tag "cup.png" , alt: "cup" , class: "item-site-block-icon" %>
+						<span class="item-site-block-description">- rank</span>
+				</div>
+			</div>
+		</div>
+		<div class="info-window-nav-item-info" id="info-window-nav-item-tournament">
+			<div class="item-game-block item-game-rules">
+				<p class="item-game-rules-title">Tournament</p>
+				<p class="item-game-rules-description">
+					There are a permanent ladder tournament with a match making system with a ladder
+					system.
+					Users can play on the ladder, with a rating system, or play casually, without it affecting
+					their rating. Rules can be different. You are allowed to register to the tournament in a timeframe
+					before said tournament. After win you will get some prizes.
+				</p>
+			</div>
+		</div>
+</div>

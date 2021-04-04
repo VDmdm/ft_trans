@@ -1,0 +1,2 @@
+class TournamentPair < ApplicationRecord
+end

@@ -42,22 +42,18 @@
   </div>
 
   <div class="personal-information-form-filed">
+    <div >
+  <% if !current_user.otp_secret %>
+    <%= link_to "Turn on two-step verification", otp_secrets_path, class: "personal-information-form-button" %>
+  <%else%>
+    <%= button_to "Turn off two-step verification", otp_secrets_destroy_path, class: "personal-information-form-button",  method: :post, remote: true %>
+  <%end%>
+  </div>
     <%= f.submit "Update", class: "personal-information-form-button", style: "margin-left:auto" %>
   </div>
 <% end %>
+
 <span class="line"></span>
-
-<div class="personal-information-form-filed">
-<%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "personal-information-form-button" %>
-</div>
-
-<div class="personal-information-form-filed">
-<% if !current_user.otp_secret %>
-<%= link_to "Turn on two-step verification", otp_secrets_path, class: "personal-information-form-button" %>
-<%else%>
-<%= button_to "Turn off two-step verification", otp_secrets_destroy_path, class: "personal-information-form-button",  method: :post, remote: true %>
-<%end%>
-</div>
 
 
 </section>
@@ -85,4 +81,3 @@
     <%end%>
     </ul>
 </section>
-<%= link_to "Back", :back %>
