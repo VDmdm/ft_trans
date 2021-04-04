@@ -54,7 +54,6 @@
 
 .game-status-mods-item-icon {
     height: 29px;
-    width: 29px;
 }
 
 .game-status-mods-list {
@@ -149,4 +148,12 @@
 
 .launched-game-spectate {
     margin: 0 10px;
+}
+
+.game-status-invite-item {
+    display: flex;
+}
+
+.game-status-invite-list {
+    padding: 0;
 }
