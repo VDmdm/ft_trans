@@ -235,7 +235,6 @@ ActiveRecord::Schema.define(version: 2021_04_04_082121) do
     t.integer "max_players"
     t.integer "cost"
     t.integer "prize"
-    t.integer "pairs", default: [], array: true
     t.string "ball_color", default: "#ffffff"
     t.string "bg_color", default: "#000000"
     t.string "paddle_color", default: "#ffffff"
