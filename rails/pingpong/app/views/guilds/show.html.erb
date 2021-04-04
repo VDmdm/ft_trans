@@ -160,7 +160,14 @@
 			</div>
         </div>
         <div class="guild-war-history-list">
-            <h3 class="guild-war-history-list-title"><%= link_to "Wars", guild_wars_index_path(@guild) %></h3>
+			<h3 class="guild-war-history-list-title">
+				<%= link_to guild_wars_index_path(@guild) do %>
+					Wars
+					<% if current_user.guild_owner || current_user.guild_officer %>
+						<%= link_to "+", guild_wars_new_path %>
+					<%end%>
+				<%end%>
+			</h3>
             <ul class="war-history-list">
 			<% @wars_ended.each do |wre| %>
 				<%= link_to guild_wars_show_path(wre) do %>

@@ -1,7 +1,17 @@
 <section class="wars-show">
 <h2 class="wars-show-title">Wars</h2>
 <p class="wars-show-guilds-title">
-	WAITING FOR WAR BEGIN
+<% if @war.status == "wait_start" %>
+	Waiting for war begin
+<%elsif @war.status == "in_war"%>
+	Guilds are in war
+<%elsif @war.status == "finish" %>
+	War finished
+<%elsif @war.status == "send_request" %>
+	Waiting for accept
+<% else %>
+	<%= p @war.status %>
+<%end%>
 </p>
 <div class="wars-show-guilds-block">
 	<div class="wars-show-block">
@@ -40,7 +50,7 @@
 			</div>
 			<div class="wars-show-cancel-block">
 				<%= image_tag "cross.png", alt: "cup", class: "wars-show-cancel-icon" %>
-				<span class="wars-show-score"><%= @war.initiator_score %></span>
+				<span class="wars-show-score"><%= @war.initiator_unanswered %></span>
 			</div>
 		</div>
 	</div>
@@ -76,11 +86,11 @@
 		<div class="wars-show-score">
 			<div class="wars-show-score-block">
 				<%= image_tag "ball.png", alt: "cup", class: "wars-show-score-icon" %>
-				<span class="wars-show-score"><%= @war.initiator_score %></span>
+				<span class="wars-show-score"><%= @war.recipient_score %></span>
 			</div>
 			<div class="wars-show-cancel-block">
 				<%= image_tag "cross.png", alt: "cup", class: "wars-show-cancel-icon" %>
-				<span class="wars-show-score"><%= @war.initiator_score %></span>
+				<span class="wars-show-score"><%= @war.recipient_unanswered %></span>
 			</div>
 		</div>
 	</div>
@@ -88,8 +98,8 @@
 
 <div class="wars-show-info">
 	<p class="wars-show-time">
-		Starts in 04/13/2021 13:05<br>
-		Ends in 04/13/2021 13:05
+		Starts in <%= @war.started.strftime("%m/%d/%Y %H:%M") %><br>
+		Ends in <%= @war.ended.strftime("%m/%d/%Y %H:%M") %>
 	</p>
 
 	<p class="wars-show-wartime">
@@ -128,16 +138,12 @@
 		<th class="wars-show-table-title-title games-table-title-score">score</th>
 		<th class="wars-show-table-title-title games-table-title-date">date</th>
 	</tr>
+<% @war_games.each do |game| %>
 	<tr class="wars-show-table-row">
-		<td class="wars-show-table-row wars-show-table-row-players">jalvaro vs loh</td>
-		<td class="wars-show-table-row wars-show-table-row-score">24/12</td>
-		<td class="wars-show-table-row wars-show-table-row-date">24/09/13 14:34:34</td>
-	</tr>
-	<tr class="wars-show-table-row">
-		<td class="wars-show-table-row wars-show-table-row-players">jalvaro vs loh</td>
-		<td class="wars-show-table-row wars-show-table-row-score">24/12</td>
-		<td class="wars-show-table-row wars-show-table-row-date">24/09/13 14:34:34</td>
+		<td class="wars-show-table-row wars-show-table-row-players"><%= game.p1.nickname %> vs <%= game.p2.nickname %></td>
+		<td class="wars-show-table-row wars-show-table-row-score"><%= game.p1_score %>:<%= game.p2_score %></td>
+		<td class="wars-show-table-row wars-show-table-row-date"><%= game.ended.strftime("%m/%d/%Y %H:%M") %></td>
 	</tr>
 </table>
-
+<%end%>
 </section>
