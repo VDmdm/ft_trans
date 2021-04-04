@@ -11,11 +11,10 @@ class GameChannel < ApplicationCable::Channel
 
 	def unsubscribed
 		# Any cleanup needed when channel is unsubscribed
-		if current_user.pending_games_p1
-			game = current_user.pending_games_p1
+		game = Game.where("(p1_id = ? OR p2_id = ?) AND status = 1", current_user.id, current_user.id)
+		if game && game.p1 == current_user
 			status = "p1"
-		elsif current_user.pending_games_p2
-			game = current_user.pending_games_p2
+		elsif game && game.p2 == current_user
 			status = "p2"
 		end
 		if GameStateHash.instance.return_value("#{status}_status_#{game.id}") == "ready" &&

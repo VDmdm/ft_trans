@@ -181,7 +181,7 @@ class Game < ApplicationRecord
                 @ball[:dx] = -1 * @ball[:dx];
             end
             if (self.random_mode)
-                @ball[:dy] = rand(-5..5);
+                @ball[:dy] = rand(-25..25);
             end
             if (self.ball_down_mode)
                 @ball[:radius] = @ball[:radius] - (@ball[:radius] * self.ball_down_rate)

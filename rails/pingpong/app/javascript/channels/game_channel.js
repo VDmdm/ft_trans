@@ -1,6 +1,7 @@
 import consumer from "./consumer"
 
 var canvas;
+var prev;
 var context;
 var ball_size;
 var player_1_score;
@@ -12,6 +13,7 @@ var game_id = null;
 var paddleHeight;
 var winner = null;
 var subscribe = null;
+
 
 var leftPaddle = {
 	x: 0,
@@ -29,7 +31,6 @@ var rightPaddle = {
 	dy: 0
 };
 
-// Описываем мячик
 var ball = {
 	x: 0,
 	y: 0,
@@ -107,8 +108,9 @@ window.drawFrame = function() {
 }
 
 $(document).on("turbolinks:load", function() {
-	if (subscribe && (!document.getElementById('game') || (game_id && game_id != $('#room-name').attr("data-room-id")))) {
-		console.log(consumer.subscriptions.remove(subscribe));
+	if (subscribe && (!document.getElementById('game'))) {
+		// consumer.subscriptions.remove(subscribe.unsubscribe());
+		subscribe.unsubscribe();
 		subscribe = null;
 		game_id = null;
 	}

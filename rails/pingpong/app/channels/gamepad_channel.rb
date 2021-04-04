@@ -4,7 +4,6 @@ class GamepadChannel < ApplicationCable::Channel
 
 	def subscribed
 		# stream_from "some_channel"
-		sleep(0.3)
 		game = Game.find_by(id: params[:gamepad])
 		if current_user == game.p1
 			status = "p1"
@@ -26,7 +25,7 @@ class GamepadChannel < ApplicationCable::Channel
 
 	def receive(data)
 		id = data["gamepad"]
-		if current_user.pending_games_p1 && current_user.pending_games_p1.id == id.to_i
+		if GameStateHash.instance.return_value("p1_nickname_#{data["gamepad"]}") == current_user.nickname
 			if data["pad"] > 0
 				GameStateHash.instance.add_kv("paddle_p1_#{data["gamepad"]}", 30)
 			elsif data["pad"] == 0
@@ -35,7 +34,7 @@ class GamepadChannel < ApplicationCable::Channel
 				GameStateHash.instance.add_kv("paddle_p1_#{data["gamepad"]}", -30)
 			end
 		end
-		if current_user.pending_games_p2 && current_user.pending_games_p2.id == id.to_i
+		if GameStateHash.instance.return_value("p2_nickname_#{data["gamepad"]}") == current_user.nickname
 			if data["pad"] > 0
 				GameStateHash.instance.add_kv("paddle_p2_#{data["gamepad"]}", 30)
 			elsif data["pad"] == 0
