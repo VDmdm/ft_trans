@@ -3,6 +3,7 @@ class CreateTournaments < ActiveRecord::Migration[6.1]
     create_table :tournaments do |t|
       t.references        :creator
       t.string            :name
+      t.integer           :status, default: 0
       t.datetime          :start
       t.time              :one_round_time
       t.integer           :max_players

@@ -207,6 +207,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_082121) do
     t.bigint "p1_id"
     t.bigint "p2_id"
     t.bigint "game_id"
+    t.integer "round"
     t.boolean "played", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -230,12 +231,12 @@ ActiveRecord::Schema.define(version: 2021_04_04_082121) do
   create_table "tournaments", force: :cascade do |t|
     t.bigint "creator_id"
     t.string "name"
+    t.integer "status", default: 0
     t.datetime "start"
     t.time "one_round_time"
     t.integer "max_players"
     t.integer "cost"
     t.integer "prize"
-    t.integer "pairs", default: [], array: true
     t.string "ball_color", default: "#ffffff"
     t.string "bg_color", default: "#000000"
     t.string "paddle_color", default: "#ffffff"

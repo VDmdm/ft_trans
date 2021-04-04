@@ -5,6 +5,7 @@ class CreateTournamentPairs < ActiveRecord::Migration[6.1]
       t.references      :p1
       t.references      :p2
       t.references      :game
+      t.integer         :round
       t.boolean         :played, default: true
       t.timestamps
     end

@@ -4,7 +4,7 @@ class CreateTournamentPlayers < ActiveRecord::Migration[6.1]
       t.references        :tournament
       t.references        :player
       t.integer           :score, default: 0
-      t.boolean           :winner
+      t.boolean           :winner, default: false
       t.timestamps
     end
   end
