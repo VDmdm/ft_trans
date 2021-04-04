@@ -39,6 +39,7 @@
 }
 
 .wars-sending-incoming-item {
+    cursor: pointer;
     display: inline-block;
 }
 

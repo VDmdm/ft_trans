@@ -33,15 +33,25 @@
             </ul>
         </div>
                 <div class="tournaments-mods">
-                    <div class="tournaments-mods-title">
-                        <span>Mods</span>
-					</div>
-					<%= image_tag "cup.png", alt: "cup", class: "tournaments-prizes-item-cup" %>
-					 <%= image_tag "cup.png", alt: "cup", class: "tournaments-prizes-item-cup" %>
+                        <span class="game-status-mods-title">Mods</span>
+                        <ul class="game-status-mods-list">
+                        <li class="game-status-mods-item">
+                            <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                        </li>
+                        <li class="game-status-mods-item">
+                            <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                        </li>
+                        <li class="game-status-mods-item">
+                            <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                        </li>
+                        <li class="game-status-mods-item">
+                            <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                        </li>
+                    </ul>
                 </div>
         <div class="tournaments-register">
             <p class="tournaments-register-ranked">ranked</p>
-<!--                    <p class="tournaments-register-ranked">unranked</p>-->
+<!--        <p class="tournaments-register-unranked">unranked</p>-->
             <div class="tournaments-register-amount-member">
             <%= image_tag "man.png", alt: "man", class: "tournaments-register-amount-member-icon" %>
                 <span>27/30</span>

@@ -124,7 +124,7 @@
 .messages-header{
     display: flex;
     width: 900px;
-    height: 50px;
+    height: 60px;
 }
 
 .header-room-name{
@@ -293,7 +293,6 @@ input[type="checkbox"] {
 }
 
 .new_room button:hover {
-
     border: 1px solid #FFFFFF;
 }
 
@@ -311,8 +310,12 @@ input[type="checkbox"] {
 .room-password{
     font-size: 50px;
     margin-top: 250px;
-    margin-left: 230px;
+    margin-left: auto;
     margin-right: auto;
+}
+
+.edit_room {
+    text-align: center;
 }
 
 .password-input{
