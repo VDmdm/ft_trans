@@ -83,10 +83,10 @@
 				<th class="table-title guild-table-title-wars">wars</th>
 				
 			</tr>
-			<% @guilds.order(:points).each_with_index do |g, i| %>
+			<% @guilds.order(points: :desc).each_with_index do |g, i| %>
 				<tr class="guild-table-row">
 					<td class="guild-table-row-item guild-table-row-rank">
-						<%= i %>
+						<%= i + 1 %>
 					</td>
 					<td class="guild-table-row-item guild-table-row-score">
 						<%= g.points %>

@@ -16,6 +16,9 @@ class GamesController < ApplicationController
 
 	def index
 		@games = Game.all
+		if current_user.guild
+			@war_active = current_user.guild.war_active
+		end
 	end
 
 	def new

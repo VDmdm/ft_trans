@@ -136,8 +136,8 @@
 						<div style="display:flex">
 							<div class="friend-list-element-btn" style="min-width:295px">
 								<%= link_to image_tag("mail.png", alt: "mail"), direct_rooms_find_path(user_id: member.id), method: :post, remote: true %>
-								<% if member.online? && member != current_user %>
-									<%= link_to image_tag("sword.png", alt: "mail"), root_path%>
+								<% if member.online? && member != current_user && current_user.guild != @guild %>
+									<%= link_to image_tag("sword.png", alt: "sword"), wartime_game_create_path(p2_id: member.id), method: :post, remote: true%>
 								<% end %>
 							</div>
 						<div style="text-align:right">

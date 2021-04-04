@@ -39,7 +39,7 @@ class WarsController < ApplicationController
 
     def show
 		@war = War.find(params[:id])
-		@war_games = @war.wartime_game
+		@war_games = @war.wartimes
     end
 
     def accept_war_request

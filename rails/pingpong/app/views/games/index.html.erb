@@ -2,48 +2,64 @@
 		<h2 class="games-title">Games
 		<%= link_to "+", new_game_path %>
 		</h2>
-		<%if current_user.guild && current_user.guild.war_active && current_user.guild.war_active.wartime_active?%>
-
+		<%if current_user.guild && current_user.guild.war_active && current_user.guild.war_active.wartime_active? %>
         <section class="game-status">
-        <%= link_to "battle", wartime_game_create_path(p2_id: User.last.id), method: :post, remote: true %>
-            <h2 class="game-status-title game-status-title-accept">War time started!</h2>
+			<h2 class="game-status-title game-status-title-accept">War time started!</h2>
+			<% if !current_user.active_wartime_games.empty? %>
             <ul class="game-status-invite-list">
                 <li class="game-status-invite-item">
                     <div class="game-status-block">
                         <div class="game-status-info">
                             <a href="#" class="game-status-info-avatar-link">
-                                <img src="" alt="avatar" class="game-status-info-avatar-img">
+                                <%= image_tag current_user.active_wartime_games[0].p1.avatar, class: "game-status-info-avatar-img"%>
                             </a>
                             <div class="game-status-info-wrapper">
-                                <p class="game-status-info-nickname">deddara</p>
-                                <p class="game-status-info-guild">[anus]</p>
+                                <p class="game-status-info-nickname"><%= link_to current_user.active_wartime_games[0].p1.nickname, profile_path(current_user.active_wartime_games[0].p1) %></p>
+								<p class="game-status-info-guild">
+								<%= link_to guild_path(current_user.active_wartime_games[0].p1.guild) do %>
+									[<%= current_user.active_wartime_games[0].p1.guild.anagram %>]
+								<%end%>
+								</p>
                             </div>
                         </div>
                         <div class="game-status-mods">
                             <span class="game-status-mods-title">Mods</span>
                             <ul class="game-status-mods-list">
                                 <li class="game-status-mods-item">
-                                    <img src="" alt="icon" class="game-status-mods-item-icon">
+									<%= image_tag "ball_size.png", class: "game-status-mods-item-icon" %>
+									<h3><%= current_user.active_wartime_games[0].ball_size %></h3>
                                 </li>
+								<li class="game-status-mods-item">
+									<%= image_tag "ball_speed.png", class: "game-status-mods-item-icon" %>
+									<h3><%= current_user.active_wartime_games[0].speed_rate %></h3>
+								</li>
+								<% if  current_user.active_wartime_games[0].ball_down_mode %>
                                 <li class="game-status-mods-item">
-                                    <img src="" alt="icon" class="game-status-mods-item-icon">
-                                </li>
-                                <li class="game-status-mods-item">
-                                    <img src="" alt="icon" class="game-status-mods-item-icon">
-                                </li>
+									<%= image_tag "ball_size_down.png", class: "game-status-mods-item-icon" %>
+								</li>
+								<%elsif current_user.active_wartime_games[0].ball_speedup_mode %>
+								<li class="game-status-mods-item">
+									<%= image_tag "ball_speed_up.png", class: "game-status-mods-item-icon" %>
+								</li>
+								<%end%>
                             </ul>
                         </div>
-                        <a href="#" class="game-status-accept">accept</a>
+                        <%= link_to "accept", game_path(current_user.active_wartime_games[0].id) %>
                     </div>
                 </li>
-            </ul>
+			</ul>
         </section>
+		<%else%>
+		<section class="game-status">
+			<% if @war_active.initiator == current_user.guild %>
+				<%= link_to "BATTLE", guild_path(@war_active.recipient), class: "game-status-invite" %>
+			<% elsif @war_active.initiator != current_user.guild %>
+				<%= link_to "BATTLE", guild_path(@war_active.initiator), class: "game-status-invite" %>
+			<%end%>
+		</section>
 		<%end%>
-
-        <section class="game-status">
-            <a href="#" class="game-status-invite">Invite</a>
-
-        </section>
+	
+	<%end%>
 
         <div class="games-line"></div>
         <div class="games-types" id="tabs">

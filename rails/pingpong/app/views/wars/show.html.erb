@@ -99,22 +99,23 @@
 </div>
 
 <div class="wars-show-info">
-	<p class="wars-show-time">
-		Starts in <%= @war.started.strftime("%m/%d/%Y %H:%M") %><br>
-		Ends in <%= @war.ended.strftime("%m/%d/%Y %H:%M") %>
+	<div class="wars-show-time">
+	<p class="wars-show-mods-title">War</p>
+	<p class="wars-show-time-start">
+		Starts: <%= @war.started.strftime("%m/%d/%Y %H:%M") %><br>
 	</p>
 	<p class="wars-show-time-end">
-		Ends: 04/13/2021 13:05
+		Ends: <%= @war.ended.strftime("%m/%d/%Y %H:%M") %>
 	</p>	
 	</div>
 
 	<div class="wars-show-wartime">
 	<p class="wars-show-mods-title">Wartime</p>
 	<p class="wars-show-wartime-start">
-		Starts: 13:05
+		Starts: <%= @war.daily_start.strftime("%H:%M") %>
 	</p>
 	<p class="wars-show-wartime-end">
-		Ends: 13:05
+		Ends: <%= @war.daily_end.strftime("%H:%M") %>
 	</p>	
 	</div>
 	<div class="wars-show-mods">
@@ -142,17 +143,20 @@
 	</div>
 </div>
 
+
 <table class="wars-show-table" align="left">
 	<tr class="wars-show-table-title">
 		<th class="wars-show-table-title-title games-table-title-players">players</th>
 		<th class="wars-show-table-title-title games-table-title-score">score</th>
+		<th class="wars-show-table-title-title games-table-title-score">win</th>
 		<th class="wars-show-table-title-title games-table-title-date">date</th>
 	</tr>
-<% @war_games.each do |game| %>
+<% @war_games.each do |wt| %>
 	<tr class="wars-show-table-row">
-		<td class="wars-show-table-row wars-show-table-row-players"><%= game.p1.nickname %> vs <%= game.p2.nickname %></td>
-		<td class="wars-show-table-row wars-show-table-row-score"><%= game.p1_score %>:<%= game.p2_score %></td>
-		<td class="wars-show-table-row wars-show-table-row-date"><%= game.ended.strftime("%m/%d/%Y %H:%M") %></td>
+		<td class="wars-show-table-row wars-show-table-row-players"><%= wt.game.p1.nickname %> vs <%= wt.game.p2.nickname %></td>
+		<td class="wars-show-table-row wars-show-table-row-score"><%= wt.game.p1_score %>:<%= wt.game.p2_score %></td>
+		<td class="wars-show-table-row wars-show-table-row-score"><%= wt.winner.name %></td>
+		<td class="wars-show-table-row wars-show-table-row-date"><%= wt.game.ended.strftime("%m/%d/%Y %H:%M") %></td>
 	</tr>
 </table>
 <%end%>

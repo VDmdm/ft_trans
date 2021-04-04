@@ -62,7 +62,8 @@
 					[<%= @war_active.recipient.anagram %>]
 				<%end%>
 			</div>
-			<div class="wars-show-guild-info-wrap">
+		<%= link_to guild_wars_show_path(@war_active), class: "active-war-show-link" do %>	
+			<div class="wars-show-guild-info-wrap active-war-show-link">
 				<%= image_tag @war_active.recipient.avatar, class: "wars-show-guild-info-avatar" %>
 				<div class="wars-show-guild-info-stats">
 					<div class="wars-show-guild-info-stat">
@@ -86,6 +87,8 @@
 					<h3 class="top-guild-score"><%= @war_active.recipient.points %></h3>
 				</div>
 			</div>
+		<%end%>
+		
 			<p class="you-are-in-war-end-time">
 			<% if @war_active.status == "wait_start" %>
 				Starts in <%= @war_active.started.strftime("%m/%d/%Y %H:%M") %>
