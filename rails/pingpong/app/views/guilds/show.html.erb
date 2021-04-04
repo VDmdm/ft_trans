@@ -21,7 +21,7 @@
 				<% else %>
 					<%= button_to "SEND JOIN REQUEST", send_join_request_path(@guild), class: "guild-description-join", remote: true %>
 				<% end %>
-			<%else%>
+			<%elsif current_user.guild == @guild%>
 				<%= button_to "LEAVE", leave_guild_path(@guild, user_id: current_user), class: "guild-description-join", method: :post, remote: true %>
 			<% end %>
 			</div>
@@ -52,12 +52,12 @@
 				<%= image_tag "man.png", style: "width:50px;height:50px" %>
 				<h3 class="guild-users-list-header-title">
 					<%= @guild.guild_members.size %>
-					<% if current_user.guild_officer or current_user.guild_owner %>
+					<% if (current_user.guild_owner || current_user.guild_officer) && current_user.guild == @guild%>
 					<%= link_to "+", friends_search_path %>
 					<%end%>
 				</h3>
 			</div>
-		<% if current_user.guild_owner || current_user.guild_officer %>
+		<% if (current_user.guild_owner || current_user.guild_officer) && current_user.guild == @guild %>
 			<div class="guild_users_list_nav">
                 <div class="guild_users_list">
                     <button id="switch-btn-guild-users" class="btn-active" onclick="room_guild_users_switch('users')">users</button>
@@ -125,9 +125,9 @@
 								<div class="friend-list-element-nickname-guild" style="min-width:430px">
 									<h4> <%= link_to member.nickname, profile_path(member) %> </h4>
 									<h4 class="friend-list-element-guild">[<%= member.guild.anagram %>]</h4>
-									<% if member.guild_officer %>
+									<% if (member.guild_officer) && member.guild == @guild %>
 										<h4 style="margin-left:auto">officer</h4>
-									<%elsif member.guild_owner %>
+									<%elsif member.guild_owner  && member.guild == @guild %>
 										<h4 style="margin-left:auto">owner</h4>
 									<%end%>
 
@@ -141,13 +141,13 @@
 								<% end %>
 							</div>
 						<div style="text-align:right">
-						<% if current_user.guild_owner %>
+						<% if current_user.guild_owner && current_user.guild == @guild %>
 							<% if !member.guild_officer  %>
 								<%= link_to "make officer", add_officer_path(user_id: member.id), style: "margin-left: auto; display:block", method: :post, remote: true %>
 							<% elsif %>
 								<%= link_to "remove officer", remove_officer_path(user_id: member.id), style: "margin-left: auto; display:block", method: :post, remote: true %>	
 							<%end%>
-							<% if (current_user.guild_owner && !member.guild_owner)|| (current_user.guild_officer && !member.guild_owner && !member.guild_officer )%>
+							<% if ((current_user.guild_owner && !member.guild_owner)|| (current_user.guild_officer && !member.guild_owner && !member.guild_officer )) && current_user.guild == @guild %>
 								<%= link_to "kick", kick_member_path(user_id: member.id), style: "margin-left: auto; display:block", method: :post, remote: true %>
 							<%end%>
 						<%end%>
@@ -163,7 +163,7 @@
 			<h3 class="guild-war-history-list-title">
 				<%= link_to guild_wars_index_path(@guild) do %>
 					Wars
-					<% if current_user.guild_owner || current_user.guild_officer %>
+					<% if (current_user.guild_owner || current_user.guild_officer) && current_user.guild == @guild %>
 						<%= link_to "+", guild_wars_new_path %>
 					<%end%>
 				<%end%>
@@ -184,13 +184,13 @@
                     <div class="war-history-total-result">
 						
 							<% if @guild != wre.initiator %>
-								<% if @guild != wre.winner %>
+								<% if @guild != wre.winner && wre.status != "finish_draw" %>
 									<h3 class="total-result-score"><span class="total-result-score-lose"><%= wre.initiator_score %></span>
 								<%else%>
 									<h3 class="total-result-score"><%= wre.initiator_score %>
 								<%end%>
 							<%else%>
-								<% if @guild != wre.winner %>
+								<% if @guild != wre.winner && wre.status != "finish_draw"  %>
 									<h3 class="total-result-score"><span class="total-result-score-lose"><%= wre.recipient_score %></span>
 								<%else%>
 									<h3 class="total-result-score"><%= wre.recipient_score %>
@@ -198,21 +198,23 @@
 							<%end%>
 
 							<% if @guild == wre.initiator %>
-								<% if @guild == wre.winner %>
+								<% if @guild == wre.winner && wre.status != "finish_draw"  %>
 									<span class="total-result-score-win">: <%= wre.initiator_score %></span></h3>
 								<%else%>
 									: <%= wre.initiator_score %></h3>
 								<%end%>
 							<%else%>
-								<% if @guild == wre.winner %>
+								<% if @guild == wre.winner && wre.status != "finish_draw"  %>
 									<span class="total-result-score-win">:   <%= wre.recipient_score %></span></h3>
 								<%else%>
 									: <%= wre.recipient_score %></h3>
 								<%end%>
 							<%end%>
 
-							<% if @guild == wre.winner %>
+							<% if @guild == wre.winner && wre.status != "finish_draw" %>
 								<span class="total-result-score total-result-score-win">WIN</span>
+							<%elsif wre.status == "finish_draw" %>
+							<span class="total-result-score total-result-score-win">DRAW</span>
 							<%else%>
 								<span class="total-result-score total-result-score-lose">LOST</span>
 							<%end%>

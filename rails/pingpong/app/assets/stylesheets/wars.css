@@ -55,6 +55,16 @@
     padding-bottom: 18px;
 }
 
+.active-war-show-link {
+	transition: 0.5s;
+}
+
+
+.active-war-show-link:hover {
+    background-color: gray;
+	transition: 0.5s;
+}
+
 .wars-history-table {
     font-family: PixelarRegularW01-Regular, serif;
     color: #fff;

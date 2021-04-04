@@ -66,6 +66,10 @@
     color: #B2D430;
 }
 
+.new_direct_message{
+	display: flex;
+}
+
 .chat-rooms-create{
     width: 200px;
     height: 25px;

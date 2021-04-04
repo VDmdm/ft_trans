@@ -9,7 +9,9 @@
 	War finished
 <%elsif @war.status == "send_request" %>
 	Waiting for accept
-<% else %>
+<% elsif @war.status == "finish_draw"%>
+	finished with draw
+<%else%>
 	<%= p @war.status %>
 <%end%>
 </p>
