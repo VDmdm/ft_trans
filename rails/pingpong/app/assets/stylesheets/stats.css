@@ -15,6 +15,7 @@
 .stats-top-guild {
     padding-right: 45px;
     border-right: 1px solid #979797;
+    width: 47%;
 }
 
 .stats-top-title {
@@ -183,13 +184,8 @@
     padding-left: 23px;
 }
 
-.stats-users-guild-search {
-    height: 34px;
-    width: 394px;
-    margin-bottom: 11px;
-    font-size: 35px;
-    line-height: 33px;
-    letter-spacing: 4px;
+.stats-users-guild {
+    margin-top: 35px;
 }
 
 .stats-users-guild-table {

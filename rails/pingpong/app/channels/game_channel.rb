@@ -11,5 +11,17 @@ class GameChannel < ApplicationCable::Channel
 
 	def unsubscribed
 		# Any cleanup needed when channel is unsubscribed
+		if current_user.pending_games_p1
+			game = current_user.pending_games_p1
+			status = "p1"
+		elsif current_user.pending_games_p2
+			game = current_user.pending_games_p2
+			status = "p2"
+		end
+		if GameStateHash.instance.return_value("#{status}_status_#{game.id}") == "ready" &&
+			game.status != "ended"
+			GameStateHash.instance.add_kv("#{status}_status_#{game.id}", "lags")
+			GameStateHash.instance.add_kv("#{status}_lagtime_#{game.id}", DateTime.now)
+		end
 	end
 end

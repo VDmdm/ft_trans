@@ -9,7 +9,7 @@ class ProfilesController < ApplicationController
 		@user = User.find(params[:id])
 		@wins = @user.win_games.count
 		@losses = @user.lose_games.count
-		@games = Game.all.where("p1_id = ? OR p2_id = ?", @user.id, @user.id)
+		@games = Game.all.where("(p1_id = ? OR p2_id = ?) AND status = 1", @user.id, @user.id)
 	end
 
 	def edit

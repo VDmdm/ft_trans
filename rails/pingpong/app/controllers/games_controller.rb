@@ -5,6 +5,7 @@ class GamesController < ApplicationController
 	before_action :check_game_is_ended, only: [:show, :join_player, :leave_games]
 	before_action :check_game_allready_have_p2, only: [:join_player]
 	before_action :check_passcode_wrong, only: [:join_player]
+	before_action :check_game_not_wartime, only: [:join_player]
 	before_action :check_current_user_not_in_guild, only: [:wartime_game_create]
 	before_action :check_p2_not_exist, only: [:wartime_game_create]
 	before_action :check_p2_guild_not_exist, only: [:wartime_game_create]
@@ -61,7 +62,6 @@ class GamesController < ApplicationController
 			wartime.save
 			redirect_to game_path(game), success: "Game was created!"
 		else
-			p "================= #{ game.game_type } ===================="
 			redirect_to games_path, alert: game.errors.full_messages.join("; ")
 		end
 	end
@@ -71,7 +71,6 @@ class GamesController < ApplicationController
 		if @game.p2 == current_user
 			GameStateHash.instance.add_kv("p2_activate_game_#{@game.id}", "yes")
 		end
-		p "================== #{GameStateHash.instance.return_value("p2_activate_game_#{@game.id}")} ======================="
 	end
 
 	def join_player
@@ -197,5 +196,10 @@ class GamesController < ApplicationController
 	def check_wartime_game_not_exist
 		war = current_user.guild.war_active
 		redirect_to games_path, alert: "Wartime game allready started between guilds" if war.active_wartime
+	end
+	
+	def check_game_not_wartime
+		game = Game.find_by(id: params[:id])
+		redirect_to games_path(params[:id]), alert: "You can't leave from wartime games" if game.wartime?
 	end
 end

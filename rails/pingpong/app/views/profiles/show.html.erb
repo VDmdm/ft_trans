@@ -15,6 +15,13 @@
 					<% if @user.guild %>
 						<h3><%= link_to "[" + @user.guild.anagram + "]", guild_path(@user.guild), class: "profile-guild-anag" %></h3>
 					<% end %>
+					<% if @user.status == 'online' && (!@user.pending_games.empty? || !@user.active_wartime_games.empty? || !@user.active_tournament_games.empty?) %>
+						<h3 style="color: red; margin-left: auto">In a game</h3>
+					<% elsif @user.status == 'online' %>
+						<h3 style="color: #B2D430; margin-left: auto">Online</h3>
+					<% else %>
+						<h3 style="color: grey; margin-left: auto">offline</h3>
+					<% end %>
 				</div>
 				<div class="profile-rate-ladder">
 					<%= image_tag "ball.png", class: "profile-rate-ladder-sign" %>
@@ -62,6 +69,7 @@
 			<tr>
 				<th>opponent</th>
 				<th>date</th>
+				<th>type</th>
 				<th>result</th>
 				<th>score</th>
 			</tr>
@@ -72,7 +80,8 @@
 					<% else %>
 						<td><%= game.p2.nickname %></td>
 					<% end %>
-					<td><%= game.ended %></td>
+					<td><%= game.ended.strftime("%m/%d/%Y %H:%M") %></td>
+					<td><%= game.game_type %></td>
 					<% if game.winner == @user %>
 						<td class="win-color">WIN</td>
 					<% else %>

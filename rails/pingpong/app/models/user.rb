@@ -2,7 +2,6 @@ class User < ApplicationRecord
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 	require 'open-uri'
-
 	enum status: [ :offline, :online, :in_game ]
 
 	after_create :check_user_avatar
@@ -129,6 +128,22 @@ class User < ApplicationRecord
 
 	def ended_games
 		Game.where("(p1_id = ? OR p2_id = ?) AND status = 1", self.id, self.id)
+	end
+
+	def wartime_games
+		Game.where("(p1_id = ? OR p2_id = ?) AND game_type = 3", self.id, self.id)
+	end
+
+	def active_wartime_games
+		Game.where("(p1_id = ? OR p2_id = ?) AND game_type = 3 AND status = 0", self.id, self.id)
+	end
+
+	def tournament_games
+		Game.where("(p1_id = ? OR p2_id = ?) AND game_type = 4", self.id, self.id)
+	end
+
+	def active_tournament_games
+		Game.where("(p1_id = ? OR p2_id = ?) AND game_type = 4 AND status = 0", self.id, self.id)
 	end
 
 	private 

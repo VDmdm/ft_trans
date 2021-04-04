@@ -6,7 +6,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         set_flash_message(:notice, :success, :kind => "42") if is_navigational_format?
       else
         session["devise.marvin_data"] = request.env["omniauth.auth"]
-        redirect_to new_user_registration_url
+        redirect_to guilds_path
       end
     end
      # GET|POST /resource/auth/marvin
@@ -22,5 +22,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # The path used when OmniAuth fails
     def after_omniauth_failure_path_for(scope)
         super(scope)
-    end
+	end
+	
+	def after_sign_in_path_for(resource_or_scope)
+		if resource.sign_in_count == 1
+			edit_user_registration_path
+		else
+		   root_path
+		end
+	end
   end

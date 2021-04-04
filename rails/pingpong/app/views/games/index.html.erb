@@ -65,7 +65,7 @@
                         <div class="game-status-block">
                             <div class="game-status-info">
                                 <a href="#" class="game-status-info-avatar-link">
-                                    <img src="" alt="avatar" class="game-status-info-avatar-img">
+                                    <%= image_tag current_user.avatar, alt: "avatar", class: "game-status-info-avatar-img" %>
                                 </a>
                                 <div class="game-status-info-wrapper">
                                     <p class="game-status-info-nickname">deddara</p>
@@ -76,13 +76,16 @@
                                 <span class="game-status-mods-title">Mods</span>
                                 <ul class="game-status-mods-list">
                                     <li class="game-status-mods-item">
-                                        <img src="" alt="icon" class="game-status-mods-item-icon">
+                                        <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
                                     </li>
                                     <li class="game-status-mods-item">
-                                        <img src="" alt="icon" class="game-status-mods-item-icon">
+                                        <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
                                     </li>
                                     <li class="game-status-mods-item">
-                                        <img src="" alt="icon" class="game-status-mods-item-icon">
+                                        <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                                    </li>
+                                    <li class="game-status-mods-item">
+                                        <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
                                     </li>
                                 </ul>
                             </div>
@@ -96,7 +99,7 @@
                                     10
                                 </p>
                                 <a href="#" class="game-status-info-avatar-link">
-                                    <img src="" alt="avatar" class="game-status-info-avatar-img">
+                                    <%= image_tag current_user.avatar, alt: "avatar", class: "game-status-info-avatar-img" %>
                                 </a>
                                 <div class="game-status-info-wrapper">
                                     <p class="game-status-info-nickname">deddara</p>
@@ -109,7 +112,7 @@
                             </div>
                             <div class="game-status-info launched-game">
                                 <a href="#" class="game-status-info-avatar-link">
-                                    <img src="" alt="avatar" class="game-status-info-avatar-img">
+                                    <%= image_tag current_user.avatar, alt: "avatar", class: "game-status-info-avatar-img" %>
                                 </a>
                                 <div class="game-status-info-wrapper">
                                     <p class="game-status-info-nickname">deddara</p>

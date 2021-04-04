@@ -3,7 +3,7 @@
 		<% @users.each do |user| %>
 			<li>
 			<div class="user-search-users">
-				<h3 style="font-size: 30px"><%= user.nickname %></h3>
+				<h3 style="font-size: 30px"><%= link_to user.nickname, profile_path(user) %></h3>
 				<% if current_user.friends_with?(user) %>
 					<h3 class="user-search-link">is your friend</h3>
 				<% elsif current_user == user %>

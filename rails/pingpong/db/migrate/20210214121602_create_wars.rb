@@ -10,6 +10,8 @@ class CreateWars < ActiveRecord::Migration[6.1]
       t.time        :daily_end
       t.integer     :time_to_wait
       t.integer     :max_unanswered
+      t.integer     :initiator_unanswered, default: 0
+      t.integer     :recipient_unanswered, default: 0
       t.integer     :initiator_score, default: 0
       t.integer     :recipient_score, default: 0
       t.integer     :prize

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_28_160521) do
+ActiveRecord::Schema.define(version: 2021_04_04_082121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -202,6 +202,52 @@ ActiveRecord::Schema.define(version: 2021_03_28_160521) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
+  create_table "tournament_pairs", force: :cascade do |t|
+    t.bigint "tournament_id"
+    t.bigint "p1_id"
+    t.bigint "p2_id"
+    t.bigint "game_id"
+    t.boolean "played", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_tournament_pairs_on_game_id"
+    t.index ["p1_id"], name: "index_tournament_pairs_on_p1_id"
+    t.index ["p2_id"], name: "index_tournament_pairs_on_p2_id"
+    t.index ["tournament_id"], name: "index_tournament_pairs_on_tournament_id"
+  end
+
+  create_table "tournament_players", force: :cascade do |t|
+    t.bigint "tournament_id"
+    t.bigint "player_id"
+    t.integer "score", default: 0
+    t.boolean "winner"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["player_id"], name: "index_tournament_players_on_player_id"
+    t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
+  end
+
+  create_table "tournaments", force: :cascade do |t|
+    t.bigint "creator_id"
+    t.string "name"
+    t.datetime "start"
+    t.time "one_round_time"
+    t.integer "max_players"
+    t.integer "cost"
+    t.integer "prize"
+    t.string "ball_color", default: "#ffffff"
+    t.string "bg_color", default: "#000000"
+    t.string "paddle_color", default: "#ffffff"
+    t.boolean "ball_down_mode", default: false
+    t.boolean "ball_speedup_mode", default: false
+    t.boolean "random_mode", default: false
+    t.float "ball_size", default: 1.0
+    t.float "speed_rate", default: 1.0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["creator_id"], name: "index_tournaments_on_creator_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -241,6 +287,8 @@ ActiveRecord::Schema.define(version: 2021_03_28_160521) do
     t.time "daily_end"
     t.integer "time_to_wait"
     t.integer "max_unanswered"
+    t.integer "initiator_unanswered", default: 0
+    t.integer "recipient_unanswered", default: 0
     t.integer "initiator_score", default: 0
     t.integer "recipient_score", default: 0
     t.integer "prize"

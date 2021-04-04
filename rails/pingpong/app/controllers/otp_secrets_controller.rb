@@ -23,8 +23,6 @@ class OtpSecretsController < ApplicationController
 		  @otp_secret, issuer: 'PingPong'
 		)
 	
-		p "@@@@@@@@@*#@!*#!@*#************!@#*!@"
-		p params
 		last_otp_at = totp.verify(
 		  params[:otp_attempt], drift_behind: 15
 		)
