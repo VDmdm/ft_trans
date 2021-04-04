@@ -110,8 +110,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_082121) do
     t.float "speed_rate", default: 1.0
     t.integer "p1_score", default: 0
     t.integer "p2_score", default: 0
-    t.boolean "resetting", default: false
-    t.boolean "broadcasted", default: false
+    t.integer "time_to_game", default: 60
     t.datetime "started"
     t.datetime "ended"
     t.datetime "created_at", precision: 6, null: false
@@ -221,7 +220,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_082121) do
     t.bigint "tournament_id"
     t.bigint "player_id"
     t.integer "score", default: 0
-    t.boolean "winner"
+    t.boolean "winner", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["player_id"], name: "index_tournament_players_on_player_id"
@@ -262,6 +261,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_082121) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.integer "status", default: 0
+    t.boolean "admin", default: false
     t.integer "score", default: 1000
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

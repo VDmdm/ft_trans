@@ -5,8 +5,17 @@ class TournamentRoundJob < ApplicationJob
     # Do something later
     pairs = tournament.tournament_pair.find_by(round: round)
     if !pairs
-      #end
+      TournamentEndJob.perform_later(tournament)
+      return
     end
+
+    if round != 0
+      pairs_previous = tournament.tournament_pair.find_by(round: round - 1)
+      previous_round_continues?(pairs_previous) do
+        sleep(60)
+      end
+    end
+    
     pairs.each do |pair|
       game_create(tournament, pair)
     end
@@ -25,7 +34,8 @@ class TournamentRoundJob < ApplicationJob
                           speed_rate: tournament.speed_rate,
                           ball_color: tournament.ball_color,
                           bg_color: tournament.bg_color,
-                          paddle_color: tournament.paddle_color
+                          paddle_color: tournament.paddle_color,
+                          time_to_game: 20
     if tournament.bg_image.attached?
       game.bg_image = tournament.bg_image
     end
@@ -33,7 +43,10 @@ class TournamentRoundJob < ApplicationJob
     pair.update_attribute(:game, game)
   end
 
-  def check_game_condition
+  def previous_round_continues?(pairs)
+    pairs do |pair|
+      return true if !pair.game.ended? || !pair.ended_by_time?
+    end
   end
   
 end

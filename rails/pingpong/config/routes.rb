@@ -65,7 +65,7 @@ Rails.application.routes.draw do
 
   resources :profiles
 
-  get 'tournaments' , to: "tournaments#index"
+  resources :tournaments
 
   get 'guilds/:id/wars', to: "wars#index", as: :guild_wars_index
   get 'guilds/wars/:id', to: "wars#show", as: :guild_wars_show

@@ -19,8 +19,7 @@ class CreateGames < ActiveRecord::Migration[6.1]
       t.float       :speed_rate, default: 1.0
       t.integer     :p1_score, default: 0
       t.integer     :p2_score, default: 0
-      t.boolean     :resetting, default: false
-      t.boolean     :broadcasted, default: false
+      t.integer     :time_to_game, default: 60
       t.datetime    :started
       t.datetime    :ended
       t.timestamps

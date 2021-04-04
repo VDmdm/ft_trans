@@ -1,7 +1,7 @@
 class Game < ApplicationRecord
 	has_one_attached :bg_image
 
-    enum status: [ :pending, :ended ]
+    enum status: [ :pending, :ended, :ended_by_time ]
     enum game_type: [ :open, :rating, :close, :wartime, :tournament ]
     belongs_to :p1, class_name: "User", foreign_key: "p1_id"
     belongs_to :p2, class_name: "User", foreign_key: "p2_id", optional: true
@@ -154,6 +154,12 @@ class Game < ApplicationRecord
                 GameStateHash.instance.return_value("p2_status_#{self.id}") == 'not ready'))
             GameStateHash.instance.add_kv("status_#{self.id}", "paused")
             return false
+        elsif GameStateHash.instance.return_value("status_#{self.id}") == 'paused' &&
+                GameStateHash.instance.return_value("pause_time_#{self.id}") + 3.minute < DateTime.now
+            GameStateHash.instance.add_kv("p1_status_#{self.id}", "ready")
+            GameStateHash.instance.add_kv("p2_status_#{self.id}", "ready")
+            GameStateHash.instance.add_kv("status_#{self.id}", "active")
+            return true
         elsif GameStateHash.instance.return_value("status_#{self.id}") == 'active'
             return true
         else
@@ -255,21 +261,29 @@ class Game < ApplicationRecord
         if @score[:p1] == 21 || @score[:p2] == 21 || GameStateHash.instance.return_value("p1_status_#{self.id}") == 'leave' || 
                                                      GameStateHash.instance.return_value("p2_status_#{self.id}") == 'leave' || 
                                                      (self.wartime? && (GameStateHash.instance.return_value("p2_activate_game_#{self.id}") == "no") && 
-                                                     (self.created_at + @wt_end_time.minutes < DateTime.now))
+                                                     (self.created_at + @wt_end_time.minutes < DateTime.now)) ||
+                                                     (self.started + self.time_to_game.minutes < DateTime.now)
             self.reload
-            if @score[:p1] == 21 || GameStateHash.instance.return_value("p2_status_#{self.id}") == 'leave' ||
+            if (self.started + self.time_to_game.minutes < DateTime.now)
+                if times_up()
+                    self.status = "ended_by_time"
+                else
+                    return false
+                end
+            elsif @score[:p1] == 21 || GameStateHash.instance.return_value("p2_status_#{self.id}") == 'leave' ||
                 (self.wartime? && (GameStateHash.instance.return_value("p2_activate_game_#{self.id}") == "no") && (self.created_at + @wt_end_time.minutes < DateTime.now))
                 GameStateHash.instance.add_kv("winner_#{self.id}", "p1")
                 calculate_points(self.p1, self.p2)
+                self.status = "ended"
             else
                 GameStateHash.instance.add_kv("winner_#{self.id}", "p2")
                 calculate_points(self.p2, self.p1)
+                self.status = "ended"
             end
             GameStateHash.instance.add_kv("status_#{self.id}", "ended")
             GameStateHash.instance.delete_key("paddle_p2_#{self.id}")
             GameStateHash.instance.delete_key("paddle_p1_#{self.id}")
             GameStateHash.instance.delete_key("p2_activate_game_#{self.id}")
-            self.status = "ended"
             self.p1_score = @score[:p1]
             self.p2_score = @score[:p2]
             self.ended = DateTime.now
@@ -285,6 +299,11 @@ class Game < ApplicationRecord
         if self.rating?
             winner.update_attribute(:score, winner.score + 25)
             loser.update_attribute(:score, loser.score - 25)
+        end
+        if self.tournament?
+            tournament = TournamentPair.find_by(game: self.id).tournament
+            player = tournament.tournament_players.find_by(player: winner)
+            player.update_attribute(:score, player1.score + 1)
         end
         if winner.guild
             if self.rating?
@@ -309,6 +328,39 @@ class Game < ApplicationRecord
                     wartime.save
                 end
             end
+        end
+    end
+    
+    def times_up
+        if @score[:p1] != 0 && @score[:p1] > @score[:p2]
+            self.winner = self.p1
+            self.loser = self.p2
+            if self.tournament?
+                tournament = TournamentPair.find_by(game: self.id).tournament
+                player = tournament.tournament_players.find_by(player: self.p1)
+                player.update_attribute(:score, player.score + 1)
+            end
+            return true
+        elsif @score[:p2] != 0 && @score[:p1] < @score[:p2]
+            self.winner = self.p2
+            self.loser = self.p1
+            if self.tournament?
+                tournament = TournamentPair.find_by(game: self.id).tournament
+                player = tournament.tournament_players.find_by(player: self.p2)
+                player.update_attribute(:score, player.score + 1)
+            end
+            return true
+        elsif @score[:p2] == 0 && @score[:p1] == 0
+            if self.tournament?
+                tournament = TournamentPair.find_by(game: self.id).tournament
+                player1 = tournament.tournament_players.find_by(player: self.p2)
+                player2 = tournament.tournament_players.find_by(player: self.p2)
+                player1.update_attribute(:score, player1.score - 1)
+                player2.update_attribute(:score, player2.score - 1)
+            end
+            return true
+        else
+            return false
         end
     end
 end

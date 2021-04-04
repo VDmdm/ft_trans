@@ -29,6 +29,8 @@ class GamesController < ApplicationController
 			GameStateHash.instance.add_kv("p1_status_#{game.id}", "not ready")
 			GameStateHash.instance.add_kv("status_#{game.id}", "waiting")
 			GameStateHash.instance.add_kv("p1_nickname_#{game.id}", game.p1.nickname)
+			GameStateHash.instance.add_kv("p1_pause_#{game.id}", "false")
+			GameStateHash.instance.add_kv("p2_pause_#{game.id}", "false")
 			redirect_to game_path(game), success: "Game was created!"
 		else
 			redirect_to new_game_path, alert: game.errors.full_messages.join("; ")
@@ -55,6 +57,8 @@ class GamesController < ApplicationController
 			GameStateHash.instance.add_kv("p2_nickname_#{game.id}", p2.nickname)
 			GameStateHash.instance.add_kv("status_#{game.id}", "waiting")
 			GameStateHash.instance.add_kv("p2_activate_game_#{game.id}", "no")
+			GameStateHash.instance.add_kv("p1_pause_#{game.id}", "false")
+			GameStateHash.instance.add_kv("p2_pause_#{game.id}", "false")
 			wartime = Wartime.new 		war: war,
 										game: game,
 										guild_1: war.initiator,
@@ -121,7 +125,14 @@ class GamesController < ApplicationController
 		if status == "not ready" || status == "lags"
 			GameStateHash.instance.add_kv("#{string}_status_#{game.id}", "ready")
 		elsif status == "ready"
-			GameStateHash.instance.add_kv("#{string}_status_#{game.id}", "not ready")
+			p "=================== #{GameStateHash.instance.return_value("#{string}_pause_#{game.id}")} ===================="
+			if GameStateHash.instance.return_value("#{string}_pause_#{game.id}") == "false"
+				GameStateHash.instance.add_kv("#{string}_status_#{game.id}", "not ready")
+			end
+			if GameStateHash.instance.return_value("status_#{game.id}") == 'active' && GameStateHash.instance.return_value("#{string}_pause_#{game.id}") == "false"
+				GameStateHash.instance.add_kv("#{string}_pause_#{game.id}", "true")
+				GameStateHash.instance.add_kv("pause_time_#{game.id}", DateTime.now)
+			end
 		end
 		if GameStateHash.instance.return_value("p1_status_#{game.id}") == "ready" &&
 			GameStateHash.instance.return_value("p2_status_#{game.id}") == "ready"

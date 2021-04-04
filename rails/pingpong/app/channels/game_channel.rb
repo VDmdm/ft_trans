@@ -2,9 +2,7 @@ class GameChannel < ApplicationCable::Channel
 	def subscribed
 		game = Game.find(params[:game])
 		stream_for game
-		if game.p1 == current_user && !game.broadcasted
-			game.broadcasted = true
-			game.save
+		if game.p1 == current_user
 			GameLoopJob.new(game.id).perform_now()
 		end
 	end
