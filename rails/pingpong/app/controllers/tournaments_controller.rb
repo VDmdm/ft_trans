@@ -8,10 +8,12 @@ class TournamentsController < ApplicationController
 	end
 
 	def create
-		tournament = Tournament.new tournament_parametres(tournament_parametres)
+		tournament = Tournament.new tournament_parametres
+		tournament.creator = current_user
+		tournament.prize = tournament.cost * tournament.max_players
 		if tournament.save
 			TournamentStartJob.set(wait_until: tournament.start).perform_later(tournament.id)
-			redirect_to tournaments_path(tournament), success: "Tournament was created"
+			redirect_to tournament_path(tournament), success: "Tournament was created"
 		else
 			redirect_to tournaments_path, alert: "Can't create tournament: #{ tournament.errors.full_messages.join(", ") }"
 		end
@@ -27,11 +29,11 @@ class TournamentsController < ApplicationController
 	private 
 
 	def tournament_parametres
-		params.require(:tournament).permit(	:creator, :name, :start,
+		params.require(:tournament).permit( :creator, :name, :start,
 											:one_round_time, :max_players,
 											:cost, :prize, :ball_color,
 											:bg_color, :paddle_color, :ball_down_mode,
 											:ball_speedup_mode, :random_mode, :ball_size,
-											:speed_rate, :bg_image );
+											:speed_rate, :bg_image )
 	end
 end

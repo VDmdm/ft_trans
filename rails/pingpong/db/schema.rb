@@ -207,7 +207,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_082121) do
     t.bigint "p2_id"
     t.bigint "game_id"
     t.integer "round"
-    t.boolean "played", default: true
+    t.boolean "played", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_tournament_pairs_on_game_id"
@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_082121) do
     t.string "name"
     t.integer "status", default: 0
     t.datetime "start"
-    t.time "one_round_time"
+    t.integer "one_round_time"
     t.integer "max_players"
     t.integer "cost"
     t.integer "prize"

@@ -1,7 +1,7 @@
 class Game < ApplicationRecord
 	has_one_attached :bg_image
 
-    enum status: [ :pending, :ended, :ended_by_time ]
+    enum status: [ :pending, :ended ]
     enum game_type: [ :open, :rating, :close, :wartime, :tournament ]
     belongs_to :p1, class_name: "User", foreign_key: "p1_id"
     belongs_to :p2, class_name: "User", foreign_key: "p2_id", optional: true
@@ -265,9 +265,7 @@ class Game < ApplicationRecord
                                                      (self.started + self.time_to_game.minutes < DateTime.now)
             self.reload
             if (self.started + self.time_to_game.minutes < DateTime.now)
-                if times_up()
-                    self.status = "ended_by_time"
-                else
+                if !times_up()
                     return false
                 end
             elsif @score[:p1] == 21 || GameStateHash.instance.return_value("p2_status_#{self.id}") == 'leave' ||

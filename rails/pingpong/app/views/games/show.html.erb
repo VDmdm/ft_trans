@@ -23,10 +23,8 @@
                     remote: true, id: "ready_btn" %>
                 <% end %>
             <% end %>
-            <% if !@game.p2 && current_user.pending_games.empty? %>
-                <%= link_to "join" , game_join_player_path(@game), method: :post, class: "game-block-action-link",
-                remote: true %>
-            <% end %>
+            <%= link_to "join" , game_join_player_path(@game), method: :post, class: "game-block-action-link", id: "game-block-join-link",
+                remote: true, style: 'display: none;' %>
         </div>
     </div>
 </section>

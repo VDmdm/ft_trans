@@ -172,6 +172,10 @@ $(document).on("turbolinks:load", function() {
 				$('.p2').css("color","yellow");
 			else
 				$('.p2').css("color","white");
+			if (typeof(data.p2_nickname) != "string" && nick != data.p1_nickname)
+				document.getElementById('game-block-join-link').style.display = 'block';
+			else
+				document.getElementById('game-block-join-link').style.display = 'none';
 		},
 		});
 	}

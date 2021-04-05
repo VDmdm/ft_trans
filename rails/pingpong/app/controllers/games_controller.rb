@@ -148,7 +148,7 @@ class GamesController < ApplicationController
 		params.require(:game).permit(	:name, :game_type, :passcode, :bg_color,
 										:paddle_color, :ball_color, :ball_down_mode,
 										:ball_speedup_mode, :random_mode, :ball_size,
-										:speed_rate, :bg_image );
+										:speed_rate, :bg_image )
 	end
 
 	def check_game_not_exist

@@ -3,14 +3,14 @@ class TournamentRoundJob < ApplicationJob
 
   def perform(tournament, round)
     # Do something later
-    pairs = tournament.tournament_pair.find_by(round: round)
-    if !pairs
+    pairs = tournament.tournament_pair.where("round = ?", round)
+    if pairs.empty?
       TournamentEndJob.perform_later(tournament)
       return
     end
 
     if round != 0
-      pairs_previous = tournament.tournament_pair.find_by(round: round - 1)
+      pairs_previous = tournament.tournament_pair.where("round = ?", round - 1)
       previous_round_continues?(pairs_previous) do
         sleep(60)
       end
@@ -19,7 +19,7 @@ class TournamentRoundJob < ApplicationJob
     pairs.each do |pair|
       game_create(tournament, pair)
     end
-    TournamentRoundJob.set(wait_until: war.ended).perform_later(tournament, round + 1)
+    TournamentRoundJob.set(wait_until: tournament.one_round_time.minutes).perform_later(tournament, round + 1)
   end
 
   def game_create(tournament, pair)
@@ -44,8 +44,8 @@ class TournamentRoundJob < ApplicationJob
   end
 
   def previous_round_continues?(pairs)
-    pairs do |pair|
-      return true if !pair.game.ended? || !pair.ended_by_time?
+    pairs.each do |pair|
+      return true unless pair.game.ended?
     end
   end
   
