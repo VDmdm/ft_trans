@@ -20,12 +20,15 @@
 }
 
 .wars-show-time, .wars-show-wartime {
+    text-align: right;
+}
+
+.wars-show-time-start, .wars-show-time-end, .wars-show-wartime-start, .wars-show-wartime-end {
     color: #616F39;
     font-weight: normal;
     font-size: 30px;
     letter-spacing: 3px;
-    text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .wars-show-block {
@@ -104,6 +107,7 @@
     line-height: 33px;
     letter-spacing: 4px;
     color: #FFFFFF;
+    text-align: center;
 }
 
 .wars-show-mods-list {
@@ -120,8 +124,7 @@
 }
 
 .wars-show-mods-item-icon {
-    height: 50px;
-    width: 50px;
+    height: 30px;
 }
 
 .wars-show-cancel-block {
@@ -152,10 +155,6 @@
     width: 100%;
     border: 4px solid #fff;
     margin-bottom: 50px;
-}
-
-.wars-show-table-title {
-    /*border-bottom: 1px solid #fff;*/
 }
 
 .wars-show-table-title-title {

@@ -8,7 +8,7 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "personal-information-field-input", id: "email", type: "text" %>
   </div>
  	<div  class="personal-information-form-filed">
- 		<%= f.label :nickname %><br />
+ 		<%= f.label :nickname, class: "personal-information-field-label" %><br />
 		<%= f.text_field :nickname, class: "personal-information-field-input" %>
 	</div>
 
@@ -22,24 +22,6 @@
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
-
-  <div class="personal-information-form-filed">
-    <%= f.label :password, class: "personal-information-field-label"  %><br />
-    <%= f.password_field :password, autocomplete: "new-password", class: "personal-information-field-input", type: "text"  %>
-    <% if @minimum_password_length %>
-      <br />
-    <% end %>
-  </div>
-
-  <div class="personal-information-form-filed">
-    <%= f.label :password_confirmation, class: "personal-information-field-label" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password",  class: "personal-information-field-input", type: "text" %>
-  </div>
-
-  <div class="personal-information-form-filed">
-    <%= f.label :current_password, class: "personal-information-field-label" %> <br />
-    <%= f.password_field :current_password, autocomplete: "current-password", class: "personal-information-field-input", type: "text" %>
-  </div>
 
   <div class="personal-information-form-filed">
     <div >

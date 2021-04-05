@@ -1,6 +1,6 @@
 <section class="wars">
 <p class="wars-title">Wars 
-<%if current_user.guild_officer || current_user.guild_owner %>
+<% if (current_user.guild_officer || current_user.guild_owner) && current_user.guild == @guild %>
 <%= link_to "+", guild_wars_new_path %>
 <%end%>
 </p>
@@ -19,8 +19,9 @@
 				<%= link_to guild_path(@war_active.initiator), class: "wars-show-guild-info-anagram-link" do %>
 					[<%= @war_active.initiator.anagram %>]
 				<%end%>
-            </div>
-			<div class="wars-show-guild-info-wrap">
+			</div>
+		<%= link_to guild_wars_show_path(@war_active), class: "active-war-show-link" do %>	
+			<div class="wars-show-guild-info-wrap active-war-show-link">
 				<%= image_tag @war_active.initiator.avatar, class: "wars-show-guild-info-avatar" %>
                 <div class="wars-show-guild-info-stats">
 					<div class="wars-show-guild-info-stat">
@@ -43,7 +44,9 @@
 					<%= image_tag "ball.png", class: "wars-show-guild-info-stat-icon" %>
                     <h3 class="top-guild-score"><%= @war_active.initiator.points %></h3>
                 </div>
-            </div>
+			</div>
+		<%end%>
+			
             <p class="you-are-in-war-end-time">
 			<% if @war_active.status == "wait_start" %>
 				Starts in <%= @war_active.started.strftime("%m/%d/%Y %H:%M") %>
@@ -51,7 +54,7 @@
 				Ends in <%= @war_active.ended.strftime("%m/%d/%Y %H:%M") %>
 			<%end%>
             </p>
-        </div>
+		</div>
 		<%else%>
 				<div class="wars-show-guild-info-name">
 				<%= link_to @war_active.recipient.name, guild_path(@war_active.recipient), class: "wars-show-guild-info-name-link" %>
@@ -59,7 +62,8 @@
 					[<%= @war_active.recipient.anagram %>]
 				<%end%>
 			</div>
-			<div class="wars-show-guild-info-wrap">
+		<%= link_to guild_wars_show_path(@war_active), class: "active-war-show-link" do %>	
+			<div class="wars-show-guild-info-wrap active-war-show-link">
 				<%= image_tag @war_active.recipient.avatar, class: "wars-show-guild-info-avatar" %>
 				<div class="wars-show-guild-info-stats">
 					<div class="wars-show-guild-info-stat">
@@ -83,6 +87,8 @@
 					<h3 class="top-guild-score"><%= @war_active.recipient.points %></h3>
 				</div>
 			</div>
+		<%end%>
+		
 			<p class="you-are-in-war-end-time">
 			<% if @war_active.status == "wait_start" %>
 				Starts in <%= @war_active.started.strftime("%m/%d/%Y %H:%M") %>
@@ -174,26 +180,29 @@
 	</tr>
 	<% @wars_ended.each do |wre| %>
 		<tr class="wars-history-table-title-row">
+
 		<% if @guild != wre.initiator %>
-			<td class="wars-history-table-title-row-item"><%=wre.initiator.name%></td>
+			<td class="wars-history-table-title-row-item"><%= link_to wre.initiator.name, guild_wars_show_path(wre)%></td>
 		<%else%>
-			<td class="wars-history-table-title-row-item"><%=wre.recipient.name%></td>
+			<td class="wars-history-table-title-row-item"><%= link_to wre.recipient.name, guild_wars_show_path(wre)%></td>
 		<%end%>
 		<td class="wars-history-table-title-row-item"> <%=wre.started.strftime("%m/%d/%Y %H:%M")%>-<%=wre.ended.strftime("%m/%d/%Y %H:%M")%></td>
-		<% if @guild != wre.winner %>
-			<td class="wars-history-table-title-row-item" style="color: #B2463E">LOST</td>
+		<% if wre.status == "finish_draw" %>
+			<td class="wars-history-table-title-row-item" style="color: #B2D430">DRAW</td>
+		<%elsif @guild != wre.winner %>
+			<td class="wars-history-table-title-row-item" style="color: #B2463E">LOSE</td>
 		<%else%>
 			<td class="wars-history-table-title-row-item" style="color: #B2D430">WIN</td>	
 		<%end%>
 
 		<% if @guild != wre.initiator %>
-			<%if @guild != wre.winner %>
+			<%if @guild != wre.winner && wre.status != "finish_draw" %>
 				<td class="wars-history-table-title-row-item"><span style="color: #B2463E"><%= wre.initiator_score %></span>
 			<%else%>
 				<td class="wars-history-table-title-row-item"><%= wre.initiator_score %>
 			<%end%>
 		<%else%>
-			<%if @guild != wre.winner %>
+			<%if @guild != wre.winner && wre.status != "finish_draw"%>
 				<td class="wars-history-table-title-row-item"><span style="color: #B2463E"><%=wre.recipient_score%></span>
 			<%else%>
 				<td class="wars-history-table-title-row-item"><%=wre.recipient_score%>
@@ -201,18 +210,19 @@
 		<%end%>
 
 		<% if @guild == wre.initiator %>
-			<%if @guild == wre.winner %>
+			<%if @guild == wre.winner && wre.status != "finish_draw"  %>
 			: <span style="color: #B2D430"><%= wre.initiator_score %></span></td>
 			<%else%>
 			: <%= wre.initiator_score %></td>
 			<%end%>
 		<%else%>
-			<%if @guild == wre.winner %>
+			<%if @guild == wre.winner && wre.status != "finish_draw" %>
 			: <span style="color: #B2D430"><%= wre.recipient_score %></span></td>
 			<%else%>
 			: <%=wre.recipient_score%></td>
 			<%end%>
 		<%end%>
+
 	</tr>
 	<% end %>
 

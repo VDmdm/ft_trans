@@ -20,7 +20,7 @@
 
 .game-status-block {
     display: inline-flex;
-    width: 893px;
+    width: 100%;
     border: 1px solid #fff;
     padding: 29px 56px 28px 59px;
     align-items: center;
@@ -54,7 +54,6 @@
 
 .game-status-mods-item-icon {
     height: 29px;
-    width: 29px;
 }
 
 .game-status-mods-list {
@@ -86,7 +85,7 @@
 
 .games-types {
     text-align: center;
-    width: 963px;
+    /* width: 963px; */
     margin: auto;
 }
 
@@ -110,6 +109,7 @@
 }
 
 .games-free-type-item {
+    display: flex;
     margin-bottom: 20px;
 }
 
@@ -144,4 +144,16 @@
 .game-status-invite {
     font-size: 48px;
     padding: 10px 70px;
+}
+
+.launched-game-spectate {
+    margin: 0 10px;
+}
+
+.game-status-invite-item {
+    display: flex;
+}
+
+.game-status-invite-list {
+    padding: 0;
 }
