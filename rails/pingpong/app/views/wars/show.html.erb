@@ -152,12 +152,14 @@
 		<th class="wars-show-table-title-title games-table-title-date">date</th>
 	</tr>
 <% @war_games.each do |wt| %>
-	<tr class="wars-show-table-row">
-		<td class="wars-show-table-row wars-show-table-row-players"><%= wt.game.p1.nickname %> vs <%= wt.game.p2.nickname %></td>
-		<td class="wars-show-table-row wars-show-table-row-score"><%= wt.game.p1_score %>:<%= wt.game.p2_score %></td>
-		<td class="wars-show-table-row wars-show-table-row-score"><%= wt.winner.name %></td>
-		<td class="wars-show-table-row wars-show-table-row-date"><%= wt.game.ended.strftime("%m/%d/%Y %H:%M") %></td>
-	</tr>
+	<% if wt.game.status != "pending" %>
+		<tr class="wars-show-table-row">
+			<td class="wars-show-table-row wars-show-table-row-players"><%= wt.game.p1.nickname %> vs <%= wt.game.p2.nickname %></td>
+			<td class="wars-show-table-row wars-show-table-row-score"><%= wt.game.p1_score %>:<%= wt.game.p2_score %></td>
+			<td class="wars-show-table-row wars-show-table-row-score"><%= wt.winner.name %></td>
+			<td class="wars-show-table-row wars-show-table-row-date"><%= wt.game.ended.strftime("%m/%d/%Y %H:%M") %></td>
+		</tr>
+	<%end%>
 </table>
 <%end%>
 </section>
