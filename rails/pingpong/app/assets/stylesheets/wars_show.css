@@ -69,7 +69,7 @@
 .wars-show-guild-info-stats {
     display: flex;
     flex-wrap: wrap;
-    max-width: 295px;
+    max-width: 270px;
     margin-right: 80px;
 }
 
