@@ -36,9 +36,9 @@ class Tournament < ApplicationRecord
 		end
 		@rounds.each_with_index do |round, index|
 			round.each do |pair|
-				self.tournament_pair.create 	p1: pair[0],
-			 									p2: pair[1],
-												round: index
+				 self.tournament_pair.create 		p1: pair[0],
+			 										p2: pair[1],
+													round: index
 			end
 		end
 	end

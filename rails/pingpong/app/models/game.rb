@@ -2,13 +2,13 @@ class Game < ApplicationRecord
 	has_one_attached :bg_image
 
     enum status: [ :pending, :ended ]
-    enum game_type: [ :open, :rating, :close, :wartime, :tournament ]
+    enum game_type: [ :open, :rating, :close, :wartime, :tournament, :times_up ]
     belongs_to :p1, class_name: "User", foreign_key: "p1_id"
     belongs_to :p2, class_name: "User", foreign_key: "p2_id", optional: true
     belongs_to :winner, class_name: "User", foreign_key: "winner_id", optional: true
     belongs_to :loser, class_name: "User", foreign_key: "loser_id", optional: true
 
-    validates  :name, presence: true, length: { maximum: 15, minimum: 4 }, if: -> { self.game_type != 'wartime' }
+    validates  :name, presence: true, length: { maximum: 15, minimum: 4 }, if: -> { self.wartime? &&  self.tournament? }
     validate_enum_attribute :game_type, message: "Wrong game type!"
     validates  :game_type, presence: true, inclusion: { in: %w[open rating close], message: "Wrong game type!"}, unless: :p2
     validates  :passcode, presence: true, length: { maximum: 4, minimum: 4 }, if: -> { self.game_type == 'close' }
@@ -268,6 +268,7 @@ class Game < ApplicationRecord
                 if !times_up()
                     return false
                 end
+                self.status = 'times_up'
             elsif @score[:p1] == 21 || GameStateHash.instance.return_value("p2_status_#{self.id}") == 'leave' ||
                 (self.wartime? && (GameStateHash.instance.return_value("p2_activate_game_#{self.id}") == "no") && (self.created_at + @wt_end_time.minutes < DateTime.now))
                 GameStateHash.instance.add_kv("winner_#{self.id}", "p1")
@@ -299,7 +300,8 @@ class Game < ApplicationRecord
             loser.update_attribute(:score, loser.score - 25)
         end
         if self.tournament?
-            tournament = TournamentPair.find_by(game: self.id).tournament
+            tournamentPair = TournamentPair.find_by(game: self.id)
+            tournament = tournamentPair.tournament
             player = tournament.tournament_players.find_by(player: winner)
             player.update_attribute(:score, player1.score + 1)
         end
@@ -334,7 +336,8 @@ class Game < ApplicationRecord
             self.winner = self.p1
             self.loser = self.p2
             if self.tournament?
-                tournament = TournamentPair.find_by(game: self.id).tournament
+                tournamentPair = TournamentPair.find_by(game: self.id).tournament
+                tournament = tournamentPair.tournament
                 player = tournament.tournament_players.find_by(player: self.p1)
                 player.update_attribute(:score, player.score + 1)
             end
@@ -343,14 +346,16 @@ class Game < ApplicationRecord
             self.winner = self.p2
             self.loser = self.p1
             if self.tournament?
-                tournament = TournamentPair.find_by(game: self.id).tournament
+                tournamentPair = TournamentPair.find_by(game: self.id).tournament
+                tournament = tournamentPair.tournament
                 player = tournament.tournament_players.find_by(player: self.p2)
                 player.update_attribute(:score, player.score + 1)
             end
             return true
         elsif @score[:p2] == 0 && @score[:p1] == 0
             if self.tournament?
-                tournament = TournamentPair.find_by(game: self.id).tournament
+                tournamentPair = TournamentPair.find_by(game: self.id).tournament
+                tournament = tournamentPair.tournament
                 player1 = tournament.tournament_players.find_by(player: self.p2)
                 player2 = tournament.tournament_players.find_by(player: self.p2)
                 player1.update_attribute(:score, player1.score - 1)

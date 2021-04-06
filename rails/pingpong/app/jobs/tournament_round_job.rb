@@ -11,7 +11,7 @@ class TournamentRoundJob < ApplicationJob
 
     if round != 0
       pairs_previous = tournament.tournament_pair.where("round = ?", round - 1)
-      previous_round_continues?(pairs_previous) do
+      while previous_round_continues?(pairs_previous) do
         sleep(60)
       end
     end
@@ -19,7 +19,7 @@ class TournamentRoundJob < ApplicationJob
     pairs.each do |pair|
       game_create(tournament, pair)
     end
-    TournamentRoundJob.set(wait_until: tournament.one_round_time.minutes).perform_later(tournament, round + 1)
+    TournamentRoundJob.set(wait: tournament.one_round_time.minutes).perform_later(tournament, round + 1)
   end
 
   def game_create(tournament, pair)
@@ -35,11 +35,19 @@ class TournamentRoundJob < ApplicationJob
                           ball_color: tournament.ball_color,
                           bg_color: tournament.bg_color,
                           paddle_color: tournament.paddle_color,
-                          time_to_game: 20
+                          time_to_game: tournament.one_round_time
     if tournament.bg_image.attached?
       game.bg_image = tournament.bg_image
     end
     game.save
+    GameStateHash.instance.add_kv("p1_status_#{game.id}", "not ready")
+		GameStateHash.instance.add_kv("p1_nickname_#{game.id}", pair.p1.nickname)
+		GameStateHash.instance.add_kv("p2_status_#{game.id}", "not ready")
+		GameStateHash.instance.add_kv("p2_nickname_#{game.id}", pair.p2.nickname)
+		GameStateHash.instance.add_kv("status_#{game.id}", "waiting")
+		GameStateHash.instance.add_kv("p2_activate_game_#{game.id}", "no")
+		GameStateHash.instance.add_kv("p1_pause_#{game.id}", "false")
+		GameStateHash.instance.add_kv("p2_pause_#{game.id}", "false")
     pair.update_attribute(:game, game)
   end
 
