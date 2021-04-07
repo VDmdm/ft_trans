@@ -12,7 +12,7 @@ class Tournament < ApplicationRecord
 	validates  		:name, presence: true, length: { maximum: 15, minimum: 4 }
 	validates  		:start, presence: true
 	validate   		:start_date, if: :start
-	validates  		:one_round_time, presence: true, :inclusion => 20..60
+	validates  		:one_round_time, presence: true, :inclusion => 1..60
 	validates  		:max_players, presence: true, numericality: { only_integer: true, :greater_than_or_equal_to => 2, :less_than_or_equal_to => 10, :even => true }
 	validates  		:cost, presence: true, :inclusion => 100..5000
     validates  		:ball_color, format: { with: /\A#[a-f0-9]{6}\z/, message: "Wrong color format!" }

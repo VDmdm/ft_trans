@@ -26,5 +26,10 @@
             <%= link_to "join" , game_join_player_path(@game), method: :post, class: "game-block-action-link", id: "game-block-join-link",
                 remote: true, style: 'display: none;' %>
         </div>
-    </div>
+        <div style="text-align:center;width:100%">
+            <div style="display:flex;justify-content: center">
+                <p>Time left:&ensp;</p>
+                <p id="game_time"></p>
+            </div>
+        </div>
 </section>

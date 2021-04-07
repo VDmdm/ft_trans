@@ -108,10 +108,9 @@ window.drawFrame = function() {
 }
 
 $(document).on("turbolinks:load", function() {
-	if (subscribe && (!document.getElementById('game'))) {
-		// consumer.subscriptions.remove(subscribe.unsubscribe());
-		subscribe.unsubscribe();
-		subscribe = null;
+	if (this.subscribe && (!document.getElementById('game'))) {
+		this.subscribe.unsubscribe();
+		this.subscribe = null;
 		game_id = null;
 	}
 	if (document.getElementById('game')) {
@@ -140,6 +139,7 @@ $(document).on("turbolinks:load", function() {
 			player_1_score = data.p1_score;
 			player_2_score = data.p2_score;
 			winner = data.winner;
+			$('#game_time').text(data.ended_at);
 			if ($('.p1').text() != data.p1_nickname)
 				$('.p1').text(data.p1_nickname);
 			if (typeof(data.p2_nickname) == "string")
@@ -178,5 +178,6 @@ $(document).on("turbolinks:load", function() {
 				document.getElementById('game-block-join-link').style.display = 'none';
 		},
 		});
+		this.subscribe = subscribe;
 	}
 })

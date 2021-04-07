@@ -123,7 +123,7 @@ class User < ApplicationRecord
 	end
 
 	def pending_games
-		Game.where("(p1_id = ? OR p2_id = ?) AND game_type BETWEEN 0 AND 2 AND status != 1", self.id, self.id)
+		Game.where("(p1_id = ? OR p2_id = ?) AND game_type BETWEEN 0 AND 2 AND status = 0", self.id, self.id)
 	end
 
 	def ended_games
