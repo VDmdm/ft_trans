@@ -36,7 +36,6 @@ $(document).on("turbolinks:load", function() {
 						return;
 					}
 				}
-				console.log(data.blocked_users);
 
 				for (var i = 0; i < data.blocked_users.length; i++) {
 					if (data.blocked_users[i].id == current_user){
@@ -44,7 +43,8 @@ $(document).on("turbolinks:load", function() {
 					}
 				}
 				for (var i = 0; i < data.active_users.length; i++) {
-					if (data.active_users[i].id == current_user){
+
+					if (data.active_users[i].id == current_user || data.active_users[i].admin ){
 						break;
 					}
 

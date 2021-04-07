@@ -7,16 +7,15 @@
 <div>
   <div class="messages-header">
     <div class="direct-user-info"> 
-      <%= link_to image_tag(@dude.avatar, style: "width:50px;height:50px;"), profile_path(@dude)%>
+	  <%= link_to image_tag(@dude.avatar, style: "width:50px;height:50px;"), profile_path(@dude)%>
       <div class="direct-user-text-info">
       <%= link_to @dude.nickname, profile_path(@dude) %>
       <% if @dude.guild %>
                 <%= link_to guild_path(@dude.guild), style: "color:#616F39;" do %>
                   [<%=@dude.guild.anagram%>]
                     <%end%>
-                    <%end%>
+      <%end%>
       </div>
-
       </div>
       <%= link_to "delete chat", direct_room_path(@room), method: :delete, style: "font-size:20px;margin-top:10px;margin-left:auto" %>
 
@@ -93,13 +92,22 @@
   </div>
 
   <div class="send-message">
-
     <%= simple_form_for @room_message, remote: true do |form| %>
-      <%= form.input :message, as: :string, wrapper: false, label: false,required: false, input_html: {
+      	<%= form.input :message, as: :string, wrapper: false, label: false,required: false, input_html: {
         class: "msg-input" } %>
         <%= form.submit "Send" , class: 'send-message-button', disabled: "true" %>
-          <%= form.input :direct_room_id, as: :hidden %>
-            <% end %>
+        <%= form.input :direct_room_id, as: :hidden %>
+	<% end %>
+	<div>
+	<% if current_user.pending_games_p1 && !current_user.pending_games_p1.p2 && current_user.pending_games_p1.status != "wartime" && 
+	  current_user.pending_games_p1.status != "tournament"%>
+	  		<%= simple_form_for @room_message, remote: true do |form| %>
+		  	  <%= form.hidden_field :message, style: "white-space: pre-wrap", value: "Battle me! " + game_path(current_user.pending_games_p1) %>
+		  	  <%= image_submit_tag("sword.png", style: "width:35px; height:35px;margin-left:10px;margin-right:10px" ) %>
+			  <%= form.input :direct_room_id, as: :hidden %>
+			<% end %>
+		  <%end%>
+	</div>
   </div>
 </div>
 

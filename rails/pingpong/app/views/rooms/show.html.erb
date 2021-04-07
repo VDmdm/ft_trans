@@ -6,7 +6,7 @@
 
 
 <%= render 'rooms/sidebar' %>
-<% if @room.is_room_member?(current_user) %>
+<% if @room.is_room_member?(current_user) || current_user.admin %>
   <%= render 'rooms/messages' %>
 
 <% elsif @room.password and @room.password.length() != 0 %>

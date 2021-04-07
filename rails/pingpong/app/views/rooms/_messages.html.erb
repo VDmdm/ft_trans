@@ -7,10 +7,20 @@
       <h3 class="header-room-name">
         <%=@room.name%>
       </h3>
-
-      <h3 class="messages-leave">
+	 <% if current_user.admin %>
+		 <h3 class="messages-leave">
+		 <%= link_to "destroy", destroy_room_path(@room), method: :delete, remote: true %>
+		 <% if !@room.is_room_member?(current_user) %>
+			 <%= link_to "join", new_room_member_path, :method => :post, remote: true  %>
+		 <%else%>
+		 	<%= link_to "leave" , chat_room_members_leave_path(user_id: current_user.id), method: :post, remote: true %>
+		</h3>
+		 <%end%> 
+	 <%else%> 
+	 <h3 class="messages-leave">
         <%= link_to "leave" , chat_room_members_leave_path(user_id: current_user.id), method: :post, remote: true %>
-      </h3>
+	  </h3>
+	 <%end%>
       <% if @room.is_owner?(current_user) %>
       <%= link_to image_tag("gear_.png", style: "width:30px; height:30px;"), room_settings_path, style: "margin-top: 10px;"%>
     <%end%>

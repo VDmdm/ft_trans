@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :direct_messages
   resources :direct_rooms
 
+  post	'direct_messages', to: 'direct_messages#create', as: :create_dir_message
   get   'otp_secrets', to: 'otp_secrets#new'
   get   'otp_secrets/login', to: 'otp_secrets#login'
   post   'otp_secrets/auth_logger', to: 'otp_secrets#auth_logger', as: :otp_secrets_logger
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
   post 'rooms/:id/remove_adm', to: "chat_room_members#remove_admin", as: :remove_adm_member
   post 'block', to: "chat_room_members#block", as: :block
   post 'unblock', to: "chat_room_members#unblock", as: :unblock
+  delete "/rooms/:id", to: "rooms#destroy", as: :destroy_room
 
   post 'direct/:id/block', to: "direct_rooms#block", as: :direct_block
   post 'direct/:id/unblock', to: "direct_rooms#unblock", as: :direct_unblock

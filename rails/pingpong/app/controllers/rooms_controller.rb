@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
 	before_action :load_rooms
 	before_action :check_if_member, only: [:user_list, :room_settings]
 	before_action :check_if_banned, only: [:user_list, :room_settings]
-	before_action :check_rights, only: [:room_settings, :update]
+	before_action :check_rights, only: [:room_settings, :update, :destroy]
 	
 	def index
 		@rooms = Room.all
@@ -11,6 +11,12 @@ class RoomsController < ApplicationController
 
 	def new
 		@room = Room.new
+	end
+
+	def destroy
+		room = Room.all.find(params[:id])
+		room.destroy
+		redirect_to rooms_path
 	end
 
 	def user_list
@@ -67,17 +73,20 @@ class RoomsController < ApplicationController
 
 	def check_if_member
 		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: @room.id)
-		redirect_to rooms_path, alert: "Not a member!" if !record
+		redirect_to rooms_path, alert: "Not a member!" if (!record && !current_user.admin)
 	end
 
 	def check_if_banned
 		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: @room.id)
-		redirect_to rooms_path, alert: "banned" if record and record.banned
+		redirect_to rooms_path, alert: "banned" if record && record.banned && !current_user.admin
 	end
 
 	def check_rights
 		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: @room.id)
-		redirect_to rooms_path, alert: "Don't have enough rights!" if !record.owner
+		if current_user.admin
+			return
+		end
+		redirect_to rooms_path, alert: "Don't have enough rights!" if !record.owner && !current_user.admin
 	end
 
 end
