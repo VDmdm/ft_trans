@@ -3,17 +3,17 @@ class TournamentRoundJob < ApplicationJob
 
   def perform(tournament, round)
     # Do something later
+    if round != 0
+      pairs_previous = tournament.tournament_pair.where("round = ?", round - 1)
+      while previous_round_continues?(tournament, pairs_previous) do
+        sleep(60)
+      end
+    end
+    
     pairs = tournament.tournament_pair.where("round = ?", round)
     if pairs.empty?
       TournamentEndJob.perform_later(tournament)
       return
-    end
-
-    if round != 0
-      pairs_previous = tournament.tournament_pair.where("round = ?", round - 1)
-      while previous_round_continues?(pairs_previous) do
-        sleep(60)
-      end
     end
     
     pairs.each do |pair|
@@ -51,10 +51,21 @@ class TournamentRoundJob < ApplicationJob
     pair.update_attribute(:game, game)
   end
 
-  def previous_round_continues?(pairs)
+  def previous_round_continues?(tournament, pairs)
     pairs.each do |pair|
-      return true unless pair.game.ended?
+      if !pair.game.broadcasted
+        player1 = tournament.tournament_players.find_by(player: pair.p1)
+        player2 = tournament.tournament_players.find_by(player: pair.p2)
+        player1.update_attribute(:score, player1.score - 1)
+        player2.update_attribute(:score, player2.score - 1)
+        pair.game.update_attribute(:status, :times_up)
+      elsif pair.game.ended? || pair.game.times_up?
+        next
+      else
+        return true
+      end
     end
+    return false
   end
   
 end

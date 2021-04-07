@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_082121) do
     t.boolean "ball_down_mode", default: false
     t.boolean "ball_speedup_mode", default: false
     t.boolean "random_mode", default: false
+    t.boolean "broadcasted", default: false
     t.float "ball_size", default: 1.0
     t.float "speed_rate", default: 1.0
     t.integer "p1_score", default: 0

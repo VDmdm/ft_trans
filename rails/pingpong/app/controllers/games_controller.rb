@@ -128,7 +128,6 @@ class GamesController < ApplicationController
 		if status == "not ready" || status == "lags"
 			GameStateHash.instance.add_kv("#{string}_status_#{game.id}", "ready")
 		elsif status == "ready"
-			p "=================== #{GameStateHash.instance.return_value("#{string}_pause_#{game.id}")} ===================="
 			if GameStateHash.instance.return_value("#{string}_pause_#{game.id}") == "false"
 				GameStateHash.instance.add_kv("#{string}_status_#{game.id}", "not ready")
 			end
@@ -162,7 +161,7 @@ class GamesController < ApplicationController
 
 	def check_game_is_ended
 		game = Game.find_by(id: params[:id])
-		redirect_to games_path, alert: "Game has been ended!" if game.status == "ended"
+		redirect_to games_path, alert: "Game has been ended!" unless game.pending? 
 	end
 
 	def check_game_allready_have_p2

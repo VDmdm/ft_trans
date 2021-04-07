@@ -3,9 +3,10 @@ class TournamentEndJob < ApplicationJob
 
   def perform(tournament)
     # Do something later
-    tournament.status = :completed
+    tournament.update_attribute(:status, :completed)
     players = tournament.tournament_players.size
     max_score = tournament.tournament_players.maximum(:score)
+    return if max_score <= 0
     winners = tournament.tournament_players.where("score = ?", max_score)
     winners.each do |winner|
       winner.update_attribute(:winner, true)
