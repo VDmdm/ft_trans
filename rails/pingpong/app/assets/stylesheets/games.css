@@ -20,7 +20,7 @@
 
 .game-status-block {
     display: inline-flex;
-    width: 100%;
+    width: 90%;
     border: 1px solid #fff;
     padding: 29px 56px 28px 59px;
     align-items: center;
@@ -114,7 +114,6 @@
 }
 
 .games-free-type-item {
-    display: flex;
     margin-bottom: 20px;
 }
 
