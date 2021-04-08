@@ -40,6 +40,7 @@ class User < ApplicationRecord
 	has_many :invitations
 	has_many :pending_invitations, -> { where confirmed: false }, class_name: "Invitation", foreign_key: "friend_id"
 
+
 	has_many :games
   	has_one :pending_games_p1, -> { where(status: :pending) }, :class_name => :Game, foreign_key: "p1_id"
   	has_one :pending_games_p2, -> { where(status: :pending) }, :class_name => :Game, foreign_key: "p2_id"
@@ -49,6 +50,7 @@ class User < ApplicationRecord
 	devise :database_authenticatable, :registerable,
 	:recoverable, :rememberable, :trackable, :validatable,
 	:omniauthable, omniauth_providers: [:marvin]
+
 
 	def friends
 		friends_user_sent_inv = Invitation.where(user_id: id, confirmed: true).pluck(:friend_id)

@@ -43,14 +43,23 @@ $(document).on("turbolinks:load", function() {
 					}
 				}
 				for (var i = 0; i < data.active_users.length; i++) {
-
-					if (data.active_users[i].id == current_user || data.active_users[i].admin ){
+					if (data.active_users[i].id == current_user){
 						break;
 					}
-
+					var wasAdmin = false
+					for (var j = 0; j < data.admins.length; j++) {
+						if (data.admins[j].id == current_user)
+							wasAdmin = true
+					}
+					if (wasAdmin)
+					{
+						wasAdmin = false
+						break
+					}
 					if ((i + 1) == data.active_users.length){
+						
 						consumer.subscriptions.remove(channel);
-							return;
+						return;
 					}
 				}
 
