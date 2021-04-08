@@ -49,7 +49,7 @@
     <div class="guild-lists-wrap">
 		<div class="guild-users-list">
 			<div class="guild-users-list-header">
-				<%= image_tag "man.png", style: "height:40px" %>
+				<%= image_tag "man.png", style: "height:40px;margin-right:10px" %>
 				<h3 class="guild-users-list-header-title">
 					<%= @guild.guild_members.size %>
 					<% if (current_user.guild_owner || current_user.guild_officer) && current_user.guild == @guild%>
