@@ -43,7 +43,7 @@
                                                     value: "#000000", oninput: "change_backcolor(this.value)" %>
                     <label>or</label>
                     <%= form.label "upload-bg-image", "file", class: "upload-file-label" %>
-                    <%= form.file_field :bg_image, id: "game_upload-bg-image"%>
+                    <%= form.file_field :bg_image, id: "tournament_upload-bg-image"%>
                     <%= hidden_field_tag :file_exist, false, id: 'file_exist' %>
                     <img id="output" style="display: none;">
                 </div>

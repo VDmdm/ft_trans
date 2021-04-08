@@ -1,5 +1,66 @@
 <section class="tournaments">
-<p class="tournaments-title">Tournaments<% if current_user.admin %><%= link_to "+", new_tournament_path %><%end%></p>
+<p class="tournaments-title">Tournaments<% if current_user.admin %><%= link_to "+", new_tournament_path %><%end%></p></br>
+
+<%if !@games.empty? %>
+<div>
+<p class="tournaments-title" style="margin-bottom:0px">Tournament games</p>
+<div style="height:400px;overflow:auto">
+<ul class="game-status-invite-list">
+<% @games.each do |game| %>
+	<li class="games-free-type-item">
+	<p><%= game.name %></p>
+
+							<div class="game-status-block launched-game-block">
+
+								<div class="game-status-info launched-game">
+									<p class="game-status-block-score-left">
+										<%= game.p1_score %>
+									</p>
+									<%= link_to  image_tag(game.p1.avatar, alt: "avatar", class: "game-status-info-avatar-img"), profile_path(game.p1), class: "game-status-info-avatar-link"%>
+									<div class="game-status-info-wrapper">
+										<p class="game-status-info-nickname"><%= link_to game.p1.nickname, profile_path(game.p1) %></p>
+										<%if game.p1.guild %>
+											<p class="game-status-info-guild">
+												<%= link_to guild_path(game.p1.guild), class: "game-status-info-guild" do %>
+													[<%=game.p1.guild.anagram%>]
+												<%end%>
+											</p>
+										<%end%>
+									</div>
+								</div>
+								<div class="launched-game-spectate">
+									<p>vs</p>
+									<%= link_to "join", game_path(game), class: "game-status-spectate" %>
+								</div>
+								<div class="game-status-info launched-game">
+									<%= link_to image_tag(game.p2.avatar, alt: "avatar", class: "game-status-info-avatar-img"), profile_path(game.p2), class: "game-status-info-avatar-link"%>
+									<div class="game-status-info-wrapper">
+										<p class="game-status-info-nickname"><%= link_to game.p2.nickname, profile_path(game.p2) %></p>
+										<%if game.p2.guild %>
+											<p class="game-status-info-guild">
+												<%= link_to guild_path(game.p2.guild), class: "game-status-info-guild" do %>
+													[<%=game.p2.guild.anagram%>]
+												<%end%>
+											</p>
+										<%end%>
+									</div>
+									<p class="game-status-block-score-right">
+										<%= game.p2_score %>
+									</p>
+								</div>
+								
+							</div>
+						</li>
+<%end%>
+</ul>
+</div>
+</div>
+<%end%>
+
+<%if !@tournaments.empty? %>
+<p class="tournaments-title" style="margin-bottom:0px">Active tournaments</p>
+<%end%>
+<div style="height:380px;overflow:auto">
 <ul class="tournaments-list">
 <% @tournaments.each do |t| %>
     <li class="tournaments-item">
@@ -48,7 +109,8 @@
                         <% if t.random_mode %>
                             <li class="game-status-mods-item">
                                 <%= image_tag "random.png", alt: "icon", class: "game-status-mods-item-icon" %>
-                            </li>
+							</li>
+							
                          <%end%>
                     </ul>
                 </div>
@@ -63,7 +125,8 @@
                 register
             </button>
         </div>
-    </li>
+	</li>
     <%end%>
 </ul>
+</div>
 </section>

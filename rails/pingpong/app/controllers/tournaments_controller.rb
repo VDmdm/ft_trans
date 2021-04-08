@@ -1,6 +1,7 @@
 class TournamentsController < ApplicationController
 	def index
-		@tournaments = Tournament.all
+		@tournaments = Tournament.where("status = 0")
+		@games = Game.where("game_type = 4 AND status = 0")
 	end
 
 	def new
