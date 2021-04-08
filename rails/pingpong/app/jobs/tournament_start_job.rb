@@ -11,6 +11,8 @@ class TournamentStartJob < ApplicationJob
     end
     tournament.update_attribute(:status, :goes)
     tournament.make_pair
+    tournament.pay
     TournamentRoundJob.perform_later(tournament, 0)
   end
+
 end

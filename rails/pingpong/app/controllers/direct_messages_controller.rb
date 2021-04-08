@@ -4,8 +4,6 @@ class DirectMessagesController < ApplicationController
 	before_action :check_if_blocked_by, only: [:create]
 	
 	def create
-		p "$#(@*$@#*$*#@*$*@#$*#@*$*#@$*@#$*#@*$#*$*##$*#*@"
-		p params
 		@room = DirectRoom.find params.dig(:direct_message, :direct_room_id)
 		@room_message = DirectMessage.create user: current_user, direct_room: @room, message: params.dig(:direct_message, :message)
 		DirectChannel.broadcast_to @room, @room_message
@@ -16,7 +14,6 @@ class DirectMessagesController < ApplicationController
 		@room = DirectRoom.find params.dig(:direct_message, :direct_room_id)
 		res = current_user.id == @room.user_id
 		res = current_user.id == @room.dude_id if !res
-		res = current_user.admin
 		redirect_to rooms_path, alert: "Not a member" if !res
 	end
 	

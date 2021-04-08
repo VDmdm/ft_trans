@@ -59,9 +59,16 @@
             <%= image_tag "man.png", alt: "man", class: "tournaments-register-amount-member-icon" %>
                 <span><%=t.tournament_players.size%>/<%=t.max_players%></span>
             </div>
-            <button class="tournaments-register-button">
-                register
-            </button>
+            
+            <% if t.player_registered?(current_user)%>
+                <button class="tournaments-register-button">
+                    <%= link_to "unregister", tournament_unregister_path(t), remote: true, method: :post %>
+                </button>
+            <% elsif t.tournament_players.size != t.max_players%>
+                <button class="tournaments-register-button">
+                    <%= link_to "register", tournament_register_path(t), remote: true, method: :post %>
+                </button>
+            <% end %>
         </div>
     </li>
     <%end%>

@@ -19,7 +19,7 @@ class TournamentRoundJob < ApplicationJob
     pairs.each do |pair|
       game_create(tournament, pair)
     end
-    TournamentRoundJob.set(wait: tournament.one_round_time.minutes).perform_later(tournament, round + 1)
+    TournamentRoundJob.set(wait: tournament.one_round_time.minutes + 1.minutes).perform_later(tournament, round + 1)
   end
 
   def game_create(tournament, pair)

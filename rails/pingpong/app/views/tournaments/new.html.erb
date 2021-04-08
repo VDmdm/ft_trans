@@ -2,28 +2,30 @@
 <section class="game-room-form-and-game-preview">
     <%= form_for Tournament.new, remote: true do |form| %>
 		<div>
-            <div>
-                <%= form.label :name %>
-                <%= form.text_field :name, class: "game-room-name-input tournament_field" %>
-             </div>
+            
 			<div class="game-room-create-form-el">
-
+                <div>
+                    <%= form.label :name %>
+                    <%= form.text_field :name, class: "game-room-name-input tournament_field" %>
+                </div>
                 <div>
                     <%= form.label :description, 'Description', class:"game-room-name-input" %>
-		            <%= form.text_field :description, placeholder: "50 characters", minlength: 0, maxlength: 50, size: "100px" %>
+                    <%= form.text_field :description, placeholder: "50 characters", minlength: 0, maxlength: 50, size: "100px" %>
                 </div>
-				<div>
+            </div>
+			<div class="game-room-create-form-el">
+                <div>
 					<%= form.label :start, 'Tournament start' %>
 					<!-- <%= form.datetime_field :started, value: (DateTime.now + 2.minute).strftime("%FT%R"), min: (DateTime.now + 2.minute).strftime("%FT%R"), oninput: "change_wartime_and_date(this.value)" %> -->
 					<%= form.datetime_field :start, value: (DateTime.now + 2.minute).strftime("%FT%R"), min: (DateTime.now + 2.minute).strftime("%FT%R"), class: "tournament_field" %>
-				</div>
-            </div>
-			<div class="game-room-create-form-el">
+                </div>
 				<div>
 					<%= form.label :max_players, 'Nunber of players' %>
 					<%= form.number_field :max_players, value: 2, min: "2", max: "10", step: "2", class: "tournament_field" %>
 				</div>
-				<div>
+			</div>
+            <div class="game-room-create-form-el">
+                <div>
 					<%= form.label :cost, 'Cost' %>
 					<%= form.number_field :cost, value: 100, min: "100", max: "5000", step: "100", class: "tournament_field" %>
 				</div>
@@ -31,7 +33,7 @@
 					<%= form.label :one_round_time, 'Time for round' %>
 					<%= form.number_field :one_round_time, value: 1, min: "1", max: "60", step: "20", class: "tournament_field"%>
 				</div>
-			</div>
+            </div>
 		</div>
 		<h4 class="game-room-create-title">Ball settings</h4>
         <div class="game-room-create-contour-up">

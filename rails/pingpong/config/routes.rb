@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   get 'friends/destroy', to: "friends#destroy"
   get 'friends/search' , to: "friends#search"
 
-  resources :guilds
+  resources :guilds, only: [:index, :show, :new, :create]
   post 'guilds/:id/add_officer', to: "guilds#add_officer", as: :add_officer
   post 'guilds/:id/leave_guild', to: "guilds#leave_guild", as: :leave_guild
   post 'guilds/:id/kick_member', to: "guilds#kick_member", as: :kick_member
@@ -59,15 +59,18 @@ Rails.application.routes.draw do
   post 'guilds/:id/decline_join_request', to: "guild_invites#decline_join_request", as: :decline_join_request
   post 'guilds/:id/cancel_join_request', to: "guild_invites#cancel_join_request", as: :cancel_join_request
 
-  resources :games
+  resources :games, only: [:index, :show, :new, :create]
   post 'games/:id/join_player', to: "games#join_player", as: :game_join_player
   post 'games/:id/switch_ready', to: "games#switch_ready", as: :game_switch_ready
   post 'games/:id/leave_player', to: "games#leave_player", as: :game_leave_player
   post 'games/wartime_game_create', to: "games#wartime_game_create", as: :wartime_game_create
 
-  resources :profiles
+  resources :profiles, only: [:index, :show, :edit]
 
-  resources :tournaments
+  resources :tournaments, only: [:new, :create, :index, :destroy]
+
+  post 'tournaments/:id/register', to: "tournaments#register", as: :tournament_register
+  post 'tournaments/:id/unregister', to: "tournaments#unregister", as: :tournament_unregister
 
   get 'guilds/:id/wars', to: "wars#index", as: :guild_wars_index
   get 'guilds/wars/:id', to: "wars#show", as: :guild_wars_show

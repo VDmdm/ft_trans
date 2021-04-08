@@ -44,6 +44,17 @@ class Tournament < ApplicationRecord
 		end
 	end
 
+	def pay
+		players = self.tournament_players
+		players.each do |tp|
+			tp.player.update_attribute(:score, tp.player.score - self.cost)
+		end
+	end
+
+	def player_registered?(player)
+		self.tournament_players.find_by(player: player)
+	end
+
 	private
 
 	def start_date
