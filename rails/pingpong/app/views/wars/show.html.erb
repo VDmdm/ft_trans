@@ -139,6 +139,11 @@
 					<%= image_tag "ball_speed_up.png", class: "wars-show-mods-item-icon" %>
 				</li>
 			<%end%>
+			<% if @war.random_mode %>
+				<li class="wars-show-mods-item">
+					<%= image_tag "random.png", class: "wars-show-mods-item-icon" %>
+				</li>
+			<%end%>
 		</ul>
 	</div>
 </div>

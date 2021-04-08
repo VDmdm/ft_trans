@@ -114,6 +114,11 @@
 											<%= image_tag "ball_speed_up.png", alt: "icon", class: "game-status-mods-item-icon" %>
 										</li>
 									<%end%>
+									<% if game.random_mode %>
+										<li class="game-status-mods-item">
+											<%= image_tag "random.png", alt: "icon", class: "game-status-mods-item-icon" %>
+										</li>
+									<%end%>
                                 </ul>
 							</div>
 							<%= link_to "join", game_path(game), class: "game-status-accept" %>

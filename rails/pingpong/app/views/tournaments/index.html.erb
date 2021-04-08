@@ -1,34 +1,26 @@
 <section class="tournaments">
-<p class="tournaments-title">Tournaments+</p>
+<p class="tournaments-title">Tournaments<% if current_user.admin %><%= link_to "+", new_tournament_path %><%end%></p>
 <ul class="tournaments-list">
+<% @tournaments.each do |t| %>
     <li class="tournaments-item">
         <div class="tournaments-info">
-            <p class="tournaments-info-name">GACHIMUCHI</p>
+            <p class="tournaments-info-name"><%= t.name %></p>
             <p class="tournaments-info-description">
                 in this tournament you can become dungeoun master
             </p>
             <time class="tournaments-info-date">
-                28/03/2021 18:00
+                <%=t.start.strftime("%m/%d/%Y %H:%M") %>
             </time>
         </div>
         <div class="tournaments-prizes">
             <div class="tournaments-prizes-entry">
-                <span>Entry 25</span>
+                <span>Entry <%= t.cost %></span>
                 <%= image_tag "ball.png", alt: "coin", class: "tournaments-prizes-entry-icon" %>
             </div>
-            <p class="tournaments-prizes-title">Prizes</p>
+            <p class="tournaments-prizes-title">Prize</p>
             <ul class="tournaments-prizes-list">
                 <li class="tournaments-prizes-item">
-                    <%= image_tag "cup.png", alt: "cup", class: "tournaments-prizes-item-cup" %>
-                    <span class="tournaments-prizes-item-text">50% of pool</span>
-                </li>
-                <li class="tournaments-prizes-item">
-                    <%= image_tag "cup.png", alt: "cup", class: "tournaments-prizes-item-cup" %>
-                    <span class="tournaments-prizes-item-text">35% of pool</span>
-                </li>
-                <li class="tournaments-prizes-item">
-                    <%= image_tag "cup.png", alt: "cup", class: "tournaments-prizes-item-cup" %>
-                    <span class="tournaments-prizes-item-text">15% of pool</span>
+                    <span class="tournaments-prizes-item-text"><%= t.prize%> <%= image_tag "ball.png", alt: "coin", class: "tournaments-prizes-item-cup"%></span>
                 </li>
             </ul>
         </div>
@@ -36,30 +28,42 @@
                         <span class="game-status-mods-title">Mods</span>
                         <ul class="game-status-mods-list">
                         <li class="game-status-mods-item">
-                            <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            <%= image_tag "ball_speed.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            <h3><%= t.speed_rate %></h3>
                         </li>
                         <li class="game-status-mods-item">
-                            <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            <%= image_tag "ball_size.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            <h3><%= t.ball_size %></h3>
                         </li>
-                        <li class="game-status-mods-item">
-                            <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
-                        </li>
-                        <li class="game-status-mods-item">
-                            <%= image_tag "cup.png", alt: "icon", class: "game-status-mods-item-icon" %>
-                        </li>
+                        <% if t.ball_down_mode %>
+                            <li class="game-status-mods-item">
+                                <%= image_tag "ball_size_down.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            </li>
+                        <%end%>
+                        <% if t.ball_speedup_mode %>
+                            <li class="game-status-mods-item">
+                                <%= image_tag "ball_speed_up.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            </li>
+                        <%end%>
+                        <% if t.random_mode %>
+                            <li class="game-status-mods-item">
+                                <%= image_tag "random.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            </li>
+                         <%end%>
                     </ul>
                 </div>
         <div class="tournaments-register">
-            <p class="tournaments-register-ranked">ranked</p>
+            <p class="tournaments-register-ranked"></p>
 <!--        <p class="tournaments-register-unranked">unranked</p>-->
             <div class="tournaments-register-amount-member">
             <%= image_tag "man.png", alt: "man", class: "tournaments-register-amount-member-icon" %>
-                <span>27/30</span>
+                <span><%=t.tournament_players.size%>/<%=t.max_players%></span>
             </div>
             <button class="tournaments-register-button">
                 register
             </button>
         </div>
     </li>
+    <%end%>
 </ul>
 </section>
