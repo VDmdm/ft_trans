@@ -16,7 +16,6 @@ class DirectMessagesController < ApplicationController
 		@room = DirectRoom.find params.dig(:direct_message, :direct_room_id)
 		res = current_user.id == @room.user_id
 		res = current_user.id == @room.dude_id if !res
-		res = current_user.admin
 		redirect_to rooms_path, alert: "Not a member" if !res
 	end
 	

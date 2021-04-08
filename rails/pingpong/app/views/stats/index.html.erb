@@ -2,14 +2,18 @@
     <h2 class="stats-title">Stats</h2>
     <section class="stats-top">
         <section class="stats-top-guild">
-            <h3 class="stats-top-title">Top guild</h3>
+			<h3 class="stats-top-title">Top guild</h3>
+			<% if @top_guild %>
+			<% @top_guild.each do |guild| %>
             <section class="top-guild">
-                <div class="top-guild-info">
-                    <span class="top-guild-name">ANAL-BLYAT</span>
-                    <span class="top-guild-anagram">[ZHOPA]</span>
+				<div class="top-guild-info">
+					<%= link_to guild.anagram, guild_path(guild), class: "top-guild-name" %>
+					<%= link_to guild_path(guild), class: "top-guild-anagram" do %>
+						[<%= guild.anagram %>]
+					<%end%>
                 </div>
-                <div class="top-guild-stats-wrap">
-                    <img src="assets/images/sword.png" alt="avatar" class="stats-top-guild-avatar">
+				<div class="top-guild-stats-wrap">
+					<%= link_to image_tag(guild.avatar, alt: "avatar", class: "stats-top-guild-avatar"), guild_path(guild) %>
                     <div class="top-guild-stats">
                         <div class="top-guild-stat">
                             <%= image_tag "sword.png", class: "top-guild-stat-icon" %>
@@ -17,91 +21,50 @@
                         </div>
 
                         <div class="top-guild-stat">
-                        <%= image_tag "sword.png", class: "top-guild-stat-icon" %>
-                            <span class="top-guild-stat-kd">23 / 100</span>
+                        <%= image_tag "man.png", class: "top-guild-stat-icon" %>
+                            <span class="top-guild-stat-kd"><%= guild.members.size %></span>
                         </div>
 
                         <div class="top-guild-stat">
-                            <%= image_tag "sword.png", class: "top-guild-stat-icon" %>
+                            <%= image_tag "win_rate.png", class: "top-guild-stat-icon" %>
                             <span class="top-guild-stat-kd">23%</span>
                         </div>
 
                     </div>
                     <div class="top-guild-score-wrap">
                         <%= image_tag "ball.png", class: "top-guild-stat-icon" %>
-                        <span class="top-guild-score">322</span>
+                        <span class="top-guild-score"><%= guild.points %></span>
                     </div>
                 </div>
-            </section>
+			</section>
+			<%end%>
+			<%else%>
+				<h3>There are no guild top-guild</h3>
+			<%end%>
         </section>
 
         <section class="stats-top-users">
             <h3 class="stats-top-title">Top users</h3>
-            <ul class="stats-top-users-list">
+			<ul class="stats-top-users-list">
+			<% @top_users.each do |user| %>
                 <li class="stats-top-users-item">
-                    <%= image_tag "cup.png", class: "stats-top-users-cup" %>
-                    <img src="assets/images/sword.png" alt="avatar" class="stats-top-users-avatar">
+					<%= image_tag "cup.png", class: "stats-top-users-cup" %>
+					<%= link_to image_tag(user.avatar, alt: "avatar", class: "stats-top-users-avatar"), profile_path(user) %>
                     <div class="user-info">
-                        <span class="user-info-nickname">Jalvaroddq</span>
-                        <span class="user-info-anagram">[ANAL #]</span><br>
-                        <a href="#" class="user-action-message">
-                            <%= image_tag "mail.png", class: "user-action-message-icon" %>
-                        </a>
-                        <a href="#" class="user-action-war">
-                            <%= image_tag "sword.png", class: "user-action-war-icon" %>
-                        </a>
-                        <a href="#" class="user-action-block">
-                            <%= image_tag "delete.png", class: "user-action-block-icon" %>
-                        </a>
+						<span class="user-info-nickname"><%=link_to user.nickname,profile_path(user) %></span>
+						<%if user.guild %>
+							<%= link_to guild_path(user.guild), class: "user-info-anagram" do %>
+								[<%= user.guild.name %>]
+							<%end%>
+						<%end%>
+						<%= link_to image_tag("mail.png", class: "user-action-message-icon"), direct_rooms_find_path(user_id: user.id), method: :post, remote: true %>
                     </div>
                     <div class="stats-top-users-score">
                         <%= image_tag "ball.png", class: "top-users-score-icon" %>
-                        <span class="top-users-score">322</span>
+                        <span class="top-users-score"><%= user.score %></span>
                     </div>
 				</li>
-				
-                <li class="stats-top-users-item">
-                    <%= image_tag "cup.png", class: "stats-top-users-cup" %>
-                    <img src="assets/images/sword.png" alt="avatar" class="stats-top-users-avatar">
-                    <div class="user-info">
-                        <span class="user-info-nickname">Jalvaroddq</span>
-                        <span class="user-info-anagram">[ANAL #]</span><br>
-                        <a href="#" class="user-action-message">
-                            <%= image_tag "mail.png", class: "user-action-message-icon" %>
-                        </a>
-                        <a href="#" class="user-action-war">
-                            <%= image_tag "sword.png", class: "user-action-war-icon" %>
-                        </a>
-                        <a href="#" class="user-action-block">
-                            <%= image_tag "delete.png", class: "user-action-block-icon" %>
-                        </a>
-                    </div>
-                    <div class="stats-top-users-score">
-                        <%= image_tag "ball.png", class: "top-users-score-icon" %>
-                        <span class="top-users-score">322</span>
-                    </div>
-                </li>
-                <li class="stats-top-users-item">
-                    <%= image_tag "cup.png", class: "stats-top-users-cup" %>
-                    <img src="assets/images/sword.png" alt="avatar" class="stats-top-users-avatar">
-                    <div class="user-info">
-                        <span class="user-info-nickname">Jalvaroddq</span>
-                        <span class="user-info-anagram">[ANAL #]</span><br>
-                        <a href="#" class="user-action-message">
-                            <%= image_tag "mail.png", class: "user-action-message-icon" %>
-                        </a>
-                        <a href="#" class="user-action-war">
-                            <%= image_tag "sword.png", class: "user-action-war-icon" %>
-                        </a>
-                        <a href="#" class="user-action-block">
-                            <%= image_tag "delete.png", class: "user-action-block-icon" %>
-                        </a>
-                    </div>
-                    <div class="stats-top-users-score">
-                        <%= image_tag "ball.png", class: "top-users-score-icon" %>
-                        <span class="top-users-score">322</span>
-                    </div>
-                </li>
+			<%end%>
             </ul>
         </section>
     </section>
@@ -112,17 +75,14 @@
                 <th class="table-title table-title-rank">rank</th>
                 <th class="table-title table-title-nickname">nick-name</th>
                 <th class="table-title table-title-score">score</th>
-            </tr>
+			</tr>
+		<% @users.each  do |user| %>
             <tr class="table-row">
-                <td class="table-row-rank">1</td>
-                <td class="table-row-nickname">deddara</td>
-                <td class="table-row-score">3000</td>
-            </tr>
-            <tr class="table-row">
-                <td class="table-row-rank">1</td>
-                <td class="table-row-nickname">deddara</td>
-                <td class="table-row-score">3000</td>
-            </tr>
+                <td class="table-row-rank"><%= user.rating %></td>
+                <td class="table-row-nickname"><%= user.nickname %></td>
+                <td class="table-row-score"><%= user.score %></td>
+			</tr>
+		<%end%>
         </table>
     </section>
 </section>
