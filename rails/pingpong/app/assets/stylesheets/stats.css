@@ -151,11 +151,13 @@
     display: flex;
     flex-wrap: wrap;
     max-width: 295px;
-    margin-right: 62px;
+    margin-right: 38px;
 }
 
 .top-guild-stat {
     margin-left: 15px;
+    display: flex;
+    align-items: center;
 }
 
 .stats-top-guild-avatar {
@@ -167,6 +169,7 @@
 .top-guild-stat-icon {
     width: 33px;
     height: 33px;
+    margin-right: 8px;
 }
 
 .top-guild-stat-kd {

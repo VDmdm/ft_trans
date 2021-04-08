@@ -16,9 +16,10 @@ $(document).on("turbolinks:load", function() {
 		{
 		  received: function(data) {
 			var year = data.updated_at.substring(0, 10);
+			year = year.replaceAll("-", "/")
 			var banned = "ban";
 			var muted = "mute";
-			var time = data.updated_at.substring(11, 19) + " UTC";
+			var time = data.updated_at.substring(11, 19);
 			var content = messageTemplate.children().clone(true, true);
 			var current_user = content.find('[data-role="user-id"]').attr('id');
 			content.find('[data-role="user-avatar"]').attr('src', data.user_avatar);

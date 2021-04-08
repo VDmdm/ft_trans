@@ -23,7 +23,7 @@ class TournamentRoundJob < ApplicationJob
   end
 
   def game_create(tournament, pair)
-    game = Game.new       name: "tournament: #{tournament.name}, round: #{pair.round} #{pair.p1.nickname} - #{pair.p2.nickname}",
+    game = Game.new       name: "tournament: #{tournament.name}, round: #{pair.round}",
                           p1: pair.p1,
                           p2: pair.p2,
                           game_type: 'tournament',
