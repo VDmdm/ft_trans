@@ -6,7 +6,7 @@
         <div class="tournaments-info">
             <p class="tournaments-info-name"><%= t.name %></p>
             <p class="tournaments-info-description">
-                in this tournament you can become dungeoun master
+                <%= t.description %>
             </p>
             <time class="tournaments-info-date">
                 <%=t.start.strftime("%m/%d/%Y %H:%M") %>

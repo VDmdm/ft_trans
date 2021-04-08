@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_082121) do
   create_table "tournaments", force: :cascade do |t|
     t.bigint "creator_id"
     t.string "name"
+    t.string "description"
     t.integer "status", default: 0
     t.datetime "start"
     t.integer "one_round_time"

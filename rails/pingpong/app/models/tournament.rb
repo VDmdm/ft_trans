@@ -8,6 +8,7 @@ class Tournament < ApplicationRecord
 	has_many		:tournament_winners, -> { where(winner: true) }, :class_name => :TournamentPlayer
 	has_many		:tournament_pair
 
+	validates		:description, presence: true, length: { maximum: 50, minimum: 10 }
 	validates  		:creator, presence: true
 	validates  		:name, presence: true, length: { maximum: 15, minimum: 4 }
 	validates  		:start, presence: true

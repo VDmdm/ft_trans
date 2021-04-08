@@ -29,7 +29,7 @@ class TournamentsController < ApplicationController
 	private 
 
 	def tournament_parametres
-		params.require(:tournament).permit( :creator, :name, :start,
+		params.require(:tournament).permit( :creator, :name, :description, :start,
 											:one_round_time, :max_players,
 											:cost, :prize, :ball_color,
 											:bg_color, :paddle_color, :ball_down_mode,

@@ -2,11 +2,16 @@
 <section class="game-room-form-and-game-preview">
     <%= form_for Tournament.new, remote: true do |form| %>
 		<div>
+            <div>
+                <%= form.label :name %>
+                <%= form.text_field :name, class: "game-room-name-input tournament_field" %>
+             </div>
 			<div class="game-room-create-form-el">
-				<div>
-					<%= form.label :name %>
-					<%= form.text_field :name, class: "game-room-name-input tournament_field" %>
-				</div>
+
+                <div>
+                    <%= form.label :description, 'Description', class:"game-room-name-input" %>
+		            <%= form.text_field :description, placeholder: "50 characters", minlength: 0, maxlength: 50, size: "100px" %>
+                </div>
 				<div>
 					<%= form.label :start, 'Tournament start' %>
 					<!-- <%= form.datetime_field :started, value: (DateTime.now + 2.minute).strftime("%FT%R"), min: (DateTime.now + 2.minute).strftime("%FT%R"), oninput: "change_wartime_and_date(this.value)" %> -->
