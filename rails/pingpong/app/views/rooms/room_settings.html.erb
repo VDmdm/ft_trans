@@ -10,7 +10,7 @@
 <div>
 <div class="messages-header">
 <%= link_to image_tag("arrow.png" , style: "height:40px;width:40px;margin-top:5px" ), room_path(@room) %>
-    <%= link_to (image_tag "man.png" , style: "height:55px;width:55px;" ), rooms_users_path %>
+    <%= link_to (image_tag "man.png" , style: "height:45px;" ), rooms_users_path %>
       <h3 style="font-size: 25px;margin-top:10px">
         <%= @room.members.length %>
       </h3>

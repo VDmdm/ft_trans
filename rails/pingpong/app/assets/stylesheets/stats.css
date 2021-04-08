@@ -79,6 +79,7 @@
 .user-info {
     display: inline-block;
     margin-left: 8px;
+    margin-right: auto;
 }
 .user-action-message-icon {
     height: 32px;
