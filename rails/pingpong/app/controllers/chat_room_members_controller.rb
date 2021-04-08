@@ -5,6 +5,7 @@ class ChatRoomMembersController < ApplicationController
 	before_action :check_if_yourself, only: [:ban, :unban, :mute, :unmute, :make_admin, :remove_admin, :kick]
 	before_action :check_rights, only: [:ban, :unban, :mute, :unmute, :kick]
 	before_action :check_owner_rights, only: [:make_admin, :remove_admin]
+	before_action :check_if_on_site_admin, only: [:ban, :unban, :mute, :unmute, :kick]
 	before_action :check_if_on_owner, only: [:ban, :unban, :mute, :unmute, :kick]
 	before_action :check_if_on_admin , only: [:ban, :unban, :mute, :unmute, :kick]
 	before_action :check_if_banned, only: [:new, :create, :ban, :make_admin]
@@ -186,11 +187,17 @@ class ChatRoomMembersController < ApplicationController
 
 	def check_rights
 		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: params[:id])
-		redirect_to rooms_path, alert: "Don't have enough rights!" if !record.admin and !record.owner
+		if current_user.admin
+			return
+		end
+		redirect_to rooms_path, alert: "Don't have enough rights!" if !record.admin && !record.owner
 	end
 
 	def check_owner_rights
 		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: params[:id])
+		if current_user.admin
+			return
+		end
 		redirect_to rooms_path, alert: "Don't have enough rights!" if !record.owner
 	end
 
@@ -199,10 +206,18 @@ class ChatRoomMembersController < ApplicationController
 		redirect_to rooms_path, alert: "Don't have enough rights!" if record.owner
 	end
 
+	def check_if_on_site_admin
+		record = User.all.find_by(id: params[:user_id])
+		redirect_to rooms_path, alert: "Can't do on site admin!" if record.admin
+	end
+
 	def check_if_on_admin
 		record = ChatRoomMember.all.find_by(user_id: params[:user_id], room_id: params[:id])
 		record2 = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: params[:id])
-		redirect_to rooms_path, alert: "Don't have enough rights!" if !record2.owner and record.admin
+		if current_user.admin
+			return
+		end
+		redirect_to rooms_path, alert: "Don't have enough rights!" if !record2.owner  && record.admin
 	end
 
 end

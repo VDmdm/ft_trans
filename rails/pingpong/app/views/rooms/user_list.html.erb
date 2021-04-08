@@ -25,7 +25,7 @@
           <%end%>
       </div>
       <span class="messages-line"></span>
-      <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
+      <% if @room.is_admin?(current_user) || @room.is_owner?(current_user) || current_user.admin %>
         <div class="room-users" style="height:400px">
           <%else%>
             <div class="room-users">
@@ -39,13 +39,13 @@
                      
                         <div class="dropdown-msg">
               <%= link_to image_tag(user.avatar, style: "width: 50px; height: 50px; margin-right:10px;"),  profile_path(user) %>
-              <% if @room.is_admin?(current_user) or @room.is_owner?(current_user) %>
+              <% if @room.is_admin?(current_user) || @room.is_owner?(current_user) || current_user.admin%>
               <% if user != current_user %>
               <div class="dropdown-msg-content" style="width:120px;">
               <% if !@room.is_admin?(user) and !@room.is_owner?(user) %>
-              <%= link_to "make admin", add_adm_member_path(user_id: user.id),  method: :post, remote: true  %>
+                <%= link_to "make admin", add_adm_member_path(user_id: user.id),  method: :post, remote: true  %>
               <%elsif @room.is_admin?(user)%>
-              <%= link_to "remove admin", remove_adm_member_path(user_id: user.id),  method: :post, remote: true  %>
+                <%= link_to "remove admin", remove_adm_member_path(user_id: user.id),  method: :post, remote: true  %>
 
                   
                  <%end%>

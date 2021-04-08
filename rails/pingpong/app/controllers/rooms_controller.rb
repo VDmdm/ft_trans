@@ -3,7 +3,9 @@ class RoomsController < ApplicationController
 	before_action :load_rooms
 	before_action :check_if_member, only: [:user_list, :room_settings]
 	before_action :check_if_banned, only: [:user_list, :room_settings]
-	before_action :check_rights, only: [:room_settings, :update, :destroy]
+	before_action :check_rights, only: [:room_settings, :update]
+	before_action :check_rights_destroy, only: [:destroy]
+
 	
 	def index
 		@rooms = Room.all
@@ -82,6 +84,11 @@ class RoomsController < ApplicationController
 	end
 
 	def check_rights
+		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: @room.id)
+		redirect_to rooms_path, alert: "Don't have enough rights!" if !record.owner
+	end
+
+	def check_rights_destroy
 		record = ChatRoomMember.all.find_by(user_id: current_user.id, room_id: @room.id)
 		if current_user.admin
 			return
