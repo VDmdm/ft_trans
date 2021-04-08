@@ -141,13 +141,13 @@
 								<% end %>
 							</div>
 						<div style="text-align:right">
-						<% if current_user.guild_owner && current_user.guild == @guild %>
+						<% if current_user.admin || (current_user.guild_owner && current_user.guild == @guild) %>
 							<% if !member.guild_officer  %>
 								<%= link_to "make officer", add_officer_path(user_id: member.id), style: "margin-left: auto; display:block", method: :post, remote: true %>
 							<% elsif %>
 								<%= link_to "remove officer", remove_officer_path(user_id: member.id), style: "margin-left: auto; display:block", method: :post, remote: true %>	
 							<%end%>
-							<% if ((current_user.guild_owner && !member.guild_owner)|| (current_user.guild_officer && !member.guild_owner && !member.guild_officer )) && current_user.guild == @guild %>
+							<% if current_user.admin || (((current_user.guild_owner && !member.guild_owner)|| (current_user.guild_officer && !member.guild_owner && !member.guild_officer )) && current_user.guild == @guild) %>
 								<%= link_to "kick", kick_member_path(user_id: member.id), style: "margin-left: auto; display:block", method: :post, remote: true %>
 							<%end%>
 						<%end%>

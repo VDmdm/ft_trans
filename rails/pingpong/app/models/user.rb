@@ -6,8 +6,6 @@ class User < ApplicationRecord
 
 	after_create :check_user_avatar
 
-	has_many :notifications, foreign_key: :recipient_id
-
 	has_one :guild_member
 	delegate :guild, to: :guild_member, allow_nil: true
 	delegate :owner, to: :guild_member, prefix: :guild, allow_nil: true

@@ -1,3 +1,0 @@
-<% @events.last(10).reverse_each do |notification| %>
-	<%= render partial: "events/#{notification.notifiable_type}/#{notification.action}", locals: {notification: notification} %>
-<% end %>

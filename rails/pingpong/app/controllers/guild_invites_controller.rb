@@ -14,8 +14,6 @@ class GuildInvitesController < ApplicationController
 	def send_invite
 		user = User.find(params[:user_id])
 		if current_user.guild.guild_invites.create(user: user, invited_by: current_user)
-			Notification.create(user: current_user, recipient: user, action: "invite", notifiable_type: "guilds",
-																	service_info: "#{ current_user.guild.name }")
 			redirect_back fallback_location: guild_path(current_user.guild), success: "#{user.nickname} has been invited to you guild"
 		else
 			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't invite #{user.nickname} to guild"
@@ -37,8 +35,6 @@ class GuildInvitesController < ApplicationController
 		invite = guild.pending_invites.find_by(user: current_user)
 		if invite.update_attribute(:status, :accept)
 			if (guild.guild_members.create(user: invite.user))
-				Notification.create(user: current_user, recipient: invite.invited_by, action: "accept_invite", notifiable_type: "guilds",
-									service_info: "#{ guild.name }")
 				redirect_back fallback_location: guild_path(guild), success: "You have successsfully joined guild #{ guild.name }"
 			else
 				redirect_back fallback_location: guild_path(guild), alert: "#Can't accepting штмшеу. Try join again"
@@ -52,8 +48,6 @@ class GuildInvitesController < ApplicationController
 		guild = Guild.find(params[:id])
 		invite = guild.pending_invites.find_by(user: current_user)
 		if invite.update_attribute(:status, :decline)
-			Notification.create(user: current_user, recipient: invite.invited_by, action: "decline_invite", notifiable_type: "guilds",
-								service_info: "#{ guild.name }")
 			redirect_back fallback_location: guild_path(guild), success: "Invite was declined"
 		else
 			redirect_back fallback_location: guild_path(guild), alert: "Can't cancel invite"
@@ -63,8 +57,6 @@ class GuildInvitesController < ApplicationController
 	def cancel_invite
 		invite = current_user.guild.pending_invites.find_by(user: params[:user_id])
 		if invite.delete
-			Notification.create(user: current_user, recipient: invite.user, action: "cancel_invite", notifiable_type: "guilds",
-								service_info: "#{ current_user.guild.name }")
 			redirect_back fallback_location: guild_path(current_user.guild), success: "Invite has been canceled"
 		else
 			redirect_back fallback_location: guild_path(current_user.guild), alert: "Can't dicline invite"
@@ -76,8 +68,6 @@ class GuildInvitesController < ApplicationController
 		invite = guild.pending_join_request.find_by(user: params[:user_id])
 		if invite.update_attribute(:status, :accept)
 			if (guild.guild_members.create(user: invite.user))
-				Notification.create(user: current_user, recipient: invite.user, action: "accept_join_request",
-									notifiable_type: "guilds", service_info: "#{ current_user.guild.name }")
 				redirect_back fallback_location: guild_path(guild), success: "#{ invite.user.nickname } now in you guild"
 			else
 				redirect_back fallback_location: guild_path(guild), alert: "#Can't accepting join request. Try invite again"
@@ -91,8 +81,6 @@ class GuildInvitesController < ApplicationController
 		guild = Guild.find(params[:id])
 		invite = guild.pending_join_request.find_by(user: params[:user_id])
 		if invite.update_attribute(:status, :decline)
-			Notification.create(user: current_user, recipient: invite.user, action: "declined_join_request",
-								notifiable_type: "guilds", service_info: "#{ current_user.guild.name }")
 			redirect_back fallback_location: guild_path(guild), success: "Join request was declined"
 		else
 			redirect_back fallback_location: guild_path(guild), alert: "Can't cancel join request"
