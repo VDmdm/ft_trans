@@ -58,7 +58,7 @@ class TournamentsController < ApplicationController
 											:cost, :prize, :ball_color,
 											:bg_color, :paddle_color, :ball_down_mode,
 											:ball_speedup_mode, :random_mode, :ball_size,
-											:speed_rate, :bg_image )
+											:speed_rate)
 	end
 
 	def current_is_not_admin

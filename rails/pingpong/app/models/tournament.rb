@@ -1,5 +1,4 @@
 class Tournament < ApplicationRecord
-	has_one_attached :bg_image
 	
 	enum 			status: [:registration, :goes, :completed, :no_enought_players ]
 	belongs_to 		:creator, class_name: :User, foreign_key: "creator_id"
@@ -21,7 +20,6 @@ class Tournament < ApplicationRecord
 	validates  		:paddle_color, format: { with: /\A#[a-f0-9]{6}\z/, message: "Wrong color format!" }
 	validates  		:ball_size, presence: true, :inclusion => 0.5..2.0
 	validates  		:speed_rate, presence: true, :inclusion => 0.5..2.0
-    validates  		:bg_image, attached: true, content_type: [:png, :jpg, :jpeg], size: { less_than: 10.megabytes , message: 'filesize to big' }, allow_blank: true
     
 	def make_pair
 		@rounds = []

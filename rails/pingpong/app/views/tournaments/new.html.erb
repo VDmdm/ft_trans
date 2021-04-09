@@ -43,15 +43,10 @@
                     <%= form.label :bg_color, "Background" %>
                     <%= form.color_field :bg_color, class: "game-room-bg-color-input",
                                                     value: "#000000", oninput: "change_backcolor(this.value)" %>
-                    <label>or</label>
-                    <%= form.label "upload-bg-image", "file", class: "upload-file-label" %>
-                    <%= form.file_field :bg_image, id: "tournament_upload-bg-image"%>
-                    <%= hidden_field_tag :file_exist, false, id: 'file_exist' %>
-                    <img id="output" style="display: none;">
                 </div>
                 <div class="game-room-create-form-el">
                     <%= form.label :paddle_color, "Paddle" %>
-                    <%= form.color_field :paddle_color, class: "game-room-paddle-color-input",
+                    <%= form.color_field :paddle_color, class: "tournament-paddle-input",
                                                     value: "#ffffff", oninput: "change_paddlecolor(this.value)" %>
                 </div>
             </div>

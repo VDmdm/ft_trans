@@ -24,8 +24,8 @@
 }
 
 .game-room-create-form-el {
-    margin-top: 20px;
-    margin-bottom: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
 }
@@ -52,6 +52,10 @@
 
 .game-room-paddle-color-input {
     margin-right: 186px;
+}
+
+.tournament_paddle_input {
+    margin-right: 0px;
 }
 
 .game-room-create-contour-down h3 {
@@ -111,4 +115,5 @@
 
 .war_form_el {
     margin-bottom: 7px;
+    margin-top: 0px;
 }

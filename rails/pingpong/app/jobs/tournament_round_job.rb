@@ -36,9 +36,6 @@ class TournamentRoundJob < ApplicationJob
                           bg_color: tournament.bg_color,
                           paddle_color: tournament.paddle_color,
                           time_to_game: tournament.one_round_time
-    if tournament.bg_image.attached?
-      game.bg_image = tournament.bg_image
-    end
     game.save
     GameStateHash.instance.add_kv("p1_status_#{game.id}", "not ready")
 		GameStateHash.instance.add_kv("p1_nickname_#{game.id}", pair.p1.nickname)
