@@ -3,10 +3,10 @@ class GuildsController < ApplicationController
 	before_action :check_user_guild_exist, only: [:create]
 	before_action :check_user_guild_not_exist, only: [:add_officer, :leave_guild, :kick_member]
 	before_action :check_target_not_exist, only: [:add_officer, :kick_member, :remove_officer]
-	before_action :check_user_is_not_owner, only: [:add_officer, :kick_member, :remove_officer], unless: -> { current_user.admin }
+	before_action :check_user_is_not_owner, only: [:add_officer, :remove_officer], unless: -> { current_user.admin }
 	before_action :check_target_is_not_member, only: [:add_officer, :kick_member, :remove_officer]
 	before_action :check_target_is_officer, only: [:add_officer]
-	before_action :check_target_is_officer, only: [:kick_member], unless: :check_user_is_owner
+	before_action :check_target_is_officer, only: [:kick_member], unless: -> {check_user_is_owner || current_user.admin }
 	before_action :check_target_is_not_officer, only: [:remove_officer]
 	before_action :check_target_is_owner, only: [:kick_member]
 	before_action :check_guilds_not_exist, only: [:show]

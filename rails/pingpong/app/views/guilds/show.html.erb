@@ -39,11 +39,11 @@
             </div>
             <div class="guild-stat">
                 <%= image_tag "sword.png", class: "guild-stats-icon" %>
-                <span class="guild-stat-info">25 / 12</span>
+                <span class="guild-stat-info"><%= @guild.stats_string %></span>
             </div>
             <div class="guild-stat">
 				<%= image_tag "win_rate.png", class: "guild-stats-icon" %>
-                <span class="guild-stat-info">26%</span>
+                <span class="guild-stat-info"><%=@guild.winrate%>%</span>
 			</div>
 		</div>
     </div>
@@ -143,7 +143,7 @@
 								<% end %>
 							</div>
 						<div style="text-align:right">
-						<% if current_user.admin || (current_user.guild_owner && current_user.guild == @guild) %>
+						<% if current_user.admin || ((current_user.guild_owner && current_user.guild == @guild) || (current_user.guild_officer && !member.guild_owner && !member.guild_officer)) %>
 							<% if !member.guild_officer  %>
 								<%= link_to "make officer", add_officer_path(user_id: member.id), style: "margin-left: auto; display:block", method: :post, remote: true %>
 							<% elsif %>

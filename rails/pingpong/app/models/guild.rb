@@ -83,4 +83,20 @@ class Guild < ApplicationRecord
 		war = self.war_active
 		war && (war.initiator == opponent || war.recipient == opponent)
 	end
+
+	def winrate
+		war_win = self.wars_ended.where("winner_id = ?", self.id)
+		p self.wars_ended.size
+		if self.wars_ended.size != 0
+			winrate = (war_win.size * 100) / self.wars_ended.size
+			winrate.to_i
+		else
+			0
+		end
+	end
+
+	def stats_string
+		war_win = self.wars_ended.where("winner_id = ?", self.id).size
+		"#{war_win}/#{self.wars_ended.size - war_win}"
+	end
 end

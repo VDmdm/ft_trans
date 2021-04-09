@@ -10,14 +10,12 @@
                 <li class="game-status-invite-item">
                     <div class="game-status-block">
                         <div class="game-status-info">
-                            <a href="#" class="game-status-info-avatar-link">
-                                <%= image_tag current_user.active_wartime_games[0].p1.avatar, class: "game-status-info-avatar-img"%>
-                            </a>
+                            <%= link_to image_tag(current_user.active_wartime_games[0].p1.avatar, class: "game-status-info-avatar-img"), profile_path(current_user.active_wartime_games[0].p1) %>
                             <div class="game-status-info-wrapper">
                                 <p class="game-status-info-nickname"><%= link_to current_user.active_wartime_games[0].p1.nickname, profile_path(current_user.active_wartime_games[0].p1) %></p>
 								<p class="game-status-info-guild">
 								<%= link_to guild_path(current_user.active_wartime_games[0].p1.guild) do %>
-									[<%= current_user.active_wartime_games[0].p1.guild.anagram %>]
+									<span style="color:#616F39class="wars-show-guild-info-stat"">[<%= current_user.active_wartime_games[0].p1.guild.anagram %>]</span>
 								<%end%>
 								</p>
                             </div>

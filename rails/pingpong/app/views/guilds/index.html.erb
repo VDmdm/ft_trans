@@ -62,11 +62,11 @@
 										</div>
 										<div class="guild-stat">
 											<%= image_tag "sword.png" , class: "guild-stats-icon" %>
-												<span class="guild-stat-info">25 / 12</span>
+												<span class="guild-stat-info"><%= current_user.guild.stats_string %></span>
 										</div>
 										<div class="guild-stat">
 											<%= image_tag "win_rate.png" , class: "guild-stats-icon" %>
-												<span class="guild-stat-info">26%</span>
+												<span class="guild-stat-info"><%= current_user.guild.winrate %>%</span>
 										</div>
 									</div>
 					</div>
