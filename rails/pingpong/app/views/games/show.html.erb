@@ -23,8 +23,17 @@
                     remote: true, id: "ready_btn" %>
                 <% end %>
             <% end %>
+            <% if @game.game_type == "close" && @game.p1 != current_user && !@game.p2 %>
+                <%= form_for @game, :url => game_join_player_path, :method => :post, remote: true do |form| %>
+                    <%= text_field_tag 'passcode', nil, placeholder: "4 characters", minlength: 4, maxlength: 4 %> </br>
+                    <%= form.button "Join", class: "game-block-action-link", id: "game-block-join-link",
+                    remote: true, style: "display: none; background-color:black" %>
+                <%end%>
+            <%else%>
             <%= link_to "join" , game_join_player_path(@game), method: :post, class: "game-block-action-link", id: "game-block-join-link",
                 remote: true, style: 'display: none;' %>
+            <%end%>
+
         </div>
         <div style="text-align:center;width:100%">
             <div style="display:flex;justify-content: center">
