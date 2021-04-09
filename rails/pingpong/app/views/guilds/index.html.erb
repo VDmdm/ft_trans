@@ -13,7 +13,7 @@
 								<% end %>
 									<div class="guilds-invite-item-wrap">
 										<span class="guilds-invite-item-name">
-											<%= i.guild.name %>
+											<%= link_to i.guild.name, guild_path(i.guild) %>
 										</span>
 										<span class="guilds-invite-item-anagram">[<%= i.guild.anagram %>]</span>
 									</div>

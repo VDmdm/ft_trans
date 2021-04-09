@@ -14,8 +14,10 @@
 			<div style="margin-top: 5px; margin-left:auto">
 			<% if !current_user.guild %>
 				<% if @invite %>
+				<div style="display:flex">
 					<%= button_to "ACCEPT INVITE", accept_invite_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
 					<%= button_to "DECLINE INVITE", decline_invite_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
+				</div>
 				<% elsif @join_request %>
 					<%= button_to "CANCEL JOIN REQUEST", cancel_join_request_path(@guild, user_id: current_user), class: "guild-description-join", remote: true %>
 				<% else %>

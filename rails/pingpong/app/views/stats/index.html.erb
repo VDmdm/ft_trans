@@ -7,7 +7,7 @@
 			<% @top_guild.each do |guild| %>
             <section class="top-guild">
 				<div class="top-guild-info">
-					<%= link_to guild.anagram, guild_path(guild), class: "top-guild-name" %>
+					<%= link_to guild.name, guild_path(guild), class: "top-guild-name" %>
 					<%= link_to guild_path(guild), class: "top-guild-anagram" do %>
 						[<%= guild.anagram %>]
 					<%end%>
@@ -54,7 +54,7 @@
 						<span class="user-info-nickname"><%=link_to user.nickname,profile_path(user) %></span>
 						<%if user.guild %>
 							<%= link_to guild_path(user.guild), class: "user-info-anagram" do %>
-								[<%= user.guild.name %>]
+								[<%= user.guild.anagram %>]
 							<%end%>
 						<%end%>
 						<%= link_to image_tag("mail.png", class: "user-action-message-icon"), direct_rooms_find_path(user_id: user.id), method: :post, remote: true %>

@@ -31,17 +31,17 @@
   <% end %>
 
   <div class="personal-information-form-filed">
-    <div >
-  <% if !current_user.otp_secret %>
-    <%= link_to "Turn on two-step verification", otp_secrets_path, class: "personal-information-form-button" %>
-  <%else%>
-    <%= button_to "Turn off two-step verification", otp_secrets_destroy_path, class: "personal-information-form-button",  method: :post, remote: true %>
-  <%end%>
-  </div>
-    <%= f.submit "Update", class: "personal-information-form-button", style: "margin-left:auto" %>
+
+    <%= f.submit "Update", class: "personal-information-form-button", style: "margin-left:auto;" %>
   </div>
 <% end %>
-
+<div class="personal-information-form-filed">
+<% if !current_user.otp_secret %>
+  <%= link_to "Turn on two-step verification", otp_secrets_path, class: "personal-information-form-button", style: "margin-left:auto;" %>
+<%else%>
+  <%= link_to "Turn off two-step verification", otp_secrets_destroy_path, class: "personal-information-form-button", style: "margin-left:auto;", method: :post, remote: true %>
+<%end%>
+</div>
 <span class="line"></span>
 
 
