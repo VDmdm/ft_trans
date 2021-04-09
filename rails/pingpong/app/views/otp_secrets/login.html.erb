@@ -1,3 +1,4 @@
+<%= link_to "logout", destroy_user_session_path, :method => :delete, style:"position:fixed;right:10px;font-size:22px;" %>
 <h2 class="profile-settings-title">Two-step auth confirmation</h2>
 
 <div class="two-step-auth">
@@ -8,6 +9,5 @@
 		<%= submit_tag "verify", class: "two-step-auth-submit-btn" %>
 		<% end %>
 <div>
-<%= link_to "logout", destroy_user_session_path, :method => :delete %>
 
 </div>

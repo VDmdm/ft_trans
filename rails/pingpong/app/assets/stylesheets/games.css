@@ -32,6 +32,11 @@
     font-size: 20px;
 }
 
+.game-status-info {
+    display: flex;
+    align-items: center;
+}
+
 .game-status-info-avatar-link {
     display: inline-block;
     margin-right: 23px;
@@ -160,4 +165,11 @@
 
 .game-status-invite-list {
     padding: 0;
+}
+
+.edit_game {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 15px;
 }

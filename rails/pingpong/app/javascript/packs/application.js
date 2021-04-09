@@ -390,6 +390,22 @@ $(document).on("turbolinks:load", function() {
     })
 });
 
+$(document).on("turbolinks:load", function() {
+    $('.game-room-passcode-input').prop( "disabled", true );
+    $('#game_game_type').change(function () {
+        var val = $(this).val();
+
+        if (val === 'close') {
+            $('.game-room-passcode-input').prop( "disabled", false );
+        }
+        else {
+            $('.game-room-passcode-input').prop( "disabled", true );
+            $('.game-room-passcode-input').val( "");
+        }
+    })
+});
+
+
 window.change_wartime_and_date = function(value) {
     console.log(value);
     var date = new Date(value);

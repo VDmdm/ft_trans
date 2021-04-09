@@ -57,7 +57,7 @@
 								[<%= user.guild.anagram %>]
 							<%end%>
 						<%end%>
-						<%= link_to image_tag("mail.png", class: "user-action-message-icon"), direct_rooms_find_path(user_id: user.id), method: :post, remote: true %>
+						<%= link_to image_tag("mail.png", class: "user-action-message-icon"), direct_rooms_find_path(user_id: user.id), method: :post, remote: true, style:"display:block;" %>
                     </div>
                     <div class="stats-top-users-score">
                         <%= image_tag "ball.png", class: "top-users-score-icon" %>

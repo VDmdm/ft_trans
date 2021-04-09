@@ -123,7 +123,6 @@
 
 .messages-header{
     display: flex;
-    width: 900px;
     height: 60px;
 }
 
@@ -310,12 +309,18 @@ input[type="checkbox"] {
 .room-password{
     font-size: 50px;
     margin-top: 250px;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    justify-content: space-around;
 }
 
 .edit_room {
     text-align: center;
+}
+
+.new_chat_room_member {
+    display: flex;
+    text-align-last: center;
+    flex-direction: column;
 }
 
 .password-input{
@@ -335,8 +340,7 @@ input[type="checkbox"] {
     padding: 1px 20px 7px 20px;
     background-color: #000;
     border: 1px solid #FFFFFF;
-    margin-left: 150px;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .password-button:hover {

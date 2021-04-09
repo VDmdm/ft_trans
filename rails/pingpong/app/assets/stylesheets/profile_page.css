@@ -125,7 +125,7 @@
 	margin-top: 15px;
 	text-align: right;
 	display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -164,4 +164,8 @@
 
 .profile-info-action-remove {
 	transform: rotate(45deg);
+}
+
+.game-block-action-link {
+	cursor: pointer;
 }
