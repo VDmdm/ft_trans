@@ -1,0 +1,72 @@
+<section class="main-page">
+    <section class="main-page-left">
+        <section class="main-page-profile-info">
+            <div class="main-page-profile-img">
+            <% if current_user.avatar.attached? %>
+                <img src="<%= rails_storage_proxy_path(current_user.avatar) %>" alt="profile-img">
+            <% end %>
+            </div>
+            <div class="main-page-rate-nickname-guild">
+                <div class="main-page-nickname-guild">
+					<h4><%= link_to current_user.nickname, profile_path(current_user.id) %></h4>
+                    <% if current_user.guild %>
+						<h4><%= link_to "[" + current_user.guild.anagram + "]", guild_path(current_user.guild), class: "main-page-guild" %></h4>
+                    <% end %>
+                </div>
+                <div class="main-page-rate-ladder">
+                    <div class="main-page-ladder">
+                        <%= image_tag "cup.png", class: "ladder" %>
+                        <p><%= current_user.rating %></p>
+                    </div>
+                    <div class="main-page-rate">
+                        <%= image_tag "ball.png", class: "ladder" %>
+                        <p><%= current_user.score %></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="main-page-live-matches main-page-info-contour">
+            <div class="main-page-section-header">
+                <h4>Live mathes</h4>
+            </div>
+            <div class="main-page-live-matches-list">
+                <ul>
+                <% @live_games.each do |game|%>
+                    <% if (game.game_type == "open" || game.game_type == "rating" || game.game_type == "close") && game.p2 %>
+                    <%= link_to game_path(game) do %>
+                        <li class="home-match-item">
+                            <div class="home-match-item-p1">
+                                <h3><%= game.p1.nickname%>
+                                <%if game.p1.guild%><span style="color:#616F39">[<%=game.p1.guild.anagram%>]</span><%end%>
+                                </h3>
+                            </div>
+                            <div class="home-match-item-spectate">
+                                <h3>vs</h3>
+                            </div>
+                            <div class="home-match-item-p1">
+                                <h3><%= game.p2.nickname%> <%if game.p2.guild%><span style="color:#616F39">[<%=game.p2.guild.anagram%>] </span><%end%> 
+                                </h3>
+                            </div>
+                        </li>
+                    <%end%>
+                    <%end%>
+                <%end%>
+                    <li>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </section>
+    <section class="main-page-right">
+        <section class="main-page-friends main-page-info-contour">
+            <div class="main-page-section-header">
+                <h4>Friends</h4>
+            </div>
+            <div class="main-page-friends-list">
+                <% @friends.each do |friend| %>
+                    <%= render 'home/friend', friend: friend %>
+                <% end %>
+            </div>
+        </section>
+    </section>
+</section>

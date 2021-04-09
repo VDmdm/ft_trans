@@ -11,7 +11,7 @@ services:
       POSTGRES_DB: pingpong_development
       POSTGRES_HOST_AUTH_METHOD: trust
   rails:
-    build: ./rails/.
+    build: ./
     restart: always
     ports:
       - "3000:3000"

@@ -1,0 +1,141 @@
+<section class="tournaments">
+<p class="tournaments-title">Tournaments<% if current_user.admin %><%= link_to "+", new_tournament_path %><%end%></p></br>
+
+<%if !@active_tournaments.empty? %>
+<div>
+<p class="tournaments-title" style="margin-bottom:0px">Tournament games</p>
+    <div style="height:400px;overflow:auto">
+    <ul class="game-status-invite-list">
+    <%if @games.empty?%>
+    <div style="margin-left: 50%;display: inline-block;transform: translateX(-50%);">
+        <h3>Tournament games will start soon!</h3>
+    </div>
+    <%end%>
+    <% @games.each do |game| %>
+        <li class="games-free-type-item">
+        <p><%= game.name %></p>
+                                <div class="game-status-block launched-game-block">
+
+                                    <div class="game-status-info launched-game">
+                                        <%= link_to  image_tag(game.p1.avatar, alt: "avatar", class: "game-status-info-avatar-img"), profile_path(game.p1), class: "game-status-info-avatar-link"%>
+                                        <div class="game-status-info-wrapper">
+                                            <p class="game-status-info-nickname"><%= link_to game.p1.nickname, profile_path(game.p1) %></p>
+                                            <%if game.p1.guild %>
+                                                <p class="game-status-info-guild">
+                                                    <%= link_to guild_path(game.p1.guild), class: "game-status-info-guild" do %>
+                                                        [<%=game.p1.guild.anagram%>]
+                                                    <%end%>
+                                                </p>
+                                            <%end%>
+                                        </div>
+                                    </div>
+                                    <div class="launched-game-spectate">
+                                        <p>vs</p>
+                                        <%= link_to "join", game_path(game), class: "game-status-spectate" %>
+                                    </div>
+                                    <div class="game-status-info launched-game">
+                                        <%= link_to image_tag(game.p2.avatar, alt: "avatar", class: "game-status-info-avatar-img"), profile_path(game.p2), class: "game-status-info-avatar-link"%>
+                                        <div class="game-status-info-wrapper">
+                                            <p class="game-status-info-nickname"><%= link_to game.p2.nickname, profile_path(game.p2) %></p>
+                                            <%if game.p2.guild %>
+                                                <p class="game-status-info-guild">
+                                                    <%= link_to guild_path(game.p2.guild), class: "game-status-info-guild" do %>
+                                                        [<%=game.p2.guild.anagram%>]
+                                                    <%end%>
+                                                </p>
+                                            <%end%>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </li>
+    <%end%>
+    </ul>
+    </div>
+    <%else%>
+    <div style="margin-left: 50%;display: inline-block;transform: translateX(-50%);">
+        <h3>There are not tournaments games yet</h3>
+    </div>
+    <% end %>
+</div>
+
+<%if !@tournaments.empty? %>
+<p class="tournaments-title" style="margin-bottom:0px">Active tournaments</p>
+<%end%>
+<div style="height:380px;overflow:auto">
+<ul class="tournaments-list">
+<% @tournaments.each do |t| %>
+    <li class="tournaments-item">
+        <div class="tournaments-info">
+            <p class="tournaments-info-name"><%= t.name %></p>
+            <p class="tournaments-info-description">
+                <%= t.description %>
+            </p>
+            <time class="tournaments-info-date">
+                <%=t.start.strftime("%m/%d/%Y %H:%M") %>
+            </time>
+        </div>
+        <div class="tournaments-prizes">
+            <div class="tournaments-prizes-entry">
+                <span>Entry <%= t.cost %></span>
+                <%= image_tag "ball.png", alt: "coin", class: "tournaments-prizes-entry-icon" %>
+            </div>
+            <p class="tournaments-prizes-title">Prize</p>
+            <ul class="tournaments-prizes-list">
+                <li class="tournaments-prizes-item">
+                    <span class="tournaments-prizes-item-text"><%= t.prize%> <%= image_tag "ball.png", alt: "coin", class: "tournaments-prizes-item-cup"%></span>
+                </li>
+            </ul>
+        </div>
+                <div class="tournaments-mods">
+                        <span class="game-status-mods-title">Mods</span>
+                        <ul class="game-status-mods-list">
+                        <li class="game-status-mods-item">
+                            <%= image_tag "ball_speed.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            <h3><%= t.speed_rate %></h3>
+                        </li>
+                        <li class="game-status-mods-item">
+                            <%= image_tag "ball_size.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            <h3><%= t.ball_size %></h3>
+                        </li>
+                        <% if t.ball_down_mode %>
+                            <li class="game-status-mods-item">
+                                <%= image_tag "ball_size_down.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            </li>
+                        <%end%>
+                        <% if t.ball_speedup_mode %>
+                            <li class="game-status-mods-item">
+                                <%= image_tag "ball_speed_up.png", alt: "icon", class: "game-status-mods-item-icon" %>
+                            </li>
+                        <%end%>
+                        <% if t.random_mode %>
+                            <li class="game-status-mods-item">
+                                <%= image_tag "random.png", alt: "icon", class: "game-status-mods-item-icon" %>
+							</li>
+							
+                         <%end%>
+                    </ul>
+                </div>
+        <div class="tournaments-register">
+            <p class="tournaments-register-ranked"></p>
+<!--        <p class="tournaments-register-unranked">unranked</p>-->
+            <div class="tournaments-register-amount-member">
+            <%= image_tag "man.png", alt: "man", class: "tournaments-register-amount-member-icon" %>
+                <span><%=t.tournament_players.size%>/<%=t.max_players%></span>
+            </div>
+            
+            <% if t.player_registered?(current_user)%>
+                <button class="tournaments-register-button">
+                    <%= link_to "unregister", tournament_unregister_path(t), remote: true, method: :post %>
+                </button>
+            <% elsif t.tournament_players.size != t.max_players%>
+                <button class="tournaments-register-button">
+                    <%= link_to "register", tournament_register_path(t), remote: true, method: :post %>
+                </button>
+            <% end %>
+        </div>
+	</li>
+    <%end%>
+</ul>
+</div>
+</section>
