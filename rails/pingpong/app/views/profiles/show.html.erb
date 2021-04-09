@@ -44,7 +44,6 @@
 					</div>
 				</div>
 				<div class="profile-info-action">
-						<%= link_to image_tag("sword", class: "profile-settings-action"), edit_user_registration_path%>
 						<%= link_to image_tag("mail", class: "profile-settings-action"), direct_rooms_find_path(user_id: @user.id), method: :post, remote: true%>		
 						<% if @user.id == current_user.id %>
 							<%= link_to image_tag("gear_", class: "profile-settings-sign"), edit_user_registration_path%>

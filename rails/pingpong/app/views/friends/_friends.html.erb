@@ -20,11 +20,9 @@
             <div class="friend-list-element-btn">
                 <%= link_to image_tag("mail.png", alt: "mail"), direct_rooms_find_path(user_id: friend.id), method: :post, remote: true %>
                 <% if friend.online? %>
-                    <a href="#">
-                        <%= image_tag "sword.png", alt: "battle"%>
-                    </a>
+
                 <% end %>
-				<%= link_to image_tag("delete.png", alt: "delete"), friends_destroy_path(inv_id:
+				<%= link_to image_tag("cross.png", alt: "delete"), friends_destroy_path(inv_id:
 				Invitation.find_invitation(current_user.id, friend.id)) %>
             </div>
         </div>

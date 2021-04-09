@@ -404,3 +404,18 @@ col {
 .popup-alert {
     border-color: #B2463E;
 }
+
+#error_explanation {
+    top: 15px;
+    right: 15px;
+    display: flex;
+    position: absolute;
+    background-color: #000;
+    max-width: 35%;
+    border: 4px solid #fff;
+    padding: 15px;
+    justify-content: space-between;
+    color: white;
+    border-color: #B2463E;
+}
+

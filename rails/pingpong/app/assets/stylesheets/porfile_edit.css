@@ -46,6 +46,10 @@
     box-sizing: border-box;
 }
 
+.edit-input{
+    margin-left: auto;
+}
+
 .personal-information-form-button {
     cursor: pointer;
     font-size: 30px;

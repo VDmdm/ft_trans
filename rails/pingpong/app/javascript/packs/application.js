@@ -376,6 +376,11 @@ $(document).on("turbolinks:load", function() {
 });
 
 $(document).on("turbolinks:load", function() {
+    $('#error_explanation').fadeOut(5000, function() {
+      });
+});
+
+$(document).on("turbolinks:load", function() {
     $('.send-message-button').prop('disabled', true);
     $('#direct_message_message').keyup(function() {
         if (this.val != "")

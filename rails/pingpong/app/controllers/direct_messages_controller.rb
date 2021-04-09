@@ -14,7 +14,7 @@ class DirectMessagesController < ApplicationController
 		@room = DirectRoom.find params.dig(:direct_message, :direct_room_id)
 		res = current_user.id == @room.user_id
 		res = current_user.id == @room.dude_id if !res
-		redirect_to rooms_path, alert: "Not a member" if !res
+		redirect_back fallback_location: root_path, alert: "Not a member" if !res
 	end
 	
 	def check_if_blocked
@@ -23,7 +23,7 @@ class DirectMessagesController < ApplicationController
 		user = @room.user
 		user = User.all.find_by(id: @room.dude_id) if user == current_user
 
-		redirect_to rooms_path, alert: "User is blocked!" if current_user.is_blocked?(user)
+		redirect_back fallback_location: root_path, alert: "User is blocked!" if current_user.is_blocked?(user)
 	end
 
 	def check_if_blocked_by
@@ -33,7 +33,7 @@ class DirectMessagesController < ApplicationController
 
 		blocked_users = current_user.blocked_by
 		blocked_users.each do |user|
-			redirect_to rooms_path, alert: "You are blocked by this user!" if user.id == usr.id
+			redirect_back fallback_location: root_path, alert: "You are blocked by this user!" if user.id == usr.id
 		end
 	end
 end

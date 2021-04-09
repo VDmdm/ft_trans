@@ -31,7 +31,6 @@
             <% if room_message.user.id !=current_user.id %>
               <div class="dropdown-msg-content">
               <%= link_to room_message.user.nickname, profile_path(room_message.user) %>
-                  <a href="#">duel</a>
                   <% if !current_user.is_blocked?(room_message.user) %>
                     <%= link_to "block", direct_block_path(blocked_id: room_message.user.id),  method: :post, remote: true %>
                     <%else%>

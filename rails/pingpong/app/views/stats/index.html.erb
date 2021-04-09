@@ -79,7 +79,7 @@
 		<% @users.each  do |user| %>
             <tr class="table-row">
                 <td class="table-row-rank"><%= user.rating %></td>
-                <td class="table-row-nickname"><%= user.nickname %></td>
+                <td class="table-row-nickname"><%= link_to user.nickname, profile_path(user) %></td>
                 <td class="table-row-score"><%= user.score %></td>
 			</tr>
 		<%end%>

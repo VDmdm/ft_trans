@@ -4,14 +4,21 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="personal-information-form-filed">
-    <%= f.label :email, class: "personal-information-field-label" %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "personal-information-field-input", id: "email", type: "text" %>
+    <div>
+      <%= f.label :email, class: "personal-information-field-label" %><br />
+    </div>
+    <div class="edit-input">
+      <%= f.email_field :email, autocomplete: "email", class: "personal-information-field-input", id: "email", type: "text" %>
+    </div>
   </div>
  	<div  class="personal-information-form-filed">
- 		<%= f.label :nickname, class: "personal-information-field-label" %><br />
-		<%= f.text_field :nickname, class: "personal-information-field-input" %>
+   <div>
+ 		  <%= f.label :nickname, class: "personal-information-field-label" %><br />
+    </div>
+    <div class="edit-input">
+		  <%= f.text_field :nickname, class: "personal-information-field-input" %>
+    </div>
 	</div>
-
 
 	<div class="personal-information-form-filed">
 	<%= f.label :avatar, 'Image', class: "personal-information-field-label" %>
