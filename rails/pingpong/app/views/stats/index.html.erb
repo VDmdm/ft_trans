@@ -17,7 +17,7 @@
                     <div class="top-guild-stats">
                         <div class="top-guild-stat">
                             <%= image_tag "sword.png", class: "top-guild-stat-icon" %>
-                            <span class="top-guild-stat-kd">20 / 34</span>
+                            <span class="top-guild-stat-kd"><%= guild.stats_string %></span>
                         </div>
 
                         <div class="top-guild-stat">
@@ -27,7 +27,7 @@
 
                         <div class="top-guild-stat">
                             <%= image_tag "win_rate.png", class: "top-guild-stat-icon" %>
-                            <span class="top-guild-stat-kd">23%</span>
+                            <span class="top-guild-stat-kd"><%=guild.winrate%>%</span>
                         </div>
 
                     </div>
