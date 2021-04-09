@@ -170,3 +170,36 @@
 .main-page-events-list-element-new p{
     color: #B2D430;
 }
+
+.home-match-item{
+    height: 70px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    transition: 0.5s;
+
+}
+
+
+.home-match-item-p1{
+    word-wrap:  break-word;
+
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    font-size: 23px;
+}
+
+.home-match-item-spectate{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 23px;
+
+}
+
+
+.home-match-item:hover {
+    background-color: gray;
+}

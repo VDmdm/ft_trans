@@ -30,6 +30,30 @@
                 <h4>Live mathes</h4>
             </div>
             <div class="main-page-live-matches-list">
+                <ul>
+                <% @live_games.each do |game|%>
+                    <% if (game.game_type == "open" || game.game_type == "rating" || game.game_type == "close") && game.p2 %>
+                    <%= link_to game_path(game) do %>
+                        <li class="home-match-item">
+                            <div class="home-match-item-p1">
+                                <h3><%=game.p1_score%> <%= game.p1.nickname%>
+                                <%if game.p1.guild%><span style="color:#616F39">[<%=game.p1.guild.anagram%>]</span><%end%>
+                                </h3>
+                            </div>
+                            <div class="home-match-item-spectate">
+                                <h3>vs</h3>
+                            </div>
+                            <div class="home-match-item-p1">
+                                <h3><%= game.p2.nickname%> <%if game.p2.guild%><span style="color:#616F39">[<%=game.p2.guild.anagram%>] </span><%end%><%=game.p2_score%> 
+                                </h3>
+                            </div>
+                        </li>
+                    <%end%>
+                    <%end%>
+                <%end%>
+                    <li>
+                    </li>
+                </ul>
             </div>
         </section>
     </section>
