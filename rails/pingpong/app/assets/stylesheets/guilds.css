@@ -61,7 +61,12 @@
     align-items: center;
     margin-bottom: 25px;
     width: 500px;
-    margin-right: 25px;
+	margin-right: 25px;
+	transition: 0.5s;
+}
+
+.guilds-invite-item-wars:hover{
+    background-color: gray;
 }
 
 .guilds-invite-item-name {

@@ -26,7 +26,7 @@
                 <div class="wars-show-guild-info-stats">
 					<div class="wars-show-guild-info-stat">
 						<%= image_tag "sword.png", class: "wars-show-guild-info-stat-icon", style: "margin-top:5px" %>
-                        <h3 class="wars-show-guild-info-stat-kd">20/34</h3>
+                        <h3 class="wars-show-guild-info-stat-kd"><%= @war_active.initiator.stats_string %></h3>
                     </div>
 
 					<div class="wars-show-guild-info-stat">
@@ -36,7 +36,7 @@
 
 					<div class="wars-show-guild-info-stat">
 						<%= image_tag "win_rate.png", class: "wars-show-guild-info-stat-icon" %>
-                        <span class="wars-show-guild-info-stat-kd">23%</span>
+                        <span class="wars-show-guild-info-stat-kd"><%=@war_active.initiator.winrate%>%</span>
                     </div>
 
                 </div>
@@ -68,17 +68,17 @@
 				<div class="wars-show-guild-info-stats">
 					<div class="wars-show-guild-info-stat">
 						<%= image_tag "sword.png", class: "wars-show-guild-info-stat-icon", style: "margin-top:5px" %>
-						<h3 class="wars-show-guild-info-stat-kd">20/34</h3>
+						<h3 class="wars-show-guild-info-stat-kd"><%= @war_active.recipient.stats_string %></h3>
 					</div>
 
 					<div class="wars-show-guild-info-stat">
-						<%= image_tag "man.png", style: "width:45px;" %>
+						<%= image_tag "man.png", style: "height:45px;" %>
 						<span class="wars-show-guild-info-stat-kd" > <%= @war_active.recipient.members.size%></span>
 					</div>
 
 					<div class="wars-show-guild-info-stat">
 						<%= image_tag "win_rate.png", class: "wars-show-guild-info-stat-icon" %>
-						<span class="wars-show-guild-info-stat-kd">23%</span>
+						<span class="wars-show-guild-info-stat-kd"><%=@war_active.recipient.winrate%>%</span>
 					</div>
 
 				</div>
@@ -112,6 +112,7 @@
 	<div class="tabs-content" id="wars-incoming" style="display:block;">
 		<ul class="guilds-invite-list">
 		<% @wars_request_received.each do |wrr| %>
+			<%= link_to guild_wars_show_path(wrr) do %>
 				<li class="guilds-invite-item-wars">
 					<%= image_tag wrr.initiator.avatar, alt: "avatar", class: "guilds-invite-item-avatar" %>
 					<div class="guilds-invite-item-wrap">
@@ -133,6 +134,7 @@
 						<%= link_to image_tag("delete.png", class: "guilds-invite-item-cancel-icon"), guild_wars_decline_war_request_path(war_id: wrr), method: :post, remote: true %>
 					</div>
 				</li>
+			<%end%>
 		<% end %>
 		</ul>
 	</div>

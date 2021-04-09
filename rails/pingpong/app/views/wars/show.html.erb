@@ -29,7 +29,7 @@
 				<div class="wars-show-guild-info-stats">
 					<div class="wars-show-guild-info-stat">
 						<%= image_tag "sword.png", alt: "sword", class: "wars-show-guild-info-stat-icon" %>
-						<span class="wars-show-guild-info-stat-kd">20 / 34</span>
+						<span class="wars-show-guild-info-stat-kd"><%= @war.initiator.stats_string %></span>
 					</div>
 
 					<div class="wars-show-guild-info-stat">
@@ -39,7 +39,7 @@
 
 					<div class="wars-show-guild-info-stat">
 						<%= image_tag "win_rate.png", alt: "sword", class: "wars-show-guild-info-stat-icon" %>
-						<span class="wars-show-guild-info-stat-kd">23%</span>
+						<span class="wars-show-guild-info-stat-kd"><%= @war.initiator.winrate%>%</span>
 					</div>
 
 				</div>
@@ -69,7 +69,7 @@
 				<div class="wars-show-guild-info-stats">
 					<div class="wars-show-guild-info-stat">
 						<%= image_tag "sword.png", alt: "sword", class: "wars-show-guild-info-stat-icon" %>
-						<span class="wars-show-guild-info-stat-kd">20 / 34</span>
+						<span class="wars-show-guild-info-stat-kd"><%=@war.recipient.stats_string %></span>
 					</div>
 
 					<div class="wars-show-guild-info-stat">
@@ -79,7 +79,7 @@
 
 					<div class="wars-show-guild-info-stat">
 						<%= image_tag "win_rate.png", alt: "sword", class: "wars-show-guild-info-stat-icon" %>
-						<span class="wars-show-guild-info-stat-kd">23%</span>
+						<span class="wars-show-guild-info-stat-kd"><%=@war.recipient.winrate%>%</span>
 					</div>
 
 				</div>
